@@ -1,3 +1,4 @@
+import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +9,13 @@ import { HeaderComponent } from './header/header.component';
 import { GroceryCalcComponent } from './grocery-calc/grocery-calc.component';
 import { HomeloanCalcComponent } from './homeloan-calc/homeloan-calc.component';
 import { BusinessCalcComponent } from './business-calc/business-calc.component';
+import { DropdownDirective } from './dropdown.directive';
+import { InputGroupComponent } from './input-group/input-group.component';
+import { ResultsComponent } from './results/results.component';
+
+const appRoutes: Routes = [
+  {path:'grocery', component: GroceryCalcComponent}
+] 
 
 @NgModule({
   declarations: [
@@ -15,9 +23,13 @@ import { BusinessCalcComponent } from './business-calc/business-calc.component';
     HeaderComponent,
     GroceryCalcComponent,
     HomeloanCalcComponent,
-    BusinessCalcComponent
+    BusinessCalcComponent,
+    DropdownDirective,
+    InputGroupComponent,
+    ResultsComponent
   ],
   imports: [
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     FormsModule,
     HttpModule
