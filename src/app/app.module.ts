@@ -10,7 +10,6 @@ import { GroceryCalcComponent } from './grocery-calc/grocery-calc.component';
 import { HomeloanCalcComponent } from './homeloan-calc/homeloan-calc.component';
 import { BusinessCalcComponent } from './business-calc/business-calc.component';
 import { DropdownDirective } from './dropdown.directive';
-import { InputGroupComponent } from './input-group/input-group.component';
 import { ResultsComponent } from './results/results.component';
 
 const appRoutes: Routes = [
@@ -25,7 +24,6 @@ const appRoutes: Routes = [
     HomeloanCalcComponent,
     BusinessCalcComponent,
     DropdownDirective,
-    InputGroupComponent,
     ResultsComponent
   ],
   imports: [
