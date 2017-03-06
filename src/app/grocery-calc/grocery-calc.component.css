@@ -1,8 +1,0 @@
-#grocery-form{
-    width:50%;
-    float: left;
-    padding: 0 5%;
-}
-input[name = 'category']{
-    width:100px;
-}
