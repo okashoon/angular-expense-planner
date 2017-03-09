@@ -1,3 +1,5 @@
+import { ExpensesService } from '../expenses.service';
+import { Expense } from '../expense';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultsComponent implements OnInit {
 
-  constructor() { }
+  totalExpenses: number= this.expensesService.getTotalExpenses();
+  categoryArray: string[]= this.expensesService.getCategories();
+  categoryTotalsArray: number[]= this.expensesService.getCategoryTotalsArray();
+
+  constructor(private expensesService: ExpensesService) {
+    
+   }
 
   ngOnInit() {
+    
+    
+  }
+
+  // Doughnut
+  public doughnutChartLabels:string[] = this.categoryArray;
+  public doughnutChartData:number[] = this.categoryTotalsArray
+ 
+  // events
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
+ 
+  public chartHovered(e:any):void {
+    console.log(e);
   }
 
 }

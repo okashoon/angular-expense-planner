@@ -1,3 +1,14 @@
-<p>
-  results goes here
-</p>
+<div style="display: block">
+  <canvas baseChart
+              [data]="doughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="'doughnut'"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+</div>
+
+
+<div id="total">
+  <h3>Total Expenses</h3>
+  <h4>{{totalExpenses}}</h4>
+</div>

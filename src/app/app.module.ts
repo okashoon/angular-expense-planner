@@ -13,6 +13,7 @@ import { DropdownDirective } from './dropdown.directive';
 import { ResultsComponent } from './results/results.component';
 import { AddExpenseComponent } from './add-expense/add-expense.component';
 import { AddIncomeComponent } from './add-income/add-income.component';
+import { TemplateComponent } from './template/template.component';
 
 const appRoutes: Routes = [
 ] 
@@ -24,18 +25,17 @@ const appRoutes: Routes = [
     DropdownDirective,
     ResultsComponent,
     AddExpenseComponent,
-    AddIncomeComponent
+    AddIncomeComponent,
+    TemplateComponent
   ],
   imports: [
-    IncomesService,
-    ExpensesService,
     ChartsModule,
     RouterModule.forRoot(appRoutes),
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [IncomesService, ExpensesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
