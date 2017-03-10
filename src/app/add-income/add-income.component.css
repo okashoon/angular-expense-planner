@@ -1,0 +1,14 @@
+.centered {
+    margin: 0 auto;
+    float: none;
+}
+
+.input-group {
+    margin-bottom: 30px;
+}
+
+form {
+    border: 1px solid lightblue;
+    border-radius: 10px;
+    padding: 30px;
+}

@@ -1,3 +1,36 @@
-<p>
-  add-expense works!
-</p>
+<div style="display: inline-block; width: 40%">
+    <h3> Enter Expense</h3>
+    <form>
+
+        <div class="input-group centered">
+            <input type="text" class="form-control " placeholder="Title" name="title" [(ngModel)]="expense.name">
+        </div>
+
+
+        <div class="input-group centered">
+            <label for="category">Category:</label>
+            <select class="form-control" name="category" [(ngModel)]="expense.category">
+          <option>Bills</option>
+          <option>Education</option>
+          <option>Transport</option>
+          <option>Clothes</option>
+          <option>Entertainment</option>
+          <option>Food</option>
+          <option>Gifts</option>
+          <option>Health</option>
+          <option>House</option>
+          <option>Pets</option>
+          <option>Sports</option>
+       </select>
+        </div>
+
+        <div class="input-group col-md-6 centered">
+            <span class="input-group-addon">EGP</span>
+            <input type="number" class="form-control" placeholder="amount" name="amount" [(ngModel)]="expense.amount ">
+            <span class="input-group-addon ">LE</span>
+
+        </div>
+
+        <button class="btn btn-success btn-block " type="submit " (click)="onSubmit() ">Add Expense</button>
+    </form>
+</div>

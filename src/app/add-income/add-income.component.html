@@ -1,3 +1,31 @@
-<p>
-  add-income works!
-</p>
+<div style="display: inline-block; width: 40%">
+    <h3> Enter Income</h3>
+    <form>
+
+        <div class="input-group centered">
+            <input type="text" class="form-control " placeholder="Income Title" name="title" [(ngModel)]="Income.name">
+        </div>
+
+
+        <div class="input-group centered">
+            <label for="category">Category:</label>
+            <select class="form-control" name="category" [(ngModel)]="income.category">
+          <option>Salary</option>
+          <option>Deposits</option>
+          <option>Savings</option>
+          <option>Bonus</option>
+          <option>Rent</option>
+          <option>Other</option>
+       </select>
+        </div>
+
+        <div class="input-group col-md-6 centered">
+            <span class="input-group-addon">EGP</span>
+            <input type="number" class="form-control" placeholder="amount" name="amount" [(ngModel)]="income.amount ">
+            <span class="input-group-addon ">LE</span>
+
+        </div>
+
+        <button class="btn btn-success btn-block " type="submit " (click)="onSubmit() ">Add Income</button>
+    </form>
+</div>
