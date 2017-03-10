@@ -1,36 +1,44 @@
-<div style="display: inline-block; width: 40%">
-    <h3> Enter Expense</h3>
-    <form>
+<div style="display: inline-block; width: 40%" class="expense-container pull-right">
 
-        <div class="input-group centered">
-            <input type="text" class="form-control " placeholder="Title" name="title" [(ngModel)]="expense.name">
-        </div>
+    <button style="width: 150px;" *ngIf="!viewOn" class="btn btn-lg btn-danger" (click)="openView()">
+        <i class="fa fa-minus-circle fa-3x pull-left"></i>Add <br>expense</button>
 
 
-        <div class="input-group centered">
-            <label for="category">Category:</label>
-            <select class="form-control" name="category" [(ngModel)]="expense.category">
-          <option>Bills</option>
-          <option>Education</option>
-          <option>Transport</option>
-          <option>Clothes</option>
-          <option>Entertainment</option>
-          <option>Food</option>
-          <option>Gifts</option>
-          <option>Health</option>
-          <option>House</option>
-          <option>Pets</option>
-          <option>Sports</option>
-       </select>
-        </div>
 
-        <div class="input-group col-md-6 centered">
-            <span class="input-group-addon">EGP</span>
-            <input type="number" class="form-control" placeholder="amount" name="amount" [(ngModel)]="expense.amount ">
-            <span class="input-group-addon ">LE</span>
+    <div *ngIf="viewOn">
+        <h3> Enter Expense</h3>
+        <form>
 
-        </div>
+            <div class="input-group centered">
+                <input type="text" class="form-control " placeholder="Title" name="title" [(ngModel)]="expense.name" required>
+            </div>
 
-        <button class="btn btn-success btn-block " type="submit " (click)="onSubmit() ">Add Expense</button>
-    </form>
+
+            <div class="input-group centered">
+                <label for="category">Category:</label>
+                <select class="form-control" name="category" [(ngModel)]="expense.category">
+                    <option>Bills</option>
+                    <option>Education</option>
+                    <option>Transport</option>
+                    <option>Clothes</option>
+                    <option>Entertainment</option>
+                    <option>Food</option>
+                    <option>Gifts</option>
+                    <option>Health</option>
+                    <option>House</option>
+                    <option>Pets</option>
+                    <option>Sports</option>
+                </select>
+            </div>
+
+            <div class="input-group col-md-6 centered">
+                <span class="input-group-addon">EGP</span>
+                <input type="number" class="form-control" placeholder="amount" name="amount" [(ngModel)]="expense.amount" required>
+                <span class="input-group-addon ">LE</span>
+
+            </div>
+
+            <button class="btn btn-success btn-block " type="submit " (click)="onSubmit() ">Add Expense</button>
+        </form>
+    </div>
 </div>

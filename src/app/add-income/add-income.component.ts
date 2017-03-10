@@ -8,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddIncomeComponent implements OnInit {
 
-  
+  public income = {name: "salary", category: "salary", amount: 1000};
+  viewOn = false;
+
+  openView(){
+    this.viewOn = true;
+  }
+  ngOnInit(){}
 
 }

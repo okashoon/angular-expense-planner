@@ -10,11 +10,16 @@ import { Expense } from '../expense';
 export class AddExpenseComponent implements OnInit {
 
   expense: Expense = new Expense("",0,"");
+  viewOn = false;
 
   constructor(private expensesService: ExpensesService) { }
 
   ngOnInit() {
     
+  }
+
+  openView(){
+    this.viewOn = true;
   }
 
   onSubmit(){
@@ -23,6 +28,7 @@ export class AddExpenseComponent implements OnInit {
     // this.expensesService.addExpense(e2);
     // console.log(e2);
     this.expense = new Expense("",0,"");
+    this.viewOn = false;
   }
 
 }

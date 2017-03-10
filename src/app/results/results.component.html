@@ -1,5 +1,5 @@
 <div id="results-container">
-    <div class="total" style="background-color: blue">
+    <div class="total" style="background-color: #337ab7">
         <h3>Total Income</h3>
         <h4>{{totalIncome}}</h4>
     </div>
@@ -8,7 +8,7 @@
         <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="'doughnut'" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
     </div>
 
-    <div class="total" style="background-color: orangered">
+    <div class="total" style="background-color: #d9534f">
         <h3>Total Expenses</h3>
         <h4>{{totalExpenses}}</h4>
     </div>
