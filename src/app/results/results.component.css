@@ -1,8 +1,30 @@
 .total {
     border-radius: 5%;
-    margin: 40px auto;
-    padding: 10px;
+    margin: 30px auto;
     text-align: center;
-    width: 50%;
-    border: 1px solid lightblue;
+    width: 40%;
+}
+
+#total-income,
+#total-expense {
+    display: inline-block;
+}
+
+#income-expense-container {
+    text-align: center;
+}
+
+#total-income {
+    background-color: #16a085;
+    color: white;
+}
+
+#total-expense {
+    background-color: #c0392b;
+    color: white;
+}
+
+#extra {
+    border: 2px solid #34495e;
+    background-color: #bdc3c7;
 }

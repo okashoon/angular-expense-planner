@@ -1,9 +1,8 @@
 import { IncomesService } from '../incomes.service';
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 import { ExpensesService } from '../expenses.service';
 import { Expense } from '../expense';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { Component, OnInit, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 
 @Component({
   selector: 'app-results',
@@ -14,10 +13,10 @@ export class ResultsComponent implements OnInit {
 
   totalExpenses: number = this.expensesService.getTotalExpenses();
   totalIncomes: number = this.incomesService.getTotalIncomes();
-  //categpries of expenses (labels)
-  categoryArray: string[] = ["No Expenses"];
+  //categpries of expenses (labels) -- checking first that its not empty, otherwise assign "no expenses" to ti
+  categoryArray: string[] = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
   //total expenses for for each category
-  categoryTotalsArray: number[] = [100];
+  categoryTotalsArray: number[] = this.expensesService.getCategoryTotalsArray()[0] &&  this.expensesService.getCategoryTotalsArray() || [100];
 
   constructor(private expensesService: ExpensesService, private incomesService: IncomesService) {
 

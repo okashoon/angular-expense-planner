@@ -10,7 +10,7 @@ import { Income } from '../../income'
 })
 export class AddIncomeComponent implements OnInit {
 
-  income: Income = new Income("salary1", 5000, "salary");
+  income: Income = new Income("", 0, "Salary");
 
   constructor(private incomesService: IncomesService){}
 
@@ -24,6 +24,7 @@ export class AddIncomeComponent implements OnInit {
   
   onSubmit(){
     this.incomesService.addIncome(this.income);
+    this.income = new Income("", 0, "Salary");
   }
 
 }

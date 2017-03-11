@@ -2,9 +2,9 @@
 
 
     <div *ngIf="viewOn">
-        <form>
+        <form (ngSubmit)="onSubmit()">
             <div class="input-group centered">
-                <input type="text" class="form-control " placeholder="Title" name="title" [(ngModel)]="expense.name" required>
+                <input type="text" class="form-control " placeholder="Expense" name="title" [(ngModel)]="expense.name" required>
             </div>
 
 
@@ -32,6 +32,6 @@
 
             </div>
 
-            <button class="btn btn-success btn-block " type="submit " (click)="onSubmit() ">Add Expense</button>
+            <button class="btn btn-success btn-block " type="submit">Add Expense</button>
         </form>
     </div>

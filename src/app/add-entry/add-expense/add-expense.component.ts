@@ -9,7 +9,7 @@ import { Expense } from '../../expense';
 })
 export class AddExpenseComponent implements OnInit {
 
-  expense: Expense = new Expense("",0,"");
+  expense: Expense = new Expense("",0,"Bills");
 
   @Input()
   viewOn = false;
@@ -25,7 +25,7 @@ export class AddExpenseComponent implements OnInit {
     // let e2 = new Expense("pants",200,"clothes")
     // this.expensesService.addExpense(e2);
     // console.log(e2);
-    this.expense = new Expense("",0,"");
+    this.expense = new Expense("",0,"Bills");
   }
 
 }
