@@ -1,3 +1,4 @@
+import { IncomesService } from '../../incomes.service';
 
 import { Component, Input, OnInit } from '@angular/core';
 import { Income } from '../../income'
@@ -9,7 +10,9 @@ import { Income } from '../../income'
 })
 export class AddIncomeComponent implements OnInit {
 
-  income: Income = new Income("salary", 5000);
+  income: Income = new Income("salary1", 5000, "salary");
+
+  constructor(private incomesService: IncomesService){}
 
   @Input()
   viewOn = false;
@@ -20,7 +23,7 @@ export class AddIncomeComponent implements OnInit {
   ngOnInit(){}
   
   onSubmit(){
-    
+    this.incomesService.addIncome(this.income);
   }
 
 }

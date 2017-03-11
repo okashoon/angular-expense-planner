@@ -1,18 +1,16 @@
+import { EventEmitter } from '@angular/forms/src/facade/async';
 import { Subject } from 'rxjs/Rx';
 import { Expense } from './expense';
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 
 @Injectable()
 export class ExpensesService {
 
-  //Todo dummy data for testing
   mainList: any = {};
   totalExpenses: number = 0;
 
   //observable sources
-  private anounceChangeSource = new Subject<Expense>();
-  //observable streams
-  anounceChange = this.anounceChangeSource.asObservable();
+  @Output() anounceChange = new EventEmitter<any>();
 
   constructor() {
   }
@@ -23,13 +21,12 @@ export class ExpensesService {
     if (this.mainList.hasOwnProperty(expense.category)) {
       this.mainList[expense.category].push(expense)
       this.totalExpenses += expense.amount;
-     this.anounceChangeSource.next();
+     this.anounceChange.emit();
     } else {
       this.mainList[expense.category] = new Array;
       this.mainList[expense.category].push(expense);
-      
       this.totalExpenses += expense.amount;
-     this.anounceChangeSource.next();
+     this.anounceChange.emit();
 
     }
   }

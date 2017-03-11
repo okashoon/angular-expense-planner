@@ -1,3 +1,3 @@
 export class Income {
-    constructor(public category: string, public amount: number){}
+    constructor(public name: string, public amount: number, public category: string){}
 }
