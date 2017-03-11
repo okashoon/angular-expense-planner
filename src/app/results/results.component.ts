@@ -43,7 +43,6 @@ export class ResultsComponent implements OnInit {
     //update results whenever expenses or incomes changes
     this.expensesService.anounceChange.subscribe(p => {this.updateResults()});
     this.incomesService.anounceChange.subscribe(p => {this.updateResults()});
-
   }
 
   // Doughnut
