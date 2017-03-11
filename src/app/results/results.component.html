@@ -3,20 +3,25 @@
     <div id="myChart">
         <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="'doughnut'" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
     </div>
-    <div id="income-expense-container">
-        <div id="total-income" class="total">
+    <div class="row">
+        <div id="total-income" class="col-md-5 col-md-offset-1 total">
             <h3>Total Income</h3>
             <h4>{{totalIncomes}}</h4>
         </div>
 
-        <div id="total-expense" class="total">
+        <div id="total-expense" class="col-md-5 total">
             <h3>Total Expenses</h3>
             <h4>{{totalExpenses}}</h4>
         </div>
-        <div id="extra" class="total">
+
+    </div>
+    <div class="row">
+        <div id="extra" class="col-md-10 col-md-offset-1 total">
             <h3>Extra Cash</h3>
             <h4>{{totalIncomes - totalExpenses}}</h4>
         </div>
     </div>
+
+    <button id="report" class="btn btn-success btn-lg">Detailed Report</button>
 
 </div>
