@@ -1,0 +1,19 @@
+#add-container {
+    border-radius: 10px;
+    background-color: #3498db;
+    padding: 10px;
+}
+
+.nav-tabs li.active a {
+    background-color: white;
+    color: #3498db;
+}
+
+.nav-tabs li a {
+    background-color: #3498db;
+    color: white;
+}
+
+.nav-tabs {
+    border: none;
+}

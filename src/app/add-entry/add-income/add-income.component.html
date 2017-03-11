@@ -1,0 +1,24 @@
+<div *ngIf="viewOn">
+    <form>
+        <div class="input-group centered">
+            <label for="category">Category:</label>
+            <select class="form-control" name="category" [(ngModel)]="income.category">
+                    <option>Salary</option>
+                    <option>Deposits</option>
+                    <option>Savings</option>
+                    <option>Bonus</option>
+                    <option>Rent</option>
+                    <option>Other</option>
+                </select>
+        </div>
+
+        <div class="input-group col-md-6 centered">
+            <span class="input-group-addon">EGP</span>
+            <input type="number" class="form-control" placeholder="amount" name="amount" [(ngModel)]="income.amount" required>
+            <span class="input-group-addon ">LE</span>
+
+        </div>
+
+        <button class="btn btn-success btn-block " type="submit " (click)="onSubmit() ">Add Income</button>
+    </form>
+</div>

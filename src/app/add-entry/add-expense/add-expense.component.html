@@ -1,14 +1,8 @@
-<div style="display: inline-block; width: 40%" class="expense-container pull-right">
-
-    <button style="width: 150px;" *ngIf="!viewOn" class="btn btn-lg btn-danger" (click)="openView()">
-        <i class="fa fa-minus-circle fa-3x pull-left"></i>Add <br>expense</button>
-
+<div>
 
 
     <div *ngIf="viewOn">
-        <h3> Enter Expense</h3>
         <form>
-
             <div class="input-group centered">
                 <input type="text" class="form-control " placeholder="Title" name="title" [(ngModel)]="expense.name" required>
             </div>
@@ -41,4 +35,3 @@
             <button class="btn btn-success btn-block " type="submit " (click)="onSubmit() ">Add Expense</button>
         </form>
     </div>
-</div>

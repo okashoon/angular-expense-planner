@@ -1,20 +1,8 @@
 .total {
     border-radius: 5%;
-    width: 140px;
-    height: 140px;
     margin: 40px auto;
     padding: 10px;
     text-align: center;
-    display: inline-block;
-    color: yellow;
-}
-
-.total h4 {
-    border-radius: 5%;
-    background-color: grey;
-    padding: 5px;
-}
-
-#myChart {
-    width: 60%;
+    width: 50%;
+    border: 1px solid lightblue;
 }

@@ -1,5 +1,6 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Income } from '../../income'
 
 @Component({
   selector: 'app-add-income',
@@ -8,12 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddIncomeComponent implements OnInit {
 
-  public income = {name: "salary", category: "salary", amount: 1000};
+  income: Income = new Income("salary", 5000);
+
+  @Input()
   viewOn = false;
 
   openView(){
     this.viewOn = true;
   }
   ngOnInit(){}
+  
+  onSubmit(){
+    
+  }
 
 }

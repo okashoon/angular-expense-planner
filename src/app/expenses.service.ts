@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class ExpensesService {
 
   //Todo dummy data for testing
-  mainList: any;
+  mainList: any = {};
   totalExpenses: number = 0;
 
   //observable sources
@@ -15,7 +15,6 @@ export class ExpensesService {
   anounceChange = this.anounceChangeSource.asObservable();
 
   constructor() {
-    this.mainList = {};
   }
 
 

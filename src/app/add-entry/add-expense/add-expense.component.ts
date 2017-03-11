@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ExpensesService } from '../expenses.service';
-import { Expense } from '../expense';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { ExpensesService } from '../../expenses.service';
+import { Expense } from '../../expense';
 
 @Component({
   selector: 'app-add-expense',
@@ -10,16 +10,14 @@ import { Expense } from '../expense';
 export class AddExpenseComponent implements OnInit {
 
   expense: Expense = new Expense("",0,"");
+
+  @Input()
   viewOn = false;
 
-  constructor(private expensesService: ExpensesService) { }
+  constructor(public expensesService: ExpensesService) { }
 
   ngOnInit() {
     
-  }
-
-  openView(){
-    this.viewOn = true;
   }
 
   onSubmit(){
@@ -28,7 +26,6 @@ export class AddExpenseComponent implements OnInit {
     // this.expensesService.addExpense(e2);
     // console.log(e2);
     this.expense = new Expense("",0,"");
-    this.viewOn = false;
   }
 
 }
