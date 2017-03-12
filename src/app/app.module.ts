@@ -18,7 +18,9 @@ import { DetailReportComponent } from './detail-report/detail-report.component';
 import { MainComponent } from './main/main.component';
 
 const appRoutes: Routes = [
-  {path: 'report', component: DetailReportComponent}
+  {path: 'report', component: DetailReportComponent},
+  {path: 'main', component: MainComponent},
+  {path: "", redirectTo: '/main', pathMatch: 'full'}
 ] 
 
 @NgModule({
