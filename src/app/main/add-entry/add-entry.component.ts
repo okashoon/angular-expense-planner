@@ -12,7 +12,7 @@ export class AddEntryComponent implements OnInit {
   ngOnInit() {
   }
 
-  expense = false;
+  expense = true;
   income = false
 
   toggleView(tab: string) {

@@ -1,7 +1,7 @@
-<div id="add-container">
+<div [class.income]="income" [class.expense]="expense">
     <ul class="nav nav-tabs">
-        <li [class.active]="income"><a (click)="toggleView('income')">Add Income</a></li>
-        <li [class.active]="expense"><a (click)="toggleView('expense')">Add Expense</a></li>
+        <li [class.active]="income"><a id="income-a" type="button" (click)="toggleView('income')">Add Income</a></li>
+        <li [class.active]="expense"><a id="expense-a" (click)="toggleView('expense')">Add Expense</a></li>
     </ul>
     <app-add-income [viewOn]="income"></app-add-income>
     <app-add-expense [viewOn]="expense"></app-add-expense>

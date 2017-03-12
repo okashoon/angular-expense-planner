@@ -1,19 +1,51 @@
-#add-container {
+.income {
     border-radius: 10px;
-    background-color: #3498db;
+    background-color: #16a085;
     padding: 10px;
 }
 
-.nav-tabs li.active a {
+.expense {
+    border-radius: 10px;
+    background-color: #c0392b;
+    padding: 10px;
+}
+
+
+/*.nav-tabs li.active a {
+    background-color: white;
+    color: #3498db;
+}*/
+
+
+/*.nav-tabs li a {
+    background-color: #3498db;
+    color: white;
+}*/
+
+#expense-a {
+    background-color: #c0392b;
+    color: white;
+}
+
+li.active #expense-a {
     background-color: white;
     color: #3498db;
 }
 
-.nav-tabs li a {
-    background-color: #3498db;
+li.active #income-a {
+    background-color: white;
+    color: #3498db;
+}
+
+#income-a {
+    background-color: #16a085;
     color: white;
 }
 
 .nav-tabs {
     border: none;
+}
+
+a {
+    cursor: pointer;
 }

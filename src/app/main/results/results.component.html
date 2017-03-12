@@ -5,24 +5,34 @@
     </div>
     <div class="row">
         <div id="total-income" class="col-md-4 col-md-offset-2 total">
-            <h3>Total Income</h3>
-            <h4>{{totalIncomes}}</h4>
+            <i class="fa fa-dollar fa-3x"></i>
+            <span>
+                <h4>Total Income</h4>
+                <h4>{{totalIncomes}}</h4>
+            </span>
         </div>
 
         <div id="total-expense" class="col-md-4 total">
-            <h3>Total Expenses</h3>
-            <h4>{{totalExpenses}}</h4>
+            <i class="fa fa-cart-arrow-down fa-3x"></i>
+            <span>
+                <h4>Total Expenses</h4>
+                <h4>{{totalExpenses}}</h4>
+            </span>
         </div>
 
     </div>
     <div class="row">
         <div id="extra" class="col-md-8 col-md-offset-2 total">
+            <i class="fa fa-money fa-4x"></i>
+            <span>
             <h3>Extra Cash</h3>
             <h4>{{totalIncomes - totalExpenses}}</h4>
+            </span>
         </div>
     </div>
 
-    <a routerLink="/report" routerLinkACtive="active" id="report" class="btn btn-success btn-lg">Detailed Report</a>
-
-
 </div>
+<button routerLink="/report" routerLinkACtive="active" id="report" class="btn btn-success btn-lg">
+        <i class="fa fa-list-alt fa-lg"></i>
+        &nbsp;Detailed Report
+    </button>

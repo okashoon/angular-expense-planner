@@ -7,6 +7,9 @@
 
 #results-container {
     text-align: center;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 #income-expense-container {
@@ -24,12 +27,30 @@
 }
 
 #extra {
-    background-color: #bdc3c7;
+    background-color: grey;
+    color: white;
     border: 1px solid #bdc3c7;
 }
 
+span {
+    display: inline-block;
+}
+
+i {
+    position: relative;
+    bottom: 10px;
+    right: 10px;
+}
+
+#report i {
+    position: initial;
+}
+
 #report {
-    height: 100px;
-    width: 150px;
-    border-radius: 50px;
+    display: block;
+    margin: 50px auto;
+}
+
+canvas {
+    height: 800px;
 }
