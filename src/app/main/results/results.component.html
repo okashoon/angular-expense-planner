@@ -4,24 +4,25 @@
         <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="'doughnut'" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
     </div>
     <div class="row">
-        <div id="total-income" class="col-md-5 col-md-offset-1 total">
+        <div id="total-income" class="col-md-4 col-md-offset-2 total">
             <h3>Total Income</h3>
             <h4>{{totalIncomes}}</h4>
         </div>
 
-        <div id="total-expense" class="col-md-5 total">
+        <div id="total-expense" class="col-md-4 total">
             <h3>Total Expenses</h3>
             <h4>{{totalExpenses}}</h4>
         </div>
 
     </div>
     <div class="row">
-        <div id="extra" class="col-md-10 col-md-offset-1 total">
+        <div id="extra" class="col-md-8 col-md-offset-2 total">
             <h3>Extra Cash</h3>
             <h4>{{totalIncomes - totalExpenses}}</h4>
         </div>
     </div>
 
-    <button id="report" class="btn btn-success btn-lg">Detailed Report</button>
+    <a routerLink="report" routerLinkACtive="active" id="report" class="btn btn-success btn-lg">Detailed Report</a>
+
 
 </div>

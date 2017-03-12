@@ -1,6 +1,6 @@
-import { IncomesService } from '../incomes.service';
-import { ExpensesService } from '../expenses.service';
-import { Expense } from '../expense';
+import { IncomesService } from '../../incomes.service';
+import { ExpensesService } from '../../expenses.service';
+import { Expense } from '../../expense';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { Component, OnInit,  } from '@angular/core';
 
