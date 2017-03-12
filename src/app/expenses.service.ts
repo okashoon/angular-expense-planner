@@ -5,6 +5,18 @@ import { Injectable, Output } from '@angular/core';
 
 @Injectable()
 export class ExpensesService {
+  //Expense Object structure: 
+  // {
+  //   name: string, 
+  //   amount: number, 
+  //   category: string
+  // }
+  //
+  // mainList structure :
+  // {
+  //   "category1": [{Expense1}, {Expense2 }, {Expense3}],
+  //   "category2": [{Expense1}, {Expense2 }]
+  // }
 
   //retrieve data from local storage if present, otherwise create empty object
   mainList: any = JSON.parse(localStorage.getItem("expenses")) || {};

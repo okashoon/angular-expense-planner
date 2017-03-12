@@ -6,6 +6,19 @@ import { Injectable, Output } from '@angular/core';
 @Injectable()
 export class IncomesService {
 
+  //Income Object structure: 
+  // {
+  //   name: string, 
+  //   amount: number, 
+  //   category: string
+  // }
+  //
+  // mainList structure :
+  // {
+  //   "category1": [{Income1}, {Income2 }, {Income3}],
+  //   "category2": [{Income1}, {Income2 }]
+  // }
+
   mainList: any = JSON.parse(localStorage.getItem("incomes")) || {};
   totalIncomes: number =JSON.parse(localStorage.getItem("totalIncomes")) || 0;
 
@@ -38,6 +51,26 @@ export class IncomesService {
 
   getTotalIncomes() {
     return this.totalIncomes;
+  }
+
+  getCategories() {
+    return Object.keys(this.mainList);
+  }
+
+  getCategoryTotalsArray(): number[] {
+    let categoryTotals: number[] = [];
+    for (var category in this.mainList) {
+      let sum = 0;
+      for (var expense of this.mainList[category]) {
+        sum += expense.amount;
+      }
+      categoryTotals.push(sum);
+    }
+    return categoryTotals;
+  }
+
+  getMainList(){
+    return this.mainList;
   }
 
 }
