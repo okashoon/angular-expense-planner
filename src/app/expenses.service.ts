@@ -68,6 +68,10 @@ export class ExpensesService {
     return categoryTotals;
   }
 
+  getMainList(){
+    return this.mainList;
+  }
+
 
 
 }
