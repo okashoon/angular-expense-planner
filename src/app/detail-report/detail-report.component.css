@@ -33,3 +33,23 @@
 table th {
     border: none;
 }
+
+.total {
+    padding: 20px;
+    text-align: center;
+    color: white;
+    font-size: 1.4em;
+}
+
+#total-expense {
+    background-color: #c0392b;
+}
+
+#total-income {
+    background-color: #16a085;
+}
+
+#extra-cash {
+    background-color: grey;
+    border-radius: 5px;
+}

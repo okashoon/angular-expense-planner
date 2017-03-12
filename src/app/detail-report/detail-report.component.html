@@ -16,6 +16,9 @@
                 </tr>
             </tbody>
         </table>
+        <div id="total-expense" class="total">
+            Total: {{totalExpenses}} L.E
+        </div>
     </div>
 
     <div class="col-md-5" id="income-container">
@@ -35,6 +38,14 @@
                 </tr>
             </tbody>
         </table>
+        <div id="total-income" class="total">
+            Total: {{totalIncomes}} L.E
+        </div>
     </div>
 
+</div>
+<div class="row">
+    <div class="col-md-12" class="total" id="extra-cash">
+        Extra Cash: {{totalIncomes - totalExpenses}} L.E
+    </div>
 </div>
