@@ -7,7 +7,8 @@ import { Component, OnInit, Output } from '@angular/core';
 })
 export class AddEntryComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit() {
   }
