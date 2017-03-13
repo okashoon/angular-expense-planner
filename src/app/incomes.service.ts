@@ -51,6 +51,11 @@ export class IncomesService {
     if (this.mainList[income.category][0] == null){
       delete this.mainList[income.category];
     }
+    this.storeData();
+  }
+
+  editIncome(){
+    this.storeData();
   }
 
 

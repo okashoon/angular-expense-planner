@@ -17,25 +17,19 @@ export class ResultsComponent implements OnInit {
   //categpries of expenses (labels) -- checking first that its not empty, otherwise assign "no expenses" to it
   categoryArray: string[] = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
   //total expenses for each category
-  categoryTotalsArray: number[] = this.expensesService.getCategoryTotalsArray()[0] &&  this.expensesService.getCategoryTotalsArray() || [100];
+  categoryTotalsArray: number[] = this.expensesService.getCategoryTotalsArray()[0] &&  this.expensesService.getCategoryTotalsArray() || [0];
 
-  constructor(private expensesService: ExpensesService, private incomesService: IncomesService) {
-
-    
-
-  }
+  constructor(private expensesService: ExpensesService, private incomesService: IncomesService) {}
 
   updateResults() {
     this.totalExpenses = this.expensesService.getTotalExpenses();
     this.totalIncomes = this.incomesService.getTotalIncomes();
     //only update arrays if there is data, otherwise put ['no expenses'] and [100]
     this.categoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
-    this.categoryTotalsArray =this.expensesService.getCategoryTotalsArray()[0] &&  this.expensesService.getCategoryTotalsArray() || [100];
+    this.categoryTotalsArray =this.expensesService.getCategoryTotalsArray()[0] &&  this.expensesService.getCategoryTotalsArray() || [0];
 
     this.doughnutChartLabels = this.categoryArray;
     this.doughnutChartData = this.categoryTotalsArray
-
-
   }
 
   ngOnInit() {
@@ -48,9 +42,8 @@ export class ResultsComponent implements OnInit {
   public doughnutChartLabels: string[] = this.categoryArray;
   public doughnutChartData: number[] = this.categoryTotalsArray;
 
-  // events
+  // events, 
   public chartClicked(e: any): void {}
-
   public chartHovered(e: any): void {}
 
 }

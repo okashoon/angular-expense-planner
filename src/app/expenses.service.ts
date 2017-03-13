@@ -49,13 +49,16 @@ export class ExpensesService {
 
   }
 
-
   deleteExpense(expense: Expense) {
     let index: number = this.mainList[expense.category].indexOf(expense);
     this.mainList[expense.category].splice(index, 1);
     if (this.mainList[expense.category][0] == null){
       delete this.mainList[expense.category];
     }
+    this.storeData();
+  }
+
+  editExpense(){
     this.storeData();
   }
 
