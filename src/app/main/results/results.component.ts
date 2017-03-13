@@ -13,6 +13,7 @@ export class ResultsComponent implements OnInit {
 
   totalExpenses: number = this.expensesService.getTotalExpenses();
   totalIncomes: number = this.incomesService.getTotalIncomes();
+  expenseIncomePercent: number = this.totalExpenses/this.totalIncomes*100;
 
   //categpries of expenses (labels) -- checking first that its not empty, otherwise assign "no expenses" to it
   categoryArray: string[] = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
@@ -24,6 +25,8 @@ export class ResultsComponent implements OnInit {
   updateResults() {
     this.totalExpenses = this.expensesService.getTotalExpenses();
     this.totalIncomes = this.incomesService.getTotalIncomes();
+    this.expenseIncomePercent = this.totalExpenses/this.totalIncomes*100;
+    
     //only update arrays if there is data, otherwise put ['no expenses'] and [100]
     this.categoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
     this.categoryTotalsArray =this.expensesService.getCategoryTotalsArray()[0] &&  this.expensesService.getCategoryTotalsArray() || [0];

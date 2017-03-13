@@ -17,29 +17,8 @@
 }
 
 #total-income {
-    background-color: #16a085;
-    color: white;
-}
-
-#total-expense {
-    background-color: #c0392b;
-    color: white;
-}
-
-#extra {
-    background-color: grey;
-    color: white;
-    border: 1px solid #bdc3c7;
-}
-
-span {
-    display: inline-block;
-}
-
-i {
-    position: relative;
-    bottom: 10px;
-    right: 10px;
+    text-align: right;
+    padding: 10px;
 }
 
 #report i {
@@ -53,4 +32,40 @@ i {
 
 canvas {
     height: 800px;
+}
+
+body {
+    margin: 30px 0px;
+}
+
+.progress {
+    position: relative;
+    height: 100px;
+    background-color: #16a085;
+}
+
+.progress>.progress-expense {
+    position: absolute;
+    top: 5px;
+    color: white;
+    text-align: right;
+}
+
+.progress>.progress-remaining {
+    position: absolute;
+    bottom: 5px;
+    right: 0px;
+    padding: 3px 10px 2px;
+    color: #ecf0f1;
+    text-align: right;
+}
+
+.progress-bar {
+    background-color: #c0392b;
+}
+
+i {
+    position: relative;
+    top: 15px;
+    right: 10px;
 }
