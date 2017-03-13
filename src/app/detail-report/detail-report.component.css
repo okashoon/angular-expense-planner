@@ -53,3 +53,16 @@ table th {
     background-color: grey;
     border-radius: 5px;
 }
+
+.form-control {
+    width: 75px;
+    display: inline-block;
+    height: 27px;
+}
+
+.form-control:disabled {
+    cursor: default;
+    border: none;
+    background-color: white;
+    box-shadow: none;
+}

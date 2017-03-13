@@ -59,4 +59,14 @@ export class DetailReportComponent implements OnInit {
     this.updateData();
   }
 
+  enableEdit(element: any){
+    element.disabled = false;
+    this.updateData();
+  }
+  disableEdit(element: any){
+    element.disabled = true;
+    this.updateData();
+    
+  }
+
 }
