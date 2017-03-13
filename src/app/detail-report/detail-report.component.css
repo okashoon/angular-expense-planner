@@ -66,3 +66,7 @@ table th {
     background-color: white;
     box-shadow: none;
 }
+
+button {
+    margin-right: 5px;
+}

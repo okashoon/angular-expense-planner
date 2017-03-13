@@ -11,3 +11,11 @@ form {
     padding: 30px;
     background-color: white;
 }
+
+button {
+    background-color: #16a085;
+}
+
+i {
+    margin-right: 10px;
+}
