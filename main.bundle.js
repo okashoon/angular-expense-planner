@@ -34,14 +34,12 @@ var ExpensesService = (function () {
         // }
         //retrieve data from local storage if present, otherwise create empty object
         this.mainList = JSON.parse(localStorage.getItem("expenses")) || {};
-        this.totalExpenses = JSON.parse(localStorage.getItem("totalExpenses")) || 0;
         //observable sources
         this.anounceChange = new __WEBPACK_IMPORTED_MODULE_0__angular_forms_src_facade_async__["a" /* EventEmitter */]();
     }
     ExpensesService.prototype.storeData = function () {
         if (typeof (Storage) !== "undefined") {
             localStorage.setItem("expenses", JSON.stringify(this.mainList));
-            localStorage.setItem("totalExpenses", JSON.stringify(this.totalExpenses));
         }
         else {
             console.log("Local storage is not supported by your browser");
@@ -50,13 +48,11 @@ var ExpensesService = (function () {
     ExpensesService.prototype.addExpense = function (expense) {
         if (this.mainList.hasOwnProperty(expense.category)) {
             this.mainList[expense.category].push(expense);
-            this.totalExpenses += expense.amount;
             this.anounceChange.emit();
         }
         else {
             this.mainList[expense.category] = new Array;
             this.mainList[expense.category].push(expense);
-            this.totalExpenses += expense.amount;
             this.anounceChange.emit();
         }
         this.storeData();
@@ -64,10 +60,23 @@ var ExpensesService = (function () {
     ExpensesService.prototype.deleteExpense = function (expense) {
         var index = this.mainList[expense.category].indexOf(expense);
         this.mainList[expense.category].splice(index, 1);
-        this.totalExpenses -= expense.amount;
+        if (this.mainList[expense.category][0] == null) {
+            delete this.mainList[expense.category];
+        }
+        this.storeData();
+    };
+    ExpensesService.prototype.editExpense = function () {
+        this.storeData();
     };
     ExpensesService.prototype.getTotalExpenses = function () {
-        return this.totalExpenses;
+        var totalExpenses = 0;
+        for (var category in this.mainList) {
+            for (var _i = 0, _a = this.mainList[category]; _i < _a.length; _i++) {
+                var expense = _a[_i];
+                totalExpenses += expense.amount;
+            }
+        }
+        return totalExpenses;
     };
     ExpensesService.prototype.getCategories = function () {
         return Object.keys(this.mainList);
@@ -134,13 +143,11 @@ var IncomesService = (function () {
         //   "category2": [{Income1}, {Income2 }]
         // }
         this.mainList = JSON.parse(localStorage.getItem("incomes")) || {};
-        this.totalIncomes = JSON.parse(localStorage.getItem("totalIncomes")) || 0;
         this.anounceChange = new __WEBPACK_IMPORTED_MODULE_0__angular_forms_src_facade_async__["a" /* EventEmitter */]();
     }
     IncomesService.prototype.storeData = function () {
         if (typeof (Storage) !== "undefined") {
             localStorage.setItem("incomes", JSON.stringify(this.mainList));
-            localStorage.setItem("totalIncomes", JSON.stringify(this.totalIncomes));
         }
         else {
             console.log("Local storage is not supported by your browser");
@@ -149,19 +156,35 @@ var IncomesService = (function () {
     IncomesService.prototype.addIncome = function (income) {
         if (this.mainList.hasOwnProperty(income.category)) {
             this.mainList[income.category].push(income);
-            this.totalIncomes += income.amount;
             this.anounceChange.emit();
         }
         else {
             this.mainList[income.category] = new Array;
             this.mainList[income.category].push(income);
-            this.totalIncomes += income.amount;
             this.anounceChange.emit();
         }
         this.storeData();
     };
+    IncomesService.prototype.deleteIncome = function (income) {
+        var index = this.mainList[income.category].indexOf(income);
+        this.mainList[income.category].splice(index, 1);
+        if (this.mainList[income.category][0] == null) {
+            delete this.mainList[income.category];
+        }
+        this.storeData();
+    };
+    IncomesService.prototype.editIncome = function () {
+        this.storeData();
+    };
     IncomesService.prototype.getTotalIncomes = function () {
-        return this.totalIncomes;
+        var totalIncomes = 0;
+        for (var category in this.mainList) {
+            for (var _i = 0, _a = this.mainList[category]; _i < _a.length; _i++) {
+                var expense = _a[_i];
+                totalIncomes += expense.amount;
+            }
+        }
+        return totalIncomes;
     };
     IncomesService.prototype.getCategories = function () {
         return Object.keys(this.mainList);
@@ -375,19 +398,39 @@ var DetailReportComponent = (function () {
     function DetailReportComponent(expensesService, incomesService) {
         this.expensesService = expensesService;
         this.incomesService = incomesService;
+        this.updateData();
+    }
+    DetailReportComponent.prototype.updateData = function () {
         this.expensesMainList = this.expensesService.getMainList();
         this.incomesMainList = this.incomesService.getMainList();
         this.totalExpenses = this.expensesService.getTotalExpenses();
         this.totalIncomes = this.incomesService.getTotalIncomes();
-        //categpries of expenses (labels) -- checking first that its not empty, otherwise assign "no expenses" to ti
+        //categpries of expenses/incomes (labels) -- checking first that its not empty, otherwise assign "no expenses" to it
         this.expensesCategoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
-        //total expenses for for each category
-        this.expensesCategoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [100];
         this.incomesCategoryArray = this.incomesService.getCategories()[0] && this.incomesService.getCategories() || ["No Incomes"];
-        //total expenses for for each category
+        //total expenses/incomes for  each category
+        this.expensesCategoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [0];
         this.incomesCategoryTotalsArray = this.incomesService.getCategoryTotalsArray()[0] && this.incomesService.getCategoryTotalsArray() || [0];
-    }
+    };
     DetailReportComponent.prototype.ngOnInit = function () {
+    };
+    DetailReportComponent.prototype.deleteExpense = function (expense) {
+        this.expensesService.deleteExpense(expense);
+        this.updateData();
+    };
+    DetailReportComponent.prototype.deleteIncome = function (income) {
+        this.incomesService.deleteIncome(income);
+        this.updateData();
+    };
+    DetailReportComponent.prototype.enableEdit = function (element) {
+        element.disabled = false;
+    };
+    DetailReportComponent.prototype.disableEdit = function (element) {
+        element.disabled = true;
+        //to save updated list to local storage
+        this.expensesService.editExpense();
+        this.incomesService.editIncome();
+        this.updateData();
     };
     DetailReportComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
@@ -560,15 +603,13 @@ var AddExpenseComponent = (function () {
     function AddExpenseComponent(expensesService) {
         this.expensesService = expensesService;
         this.expense = new __WEBPACK_IMPORTED_MODULE_2__expense__["a" /* Expense */]("", 0, "Bills");
+        //viewOn is the variable used in *ngIf to populate the view, and its bound from the parent component(AddEntryComponent)
         this.viewOn = false;
     }
-    AddExpenseComponent.prototype.ngOnInit = function () {
-    };
+    AddExpenseComponent.prototype.ngOnInit = function () { };
     AddExpenseComponent.prototype.onSubmit = function () {
         this.expensesService.addExpense(this.expense);
-        // let e2 = new Expense("pants",200,"clothes")
-        // this.expensesService.addExpense(e2);
-        // console.log(e2);
+        //after adding expense create a new instance, so it wont update the same old instance
         this.expense = new __WEBPACK_IMPORTED_MODULE_2__expense__["a" /* Expense */]("", 0, "Bills");
     };
     __decorate([
@@ -608,6 +649,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var AddEntryComponent = (function () {
     function AddEntryComponent() {
+        //variables to toggle view between add-expense and add-income components
         this.expense = true;
         this.income = false;
     }
@@ -661,6 +703,7 @@ var AddIncomeComponent = (function () {
     function AddIncomeComponent(incomesService) {
         this.incomesService = incomesService;
         this.income = new __WEBPACK_IMPORTED_MODULE_2__income__["a" /* Income */]("", 0, "Salary");
+        //viewOn is the variable used in *ngIf to populate the view, and its bound from the parent component(AddEntryComponent)
         this.viewOn = false;
     }
     AddIncomeComponent.prototype.openView = function () {
@@ -669,6 +712,7 @@ var AddIncomeComponent = (function () {
     AddIncomeComponent.prototype.ngOnInit = function () { };
     AddIncomeComponent.prototype.onSubmit = function () {
         this.incomesService.addIncome(this.income);
+        //after adding expense create a new instance, so it wont update the same old instance
         this.income = new __WEBPACK_IMPORTED_MODULE_2__income__["a" /* Income */]("", 0, "Salary");
     };
     __decorate([
@@ -751,10 +795,10 @@ var ResultsComponent = (function () {
         this.incomesService = incomesService;
         this.totalExpenses = this.expensesService.getTotalExpenses();
         this.totalIncomes = this.incomesService.getTotalIncomes();
-        //categpries of expenses (labels) -- checking first that its not empty, otherwise assign "no expenses" to ti
+        //categpries of expenses (labels) -- checking first that its not empty, otherwise assign "no expenses" to it
         this.categoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
-        //total expenses for for each category
-        this.categoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [100];
+        //total expenses for each category
+        this.categoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [0];
         // Doughnut
         this.doughnutChartLabels = this.categoryArray;
         this.doughnutChartData = this.categoryTotalsArray;
@@ -762,9 +806,9 @@ var ResultsComponent = (function () {
     ResultsComponent.prototype.updateResults = function () {
         this.totalExpenses = this.expensesService.getTotalExpenses();
         this.totalIncomes = this.incomesService.getTotalIncomes();
-        //only update arrays if there is data, otherwise put ['noexpenses'] and [100]
+        //only update arrays if there is data, otherwise put ['no expenses'] and [100]
         this.categoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
-        this.categoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [100];
+        this.categoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [0];
         this.doughnutChartLabels = this.categoryArray;
         this.doughnutChartData = this.categoryTotalsArray;
     };
@@ -774,7 +818,7 @@ var ResultsComponent = (function () {
         this.expensesService.anounceChange.subscribe(function (p) { _this.updateResults(); });
         this.incomesService.anounceChange.subscribe(function (p) { _this.updateResults(); });
     };
-    // events
+    // events, 
     ResultsComponent.prototype.chartClicked = function (e) { };
     ResultsComponent.prototype.chartHovered = function (e) { };
     ResultsComponent = __decorate([
@@ -834,7 +878,7 @@ exports = module.exports = __webpack_require__(27)();
 
 
 // module
-exports.push([module.i, ".expense-amount {\r\n    text-align: right;\r\n}\r\n\r\n.expense-name {\r\n    text-align: left;\r\n}\r\n\r\n.thead-expense {\r\n    background-color: #c0392b;\r\n    color: white;\r\n}\r\n\r\n.thead-income {\r\n    background-color: #16a085;\r\n    color: white;\r\n}\r\n\r\n#expense-container {\r\n    border: 1px solid #c0392b;\r\n    border-radius: 10px;\r\n    padding: 0;\r\n    margin: 10px;\r\n}\r\n\r\n#income-container {\r\n    border: 1px solid #16a085;\r\n    border-radius: 10px;\r\n    padding: 0;\r\n    margin: 10px;\r\n}\r\n\r\ntable th {\r\n    border: none;\r\n}\r\n\r\n.total {\r\n    padding: 20px;\r\n    text-align: center;\r\n    color: white;\r\n    font-size: 1.4em;\r\n}\r\n\r\n#total-expense {\r\n    background-color: #c0392b;\r\n}\r\n\r\n#total-income {\r\n    background-color: #16a085;\r\n}\r\n\r\n#extra-cash {\r\n    background-color: grey;\r\n    border-radius: 5px;\r\n}", ""]);
+exports.push([module.i, ".expense-amount {\r\n    text-align: right;\r\n}\r\n\r\n.expense-name {\r\n    text-align: left;\r\n}\r\n\r\n.thead-expense {\r\n    background-color: #c0392b;\r\n    color: white;\r\n}\r\n\r\n.thead-income {\r\n    background-color: #16a085;\r\n    color: white;\r\n}\r\n\r\n#expense-container {\r\n    border: 1px solid #c0392b;\r\n    border-radius: 10px;\r\n    padding: 0;\r\n    margin: 10px;\r\n}\r\n\r\n#income-container {\r\n    border: 1px solid #16a085;\r\n    border-radius: 10px;\r\n    padding: 0;\r\n    margin: 10px;\r\n}\r\n\r\ntable th {\r\n    border: none;\r\n}\r\n\r\n.total {\r\n    padding: 20px;\r\n    text-align: center;\r\n    color: white;\r\n    font-size: 1.4em;\r\n}\r\n\r\n#total-expense {\r\n    background-color: #c0392b;\r\n}\r\n\r\n#total-income {\r\n    background-color: #16a085;\r\n}\r\n\r\n#extra-cash {\r\n    background-color: grey;\r\n    border-radius: 5px;\r\n}\r\n\r\n.form-control {\r\n    width: 75px;\r\n    display: inline-block;\r\n    height: 27px;\r\n}\r\n\r\n.form-control:disabled {\r\n    cursor: default;\r\n    border: none;\r\n    background-color: white;\r\n    box-shadow: none;\r\n}\r\n\r\nbutton {\r\n    margin-right: 5px;\r\n}", ""]);
 
 // exports
 
@@ -870,7 +914,7 @@ exports = module.exports = __webpack_require__(27)();
 
 
 // module
-exports.push([module.i, ".centered {\r\n    margin: 0 auto;\r\n    width: 90%;\r\n}\r\n\r\n.input-group {\r\n    margin-bottom: 30px;\r\n}\r\n\r\nform {\r\n    padding: 30px;\r\n    background-color: white;\r\n}", ""]);
+exports.push([module.i, ".centered {\r\n    margin: 0 auto;\r\n    width: 90%;\r\n}\r\n\r\n.input-group {\r\n    margin-bottom: 30px;\r\n}\r\n\r\nform {\r\n    padding: 30px;\r\n    background-color: white;\r\n}\r\n\r\nbutton {\r\n    background-color: #c0392b;\r\n}\r\n\r\ni {\r\n    margin-right: 10px;\r\n}", ""]);
 
 // exports
 
@@ -888,7 +932,7 @@ exports = module.exports = __webpack_require__(27)();
 
 
 // module
-exports.push([module.i, ".income {\r\n    border-radius: 10px;\r\n    background-color: #16a085;\r\n    padding: 10px;\r\n}\r\n\r\n.expense {\r\n    border-radius: 10px;\r\n    background-color: #c0392b;\r\n    padding: 10px;\r\n}\r\n\r\n\r\n/*.nav-tabs li.active a {\r\n    background-color: white;\r\n    color: #3498db;\r\n}*/\r\n\r\n\r\n/*.nav-tabs li a {\r\n    background-color: #3498db;\r\n    color: white;\r\n}*/\r\n\r\n#expense-a {\r\n    background-color: #c0392b;\r\n    color: white;\r\n}\r\n\r\nli.active #expense-a {\r\n    background-color: white;\r\n    color: #3498db;\r\n}\r\n\r\nli.active #income-a {\r\n    background-color: white;\r\n    color: #3498db;\r\n}\r\n\r\n#income-a {\r\n    background-color: #16a085;\r\n    color: white;\r\n}\r\n\r\n.nav-tabs {\r\n    border: none;\r\n}\r\n\r\na {\r\n    cursor: pointer;\r\n}", ""]);
+exports.push([module.i, ".income {\r\n    border-radius: 10px;\r\n    background-color: #16a085;\r\n    padding: 5px;\r\n}\r\n\r\n.expense {\r\n    border-radius: 10px;\r\n    background-color: #c0392b;\r\n    padding: 5px;\r\n}\r\n\r\n#expense-a {\r\n    background-color: #c0392b;\r\n    color: white;\r\n}\r\n\r\nli.active #expense-a {\r\n    background-color: white;\r\n    color: #3498db;\r\n}\r\n\r\nli.active #income-a {\r\n    background-color: white;\r\n    color: #3498db;\r\n}\r\n\r\n#income-a {\r\n    background-color: #16a085;\r\n    color: white;\r\n}\r\n\r\n.nav-tabs {\r\n    border: none;\r\n}\r\n\r\na {\r\n    cursor: pointer;\r\n}", ""]);
 
 // exports
 
@@ -906,7 +950,7 @@ exports = module.exports = __webpack_require__(27)();
 
 
 // module
-exports.push([module.i, ".centered {\r\n    margin: auto;\r\n    width: 90%;\r\n}\r\n\r\n.input-group {\r\n    margin-bottom: 30px;\r\n}\r\n\r\nform {\r\n    padding: 30px;\r\n    background-color: white;\r\n}", ""]);
+exports.push([module.i, ".centered {\r\n    margin: auto;\r\n    width: 90%;\r\n}\r\n\r\n.input-group {\r\n    margin-bottom: 30px;\r\n}\r\n\r\nform {\r\n    padding: 30px;\r\n    background-color: white;\r\n}\r\n\r\nbutton {\r\n    background-color: #16a085;\r\n}\r\n\r\ni {\r\n    margin-right: 10px;\r\n}", ""]);
 
 // exports
 
@@ -962,21 +1006,21 @@ module.exports = "<div class=\"container\">\r\n    <app-header></app-header>\r\n
 /***/ 529:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\r\n    <div class=\"col-md-5\" id=\"expense-container\">\r\n        <!--iterate through categories and create a table for each category-->\r\n        <table class=\"table \" *ngFor=\"let category of expensesCategoryArray; let i = index\">\r\n            <thead class=\"thead-expense\">\r\n                <tr>\r\n                    <th class=\"expense-name\">{{category}}</th>\r\n                    <th class=\"expense-amount\">Total: {{expensesCategoryTotalsArray[i]}} L.E</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <!--iterate through expenses in that category-->\r\n                <tr *ngFor=\"let expense of expensesMainList[category]; let k = index\">\r\n                    <td class=\"expense-name\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{expense.name}}</td>\r\n                    <td class=\"expense-amount\">{{expense.amount}} L.E</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n        <div id=\"total-expense\" class=\"total\">\r\n            Total: {{totalExpenses}} L.E\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"col-md-5\" id=\"income-container\">\r\n        <!--iterate through categories and create a table for each category-->\r\n        <table class=\"table \" *ngFor=\"let category of incomesCategoryArray; let i = index\">\r\n            <thead class=\"thead-income\">\r\n                <tr>\r\n                    <th class=\"expense-name\">{{category}}</th>\r\n                    <th class=\"expense-amount\">Total: {{incomesCategoryTotalsArray[i]}} L.E</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <!--iterate through expenses in that category-->\r\n                <tr *ngFor=\"let income of incomesMainList[category]; let k = index\">\r\n                    <td class=\"expense-name\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{income.name}}</td>\r\n                    <td class=\"expense-amount\">{{income.amount}} L.E</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n        <div id=\"total-income\" class=\"total\">\r\n            Total: {{totalIncomes}} L.E\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\" class=\"total\" id=\"extra-cash\">\r\n        Extra Cash: {{totalIncomes - totalExpenses}} L.E\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"row\">\r\n    <div class=\"col-md-5\" id=\"expense-container\">\r\n        <!--iterate through categories and create a separate table for each category-->\r\n        <table class=\"table \" *ngFor=\"let category of expensesCategoryArray; let i = index\">\r\n            <thead class=\"thead-expense\">\r\n                <tr>\r\n                    <th class=\"expense-name\">{{category}}</th>\r\n                    <th class=\"expense-amount\">Total: {{expensesCategoryTotalsArray[i]}} L.E</th>\r\n                    <th></th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <!--iterate through expenses in that category-->\r\n                <tr *ngFor=\"let expense of expensesMainList[category]; let k = index\">\r\n                    <td class=\"expense-name\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{expense.name}}</td>\r\n                    <td class=\"expense-amount\">\r\n                        <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to \r\n                        non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->\r\n                        <input #expenseAmount (keyup.enter)=\"disableEdit(expenseAmount)\" disabled class=\"form-control form-control-sm\" type=\"number\" [(ngModel)]=\"expense.amount\"> L.E\r\n                    </td>\r\n                    <td>\r\n                        <button (click)=\"deleteExpense(expense)\" class=\"btn btn-danger pull-right\"> <i class=\"fa fa-trash-o\"></i></button>\r\n                        <button (click)=\"enableEdit(expenseAmount)\" class=\"btn btn-success pull-right\"><i class=\"fa fa-pencil\"></i></button>\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n        <div id=\"total-expense\" class=\"total\">\r\n            Total: {{totalExpenses}} L.E\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"col-md-5\" id=\"income-container\">\r\n        <!--iterate through categories and create a separate table for each category-->\r\n        <table class=\"table \" *ngFor=\"let category of incomesCategoryArray; let i = index\">\r\n            <thead class=\"thead-income\">\r\n                <tr>\r\n                    <th class=\"expense-name\">{{category}}</th>\r\n                    <th class=\"expense-amount\">Total: {{incomesCategoryTotalsArray[i]}} L.E</th>\r\n                    <th></th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <!--iterate through expenses in that category-->\r\n                <tr *ngFor=\"let income of incomesMainList[category]; let k = 'index + 1' \">\r\n                    <td class=\"expense-name\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{income.name}}</td>\r\n                    <td class=\"expense-amount\">\r\n                        <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to \r\n                        non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->\r\n                        <input #incomeAmount (keyup.enter)=\"disableEdit(incomeAmount)\" disabled class=\"form-control form-control-sm\" type=\"number\" [(ngModel)]=\"income.amount\"> L.E\r\n                    </td>\r\n                    <td>\r\n                        <button (click)=\"deleteIncome(income)\" class=\"btn btn-danger pull-right\"> <i class=\"fa fa-trash-o\"></i></button>\r\n                        <button (click)=\"enableEdit(incomeAmount)\" class=\"btn btn-success pull-right\"><i class=\"fa fa-pencil\"></i></button>\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n        <div id=\"total-income\" class=\"total\">\r\n            Total: {{totalIncomes}} L.E\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n<div class=\"row\">\r\n    <div class=\"col-md-12\" class=\"total\" id=\"extra-cash\">\r\n        Extra Cash: {{totalIncomes - totalExpenses}} L.E\r\n    </div>\r\n</div>"
 
 /***/ }),
 
 /***/ 530:
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default\">\r\n    <div class=\"container-fluid\">\r\n        <!-- Brand and toggle get grouped for better mobile display -->\r\n        <div class=\"navbar-header\">\r\n            <a class=\"navbar-brand\" routerLink=\"\">Expense Planner</a>\r\n        </div>\r\n\r\n        <!-- Collect the nav links, forms, and other content for toggling -->\r\n        <div class=\"collapse navbar-collapse\">\r\n            <ul class=\"nav navbar-nav\">\r\n                <li><a routerLink=\"\">Main</a></li>\r\n                <li><a routerLink=\"/report\">Report</a></li>\r\n            </ul>\r\n            <ul class=\"nav navbar-nav navbar-right\">\r\n                <li class=\"dropdown\" appDropdown>\r\n                    <a class=\"dropdown-toggle\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">User <span class=\"caret\"></span></a>\r\n                    <ul class=\"dropdown-menu\">\r\n                        <li><a>Login</a></li>\r\n                        <li><a>My Results</a></li>\r\n                        <li role=\"separator\" class=\"divider\"></li>\r\n                        <li><a>Logout</a></li>\r\n                    </ul>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n        <!-- /.navbar-collapse -->\r\n    </div>\r\n    <!-- /.container-fluid -->\r\n</nav>"
+module.exports = "<nav class=\"navbar navbar-default\">\r\n    <div class=\"container-fluid\">\r\n        <div class=\"navbar-header\">\r\n            <a class=\"navbar-brand\" routerLink=\"\">Expense Planner</a>\r\n        </div>\r\n\r\n        <div class=\"collapse navbar-collapse\">\r\n            <ul class=\"nav navbar-nav\">\r\n                <li><a routerLink=\"\">Main</a></li>\r\n                <li><a routerLink=\"/report\">Report</a></li>\r\n            </ul>\r\n            <ul class=\"nav navbar-nav navbar-right\">\r\n                <li class=\"dropdown\" appDropdown>\r\n                    <a class=\"dropdown-toggle\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">User <span class=\"caret\"></span></a>\r\n                    <ul class=\"dropdown-menu\">\r\n                        <li><a>Login</a></li>\r\n                        <li><a>My Results</a></li>\r\n                        <li role=\"separator\" class=\"divider\"></li>\r\n                        <li><a>Logout</a></li>\r\n                    </ul>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n    </div>\r\n</nav>"
 
 /***/ }),
 
 /***/ 531:
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n\r\n\r\n    <div *ngIf=\"viewOn\">\r\n        <form (ngSubmit)=\"onSubmit()\">\r\n            <div class=\"input-group centered\">\r\n                <input type=\"text\" class=\"form-control \" placeholder=\"Expense\" name=\"title\" [(ngModel)]=\"expense.name\" required>\r\n            </div>\r\n\r\n\r\n            <div class=\"input-group centered\">\r\n                <label for=\"category\">Category:</label>\r\n                <select class=\"form-control\" name=\"category\" [(ngModel)]=\"expense.category\">\r\n                    <option>Bills</option>\r\n                    <option>Education</option>\r\n                    <option>Transport</option>\r\n                    <option>Clothes</option>\r\n                    <option>Entertainment</option>\r\n                    <option>Food</option>\r\n                    <option>Gifts</option>\r\n                    <option>Health</option>\r\n                    <option>House</option>\r\n                    <option>Pets</option>\r\n                    <option>Sports</option>\r\n                </select>\r\n            </div>\r\n\r\n            <div class=\"input-group  centered\">\r\n                <span class=\"input-group-addon\">EGP</span>\r\n                <input type=\"number\" class=\"form-control\" placeholder=\"amount\" name=\"amount\" [(ngModel)]=\"expense.amount\" required>\r\n                <span class=\"input-group-addon \">LE</span>\r\n\r\n            </div>\r\n\r\n            <button class=\"btn btn-success btn-block \" type=\"submit\">Add Expense</button>\r\n        </form>\r\n    </div>"
+module.exports = "<div>\r\n\r\n\r\n    <div *ngIf=\"viewOn\">\r\n        <form (ngSubmit)=\"onSubmit()\">\r\n            <div class=\"input-group centered\">\r\n                <input type=\"text\" class=\"form-control \" placeholder=\"Expense\" name=\"title\" [(ngModel)]=\"expense.name\" required>\r\n            </div>\r\n            <div class=\"input-group centered\">\r\n                <label for=\"category\">Category:</label>\r\n                <select class=\"form-control\" name=\"category\" [(ngModel)]=\"expense.category\">\r\n                    <option>Bills</option>\r\n                    <option>Education</option>\r\n                    <option>Transport</option>\r\n                    <option>Clothes</option>\r\n                    <option>Entertainment</option>\r\n                    <option>Food</option>\r\n                    <option>Gifts</option>\r\n                    <option>Health</option>\r\n                    <option>House</option>\r\n                    <option>Pets</option>\r\n                    <option>Sports</option>\r\n                </select>\r\n            </div>\r\n            <div class=\"input-group  centered\">\r\n                <span class=\"input-group-addon\">EGP</span>\r\n                <input type=\"number\" class=\"form-control\" placeholder=\"amount\" name=\"amount\" [(ngModel)]=\"expense.amount\" required>\r\n                <span class=\"input-group-addon \">LE</span>\r\n\r\n            </div>\r\n            <button class=\"btn btn-success btn-block \" type=\"submit\"><i class=\"fa fa-cart-arrow-down\"></i>Add Expense</button>\r\n        </form>\r\n    </div>"
 
 /***/ }),
 
@@ -990,7 +1034,7 @@ module.exports = "<div [class.income]=\"income\" [class.expense]=\"expense\">\r\
 /***/ 533:
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"viewOn\">\r\n    <form (ngSubmit)=\"onSubmit()\">\r\n        <div class=\"input-group centered\">\r\n            <input type=\"text\" class=\"form-control \" placeholder=\"Income\" name=\"title\" [(ngModel)]=\"income.name\" required>\r\n        </div>\r\n\r\n        <div class=\"input-group centered\">\r\n            <label for=\"category\">Category:</label>\r\n            <select class=\"form-control\" name=\"category\" [(ngModel)]=\"income.category\">\r\n                    <option>Salary</option>\r\n                    <option>Deposits</option>\r\n                    <option>Savings</option>\r\n                    <option>Bonus</option>\r\n                    <option>Rent</option>\r\n                    <option>Other</option>\r\n                </select>\r\n        </div>\r\n\r\n        <div class=\"input-group  centered \">\r\n            <span class=\"input-group-addon\">EGP</span>\r\n            <input type=\"number\" class=\"form-control\" placeholder=\"amount\" name=\"amount\" [(ngModel)]=\"income.amount\" required>\r\n            <span class=\"input-group-addon \">LE</span>\r\n\r\n        </div>\r\n\r\n        <button class=\"btn btn-success btn-block \" type=\"submit \">Add Income</button>\r\n    </form>\r\n</div>"
+module.exports = "<div *ngIf=\"viewOn\">\r\n    <form (ngSubmit)=\"onSubmit()\">\r\n        <div class=\"input-group centered\">\r\n            <input type=\"text\" class=\"form-control \" placeholder=\"Income\" name=\"title\" [(ngModel)]=\"income.name\" required>\r\n        </div>\r\n        <div class=\"input-group centered\">\r\n            <label for=\"category\">Category:</label>\r\n            <select class=\"form-control\" name=\"category\" [(ngModel)]=\"income.category\">\r\n                    <option>Salary</option>\r\n                    <option>Deposits</option>\r\n                    <option>Savings</option>\r\n                    <option>Bonus</option>\r\n                    <option>Rent</option>\r\n                    <option>Other</option>\r\n                </select>\r\n        </div>\r\n        <div class=\"input-group  centered \">\r\n            <span class=\"input-group-addon\">EGP</span>\r\n            <input type=\"number\" class=\"form-control\" placeholder=\"amount\" name=\"amount\" [(ngModel)]=\"income.amount\" required>\r\n            <span class=\"input-group-addon \">LE</span>\r\n        </div>\r\n        <button class=\"btn btn-success btn-block \" type=\"submit \"><i class=\"fa fa-money\"></i>Add Income</button>\r\n    </form>\r\n</div>"
 
 /***/ }),
 
