@@ -795,6 +795,7 @@ var ResultsComponent = (function () {
         this.incomesService = incomesService;
         this.totalExpenses = this.expensesService.getTotalExpenses();
         this.totalIncomes = this.incomesService.getTotalIncomes();
+        this.expenseIncomePercent = this.totalExpenses / this.totalIncomes * 100;
         //categpries of expenses (labels) -- checking first that its not empty, otherwise assign "no expenses" to it
         this.categoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
         //total expenses for each category
@@ -806,6 +807,7 @@ var ResultsComponent = (function () {
     ResultsComponent.prototype.updateResults = function () {
         this.totalExpenses = this.expensesService.getTotalExpenses();
         this.totalIncomes = this.incomesService.getTotalIncomes();
+        this.expenseIncomePercent = this.totalExpenses / this.totalIncomes * 100;
         //only update arrays if there is data, otherwise put ['no expenses'] and [100]
         this.categoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
         this.categoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [0];
@@ -986,7 +988,7 @@ exports = module.exports = __webpack_require__(27)();
 
 
 // module
-exports.push([module.i, ".total {\r\n    border-radius: 5%;\r\n    text-align: center;\r\n    margin-top: 2px;\r\n    margin-right: 2px;\r\n}\r\n\r\n#results-container {\r\n    text-align: center;\r\n    border: 1px solid grey;\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n}\r\n\r\n#income-expense-container {\r\n    text-align: center;\r\n}\r\n\r\n#total-income {\r\n    background-color: #16a085;\r\n    color: white;\r\n}\r\n\r\n#total-expense {\r\n    background-color: #c0392b;\r\n    color: white;\r\n}\r\n\r\n#extra {\r\n    background-color: grey;\r\n    color: white;\r\n    border: 1px solid #bdc3c7;\r\n}\r\n\r\nspan {\r\n    display: inline-block;\r\n}\r\n\r\ni {\r\n    position: relative;\r\n    bottom: 10px;\r\n    right: 10px;\r\n}\r\n\r\n#report i {\r\n    position: initial;\r\n}\r\n\r\n#report {\r\n    display: block;\r\n    margin: 50px auto;\r\n}\r\n\r\ncanvas {\r\n    height: 800px;\r\n}", ""]);
+exports.push([module.i, ".total {\r\n    border-radius: 5%;\r\n    text-align: center;\r\n    margin-top: 2px;\r\n    margin-right: 2px;\r\n}\r\n\r\n#results-container {\r\n    text-align: center;\r\n    border: 1px solid grey;\r\n    border-radius: 10px;\r\n    padding: 10px;\r\n}\r\n\r\n#income-expense-container {\r\n    text-align: center;\r\n}\r\n\r\n#total-income {\r\n    text-align: right;\r\n    padding: 10px;\r\n}\r\n\r\n#report i {\r\n    position: initial;\r\n}\r\n\r\n#report {\r\n    display: block;\r\n    margin: 50px auto;\r\n}\r\n\r\ncanvas {\r\n    height: 800px;\r\n}\r\n\r\nbody {\r\n    margin: 30px 0px;\r\n}\r\n\r\n.progress {\r\n    position: relative;\r\n    height: 100px;\r\n    background-color: #16a085;\r\n}\r\n\r\n.progress>.progress-expense {\r\n    position: absolute;\r\n    top: 5px;\r\n    color: white;\r\n    text-align: right;\r\n}\r\n\r\n.progress>.progress-remaining {\r\n    position: absolute;\r\n    bottom: 5px;\r\n    right: 0px;\r\n    padding: 3px 10px 2px;\r\n    color: #ecf0f1;\r\n    text-align: right;\r\n}\r\n\r\n.progress-bar {\r\n    background-color: #c0392b;\r\n}\r\n\r\ni {\r\n    position: relative;\r\n    top: 15px;\r\n    right: 10px;\r\n}", ""]);
 
 // exports
 
@@ -1048,7 +1050,7 @@ module.exports = "<div class=\"row\">\r\n    <div class=\"col-md-8\">\r\n       
 /***/ 535:
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"results-container\">\r\n\r\n    <div id=\"myChart\">\r\n        <canvas baseChart [data]=\"doughnutChartData\" [labels]=\"doughnutChartLabels\" [chartType]=\"'doughnut'\" (chartHover)=\"chartHovered($event)\" (chartClick)=\"chartClicked($event)\"></canvas>\r\n    </div>\r\n    <div class=\"row\">\r\n        <div id=\"total-income\" class=\"col-md-4 col-md-offset-2 total\">\r\n            <i class=\"fa fa-dollar fa-3x\"></i>\r\n            <span>\r\n                <h4>Total Income</h4>\r\n                <h4>{{totalIncomes}}</h4>\r\n            </span>\r\n        </div>\r\n\r\n        <div id=\"total-expense\" class=\"col-md-4 total\">\r\n            <i class=\"fa fa-cart-arrow-down fa-3x\"></i>\r\n            <span>\r\n                <h4>Total Expenses</h4>\r\n                <h4>{{totalExpenses}}</h4>\r\n            </span>\r\n        </div>\r\n\r\n    </div>\r\n    <div class=\"row\">\r\n        <div id=\"extra\" class=\"col-md-8 col-md-offset-2 total\">\r\n            <i class=\"fa fa-money fa-4x\"></i>\r\n            <span>\r\n            <h3>Extra Cash</h3>\r\n            <h4>{{totalIncomes - totalExpenses}}</h4>\r\n            </span>\r\n        </div>\r\n    </div>\r\n\r\n</div>\r\n<button routerLink=\"/report\" routerLinkACtive=\"active\" id=\"report\" class=\"btn btn-success btn-lg\">\r\n        <i class=\"fa fa-list-alt fa-lg\"></i>\r\n        &nbsp;Detailed Report\r\n    </button>"
+module.exports = "<div id=\"results-container\">\r\n\r\n    <div id=\"myChart\">\r\n        <canvas baseChart [data]=\"doughnutChartData\" [labels]=\"doughnutChartLabels\" [chartType]=\"'doughnut'\" (chartHover)=\"chartHovered($event)\" (chartClick)=\"chartClicked($event)\"></canvas>\r\n    </div>\r\n    <div id=\"total-income\">\r\n        <strong>Total Income: {{totalIncomes}}</strong>\r\n    </div>\r\n    <div class=\"progress\">\r\n        <div class=\"progress-bar\" [style.width]=\"expenseIncomePercent + '%'\"></div>\r\n        <strong [style.left]=\"expenseIncomePercent - 15 + '%'\" class=\"progress-expense\"><i class=\"fa fa-cart-arrow-down fa-2x\"></i>Expenses<br>{{totalExpenses}}</strong>\r\n        <strong class=\"progress-remaining\"><i class=\"fa fa-dollar fa-2x\"></i>Remaining Cash<br>{{totalIncomes - totalExpenses}}</strong>\r\n    </div>\r\n\r\n</div>\r\n<button routerLink=\"/report\" routerLinkACtive=\"active\" id=\"report\" class=\"btn btn-success btn-lg\">\r\n        <i class=\"fa fa-list-alt fa-lg\"></i>\r\n        &nbsp;Detailed Report\r\n    </button>"
 
 /***/ }),
 
