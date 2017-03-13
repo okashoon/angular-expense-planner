@@ -6,6 +6,7 @@
                 <tr>
                     <th class="expense-name">{{category}}</th>
                     <th class="expense-amount">Total: {{expensesCategoryTotalsArray[i]}} L.E</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -13,6 +14,8 @@
                 <tr *ngFor="let expense of expensesMainList[category]; let k = index">
                     <td class="expense-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{expense.name}}</td>
                     <td class="expense-amount">{{expense.amount}} L.E</td>
+                    <td><button (click)="deleteExpense(expense)" class="btn btn-danger pull-right"> <i class="fa fa-trash-o"></i></button></td>
+
                 </tr>
             </tbody>
         </table>
@@ -28,6 +31,7 @@
                 <tr>
                     <th class="expense-name">{{category}}</th>
                     <th class="expense-amount">Total: {{incomesCategoryTotalsArray[i]}} L.E</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +39,7 @@
                 <tr *ngFor="let income of incomesMainList[category]; let k = index">
                     <td class="expense-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{income.name}}</td>
                     <td class="expense-amount">{{income.amount}} L.E</td>
+                    <td><button (click)="deleteIncome(income)" class="btn btn-danger pull-right"> <i class="fa fa-trash-o"></i></button></td>
                 </tr>
             </tbody>
         </table>

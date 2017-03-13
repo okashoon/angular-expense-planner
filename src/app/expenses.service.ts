@@ -58,6 +58,9 @@ export class ExpensesService {
     let index: number = this.mainList[expense.category].indexOf(expense);
     this.mainList[expense.category].splice(index, 1);
     this.totalExpenses -= expense.amount;
+    if (this.mainList[expense.category][0] == null){
+      delete this.mainList[expense.category];
+    }
   }
 
   getTotalExpenses() {

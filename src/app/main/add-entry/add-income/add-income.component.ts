@@ -14,6 +14,7 @@ export class AddIncomeComponent implements OnInit {
 
   constructor(private incomesService: IncomesService){}
 
+  //viewOn is the variable used in *ngIf to populate the view, and its bound from the parent component(AddEntryComponent)
   @Input()
   viewOn = false;
 
@@ -24,6 +25,7 @@ export class AddIncomeComponent implements OnInit {
   
   onSubmit(){
     this.incomesService.addIncome(this.income);
+    //after adding expense create a new instance, so it wont update the same old instance
     this.income = new Income("", 0, "Salary");
   }
 
