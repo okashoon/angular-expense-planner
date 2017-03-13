@@ -1,26 +1,14 @@
 .income {
     border-radius: 10px;
     background-color: #16a085;
-    padding: 10px;
+    padding: 5px;
 }
 
 .expense {
     border-radius: 10px;
     background-color: #c0392b;
-    padding: 10px;
+    padding: 5px;
 }
-
-
-/*.nav-tabs li.active a {
-    background-color: white;
-    color: #3498db;
-}*/
-
-
-/*.nav-tabs li a {
-    background-color: #3498db;
-    color: white;
-}*/
 
 #expense-a {
     background-color: #c0392b;

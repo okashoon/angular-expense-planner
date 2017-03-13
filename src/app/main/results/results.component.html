@@ -3,32 +3,13 @@
     <div id="myChart">
         <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="'doughnut'" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
     </div>
-    <div class="row">
-        <div id="total-income" class="col-md-4 col-md-offset-2 total">
-            <i class="fa fa-dollar fa-3x"></i>
-            <span>
-                <h4>Total Income</h4>
-                <h4>{{totalIncomes}}</h4>
-            </span>
-        </div>
-
-        <div id="total-expense" class="col-md-4 total">
-            <i class="fa fa-cart-arrow-down fa-3x"></i>
-            <span>
-                <h4>Total Expenses</h4>
-                <h4>{{totalExpenses}}</h4>
-            </span>
-        </div>
-
+    <div id="total-income">
+        <strong>Total Income: {{totalIncomes}}</strong>
     </div>
-    <div class="row">
-        <div id="extra" class="col-md-8 col-md-offset-2 total">
-            <i class="fa fa-money fa-4x"></i>
-            <span>
-            <h3>Extra Cash</h3>
-            <h4>{{totalIncomes - totalExpenses}}</h4>
-            </span>
-        </div>
+    <div class="progress">
+        <div class="progress-bar" [style.width]="expenseIncomePercent + '%'"></div>
+        <strong [style.left]="expenseIncomePercent - 15 + '%'" class="progress-expense"><i class="fa fa-list-alt fa-2x"></i>Expenses<br>{{totalExpenses}}</strong>
+        <strong class="progress-remaining"><i class="fa fa-dollar fa-2x"></i>Remaining Cash<br>{{totalIncomes - totalExpenses}}</strong>
     </div>
 
 </div>

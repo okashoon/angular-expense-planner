@@ -1,18 +1,27 @@
 <div class="row">
     <div class="col-md-5" id="expense-container">
-        <!--iterate through categories and create a table for each category-->
+        <!--iterate through categories and create a separate table for each category-->
         <table class="table " *ngFor="let category of expensesCategoryArray; let i = index">
             <thead class="thead-expense">
                 <tr>
                     <th class="expense-name">{{category}}</th>
                     <th class="expense-amount">Total: {{expensesCategoryTotalsArray[i]}} L.E</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <!--iterate through expenses in that category-->
                 <tr *ngFor="let expense of expensesMainList[category]; let k = index">
                     <td class="expense-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{expense.name}}</td>
-                    <td class="expense-amount">{{expense.amount}} L.E</td>
+                    <td class="expense-amount">
+                        <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to 
+                        non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->
+                        <input #expenseAmount (keyup.enter)="disableEdit(expenseAmount)" disabled class="form-control form-control-sm" type="number" [(ngModel)]="expense.amount"> L.E
+                    </td>
+                    <td>
+                        <button (click)="deleteExpense(expense)" class="btn btn-danger pull-right"> <i class="fa fa-trash-o"></i></button>
+                        <button (click)="enableEdit(expenseAmount)" class="btn btn-success pull-right"><i class="fa fa-pencil"></i></button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -22,19 +31,28 @@
     </div>
 
     <div class="col-md-5" id="income-container">
-        <!--iterate through categories and create a table for each category-->
+        <!--iterate through categories and create a separate table for each category-->
         <table class="table " *ngFor="let category of incomesCategoryArray; let i = index">
             <thead class="thead-income">
                 <tr>
                     <th class="expense-name">{{category}}</th>
                     <th class="expense-amount">Total: {{incomesCategoryTotalsArray[i]}} L.E</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <!--iterate through expenses in that category-->
-                <tr *ngFor="let income of incomesMainList[category]; let k = index">
+                <tr *ngFor="let income of incomesMainList[category]; let k = 'index + 1' ">
                     <td class="expense-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{income.name}}</td>
-                    <td class="expense-amount">{{income.amount}} L.E</td>
+                    <td class="expense-amount">
+                        <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to 
+                        non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->
+                        <input #incomeAmount (keyup.enter)="disableEdit(incomeAmount)" disabled class="form-control form-control-sm" type="number" [(ngModel)]="income.amount"> L.E
+                    </td>
+                    <td>
+                        <button (click)="deleteIncome(income)" class="btn btn-danger pull-right"> <i class="fa fa-trash-o"></i></button>
+                        <button (click)="enableEdit(incomeAmount)" class="btn btn-success pull-right"><i class="fa fa-pencil"></i></button>
+                    </td>
                 </tr>
             </tbody>
         </table>

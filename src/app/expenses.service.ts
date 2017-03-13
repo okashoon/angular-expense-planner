@@ -20,7 +20,6 @@ export class ExpensesService {
 
   //retrieve data from local storage if present, otherwise create empty object
   mainList: any = JSON.parse(localStorage.getItem("expenses")) || {};
-  totalExpenses: number = JSON.parse(localStorage.getItem("totalExpenses")) || 0;
 
   //observable sources
   @Output() anounceChange = new EventEmitter<any>();
@@ -33,19 +32,16 @@ export class ExpensesService {
   storeData(): void {
     if (typeof(Storage) !== "undefined") {
      localStorage.setItem("expenses", JSON.stringify(this.mainList));
-    localStorage.setItem("totalExpenses", JSON.stringify(this.totalExpenses));
     } else {console.log("Local storage is not supported by your browser")}
   }
 
   addExpense(expense: Expense) {
     if (this.mainList.hasOwnProperty(expense.category)) {
       this.mainList[expense.category].push(expense)
-      this.totalExpenses += expense.amount;
       this.anounceChange.emit();
     } else {
       this.mainList[expense.category] = new Array;
       this.mainList[expense.category].push(expense);
-      this.totalExpenses += expense.amount;
       this.anounceChange.emit();
 
     }
@@ -53,15 +49,28 @@ export class ExpensesService {
 
   }
 
-
   deleteExpense(expense: Expense) {
     let index: number = this.mainList[expense.category].indexOf(expense);
     this.mainList[expense.category].splice(index, 1);
-    this.totalExpenses -= expense.amount;
+    if (this.mainList[expense.category][0] == null){
+      delete this.mainList[expense.category];
+    }
+    this.storeData();
+  }
+
+  editExpense(){
+    this.storeData();
   }
 
   getTotalExpenses() {
-    return this.totalExpenses;
+    let totalExpenses = 0;
+    for(let category in this.mainList){
+      for(let expense of this.mainList[category]){
+        totalExpenses += expense.amount;
+      }
+    }
+    return totalExpenses;
+    
   }
 
   getCategories() {

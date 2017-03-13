@@ -3,7 +3,6 @@
         <div class="input-group centered">
             <input type="text" class="form-control " placeholder="Income" name="title" [(ngModel)]="income.name" required>
         </div>
-
         <div class="input-group centered">
             <label for="category">Category:</label>
             <select class="form-control" name="category" [(ngModel)]="income.category">
@@ -15,14 +14,11 @@
                     <option>Other</option>
                 </select>
         </div>
-
         <div class="input-group  centered ">
             <span class="input-group-addon">EGP</span>
             <input type="number" class="form-control" placeholder="amount" name="amount" [(ngModel)]="income.amount" required>
             <span class="input-group-addon ">LE</span>
-
         </div>
-
-        <button class="btn btn-success btn-block " type="submit ">Add Income</button>
+        <button class="btn btn-success btn-block " type="submit "><i class="fa fa-money"></i>Add Income</button>
     </form>
 </div>

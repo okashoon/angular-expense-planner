@@ -6,8 +6,6 @@
             <div class="input-group centered">
                 <input type="text" class="form-control " placeholder="Expense" name="title" [(ngModel)]="expense.name" required>
             </div>
-
-
             <div class="input-group centered">
                 <label for="category">Category:</label>
                 <select class="form-control" name="category" [(ngModel)]="expense.category">
@@ -24,14 +22,12 @@
                     <option>Sports</option>
                 </select>
             </div>
-
             <div class="input-group  centered">
                 <span class="input-group-addon">EGP</span>
                 <input type="number" class="form-control" placeholder="amount" name="amount" [(ngModel)]="expense.amount" required>
                 <span class="input-group-addon ">LE</span>
 
             </div>
-
-            <button class="btn btn-success btn-block " type="submit">Add Expense</button>
+            <button class="btn btn-success btn-block " type="submit"><i class="fa fa-cart-arrow-down"></i>Add Expense</button>
         </form>
     </div>

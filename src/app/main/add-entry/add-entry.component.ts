@@ -13,6 +13,7 @@ export class AddEntryComponent implements OnInit {
   ngOnInit() {
   }
 
+  //variables to toggle view between add-expense and add-income components
   expense = true;
   income = false
 
