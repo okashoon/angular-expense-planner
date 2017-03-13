@@ -20,7 +20,6 @@ export class IncomesService {
   // }
 
   mainList: any = JSON.parse(localStorage.getItem("incomes")) || {};
-  totalIncomes: number =JSON.parse(localStorage.getItem("totalIncomes")) || 0;
 
   
   @Output() public anounceChange = new EventEmitter<any>();
@@ -30,19 +29,16 @@ export class IncomesService {
   storeData(): void {
     if (typeof(Storage) !== "undefined") {
      localStorage.setItem("incomes", JSON.stringify(this.mainList));
-    localStorage.setItem("totalIncomes", JSON.stringify(this.totalIncomes));
     } else {console.log("Local storage is not supported by your browser")}
   }
 
   addIncome(income: Income) {
     if (this.mainList.hasOwnProperty(income.category)) {
       this.mainList[income.category].push(income)
-      this.totalIncomes += income.amount;
       this.anounceChange.emit();
     } else {
       this.mainList[income.category] = new Array;
       this.mainList[income.category].push(income);
-      this.totalIncomes += income.amount;
       this.anounceChange.emit();
     }
     this.storeData();
@@ -52,7 +48,6 @@ export class IncomesService {
   deleteIncome(income: Income) {
     let index: number = this.mainList[income.category].indexOf(income);
     this.mainList[income.category].splice(index, 1);
-    this.totalIncomes -= income.amount;
     if (this.mainList[income.category][0] == null){
       delete this.mainList[income.category];
     }
@@ -60,7 +55,13 @@ export class IncomesService {
 
 
   getTotalIncomes() {
-    return this.totalIncomes;
+    let totalIncomes = 0;
+    for(let category in this.mainList){
+      for(let expense of this.mainList[category]){
+        totalIncomes += expense.amount;
+      }
+    }
+    return totalIncomes;
   }
 
   getCategories() {
