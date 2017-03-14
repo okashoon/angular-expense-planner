@@ -1,4 +1,8 @@
 <div (window:resize)="onResize($event)" [style.width.px]="width" [style.height.px]="height" id="main-container">
-
-
+    <span id="title">
+        <h2>Expense Planner</h2>
+        <h3>The easy way to take control of your money</h3>
+    </span>
+    <app-login *ngIf="false"></app-login>
+    <app-signup *ngIf="true"></app-signup>
 </div>

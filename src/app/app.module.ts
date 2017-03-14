@@ -17,6 +17,8 @@ import { AddEntryComponent } from './main/add-entry/add-entry.component';
 import { DetailReportComponent } from './detail-report/detail-report.component';
 import { MainComponent } from './main/main.component';
 import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 const appRoutes: Routes = [
   {path: 'main', component: MainComponent},
@@ -36,7 +38,9 @@ const appRoutes: Routes = [
     AddEntryComponent,
     DetailReportComponent,
     MainComponent,
-    LandingComponent
+    LandingComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     ChartsModule,

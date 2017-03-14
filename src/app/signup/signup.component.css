@@ -1,0 +1,17 @@
+#main-container {
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    width: 45%;
+    height: 45%;
+    max-width: 500px;
+}
+
+.form-control,
+.btn {
+    margin-top: 20px;
+}
