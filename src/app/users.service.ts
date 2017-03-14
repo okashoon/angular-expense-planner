@@ -18,10 +18,12 @@ export class UsersService {
   loginUser(user: User){
     for(let u of this.users){
       if(user.email === u.email && user.password === u.password){
-        this.activeUser = user;
+        this.activeUser = u;
+        console.log(this.activeUser);
         return true;
       }
     }
+    console.log('user not found')
     return false;
   }
 

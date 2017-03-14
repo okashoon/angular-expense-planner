@@ -25,6 +25,8 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit(){
+    //todo: verify that id is not present in list of users, if present generate another one
+    this.userToBeAdded.id = Math.floor(Math.random()*1000000);
     this.UsersService.addUser(this.userToBeAdded);
     this.userToBeAdded = new User();
   }
