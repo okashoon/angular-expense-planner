@@ -16,11 +16,13 @@ import { AddIncomeComponent } from './main/add-entry/add-income/add-income.compo
 import { AddEntryComponent } from './main/add-entry/add-entry.component';
 import { DetailReportComponent } from './detail-report/detail-report.component';
 import { MainComponent } from './main/main.component';
+import { LandingComponent } from './landing/landing.component';
 
 const appRoutes: Routes = [
-  {path: 'report', component: DetailReportComponent},
   {path: 'main', component: MainComponent},
-  {path: "", redirectTo: '/main', pathMatch: 'full'}
+  {path: 'report', component: DetailReportComponent},
+  {path: 'landing', component: LandingComponent},  
+  {path: "", redirectTo: '/landing', pathMatch: 'full'}
 ] 
 
 @NgModule({
@@ -33,7 +35,8 @@ const appRoutes: Routes = [
     AddIncomeComponent,
     AddEntryComponent,
     DetailReportComponent,
-    MainComponent
+    MainComponent,
+    LandingComponent
   ],
   imports: [
     ChartsModule,
