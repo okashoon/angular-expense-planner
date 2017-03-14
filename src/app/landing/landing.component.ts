@@ -7,23 +7,32 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  //  height: number = window.innerHeight;
-  //  width: number = window.innerWidth;
-
    height: number = document.documentElement.clientHeight;
    width: number = document.documentElement.clientWidth;
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.height = event.target.innerHeight;
-    this.width = event.target.innerWidth;
-    
-    
-  }
+   signupView: boolean = true;
+   loginView: boolean = false;
+
+  // @HostListener('window:resize', ['$event'])
+  // onResize(event) {
+  //   this.height = event.target.innerHeight;
+  //   this.width = event.target.innerWidth;
+  // }
 
   constructor() { }
 
   ngOnInit() {
   }
+
+  openSignup(){
+    this.loginView = false;
+    this.signupView = true;
+    console.log(this.loginView);
+  } 
+  openLogin(){
+    this.signupView = false;
+    this.loginView = true;
+    console.log(this.loginView);
+  } 
 
 }
