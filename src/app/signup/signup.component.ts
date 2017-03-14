@@ -1,3 +1,5 @@
+import { UsersService } from '../users.service';
+import { User } from '../user';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
@@ -7,16 +9,24 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class SignupComponent implements OnInit {
 
+  userToBeAdded: User = new User();
+
+  //emitter recieved by landing page to activate login upon clicking go to login <a> element
   @Output()
   goToLoginClicked: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private UsersService: UsersService) { }
 
   ngOnInit() {
   }
 
   onClick(){
     this.goToLoginClicked.emit();
+  }
+
+  onSubmit(){
+    this.UsersService.addUser(this.userToBeAdded);
+    this.userToBeAdded = new User();
   }
 
 }
