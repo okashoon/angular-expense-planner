@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { UsersService } from '../users.service';
 import { User } from '../user';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   @Output() 
   createAccountClicked: EventEmitter<any> = new EventEmitter();
 
-  constructor(private UsersService: UsersService) { }
+  constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -24,7 +25,10 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    this.UsersService.loginUser(this.userToBeLogged);
+    //loginUser method, logs in the user and returns its id
+    let id = this.usersService.loginUser(this.userToBeLogged);
+    this.router.navigate(['user',id]);
+    this.userToBeLogged = new User();
   }
 
 }

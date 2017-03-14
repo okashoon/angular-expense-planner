@@ -19,12 +19,9 @@ export class UsersService {
     for(let u of this.users){
       if(user.email === u.email && user.password === u.password){
         this.activeUser = u;
-        console.log(this.activeUser);
-        return true;
+        return u.id;
       }
     }
-    console.log('user not found')
-    return false;
   }
 
   logout(){

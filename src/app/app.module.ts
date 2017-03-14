@@ -21,12 +21,16 @@ import { MainComponent } from './main/main.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { UserComponent } from './user/user.component';
+
+const userRoutes: Routes = [
+  {path: 'main', component: MainComponent},
+  {path: 'report', component: DetailReportComponent}
+]
 
 const appRoutes: Routes = [
-  {path: 'main', component: MainComponent},
-  {path: 'report', component: DetailReportComponent},
-  {path: 'landing', component: LandingComponent},  
-  {path: "", redirectTo: '/landing', pathMatch: 'full'}
+  {path: '', component: LandingComponent},  
+  {path: 'user/:id', component: UserComponent, children: userRoutes},
 ] 
 
 @NgModule({
@@ -42,7 +46,8 @@ const appRoutes: Routes = [
     MainComponent,
     LandingComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    UserComponent
   ],
   imports: [
     ChartsModule,

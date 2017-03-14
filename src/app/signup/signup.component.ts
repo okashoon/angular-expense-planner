@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { UsersService } from '../users.service';
 import { User } from '../user';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
@@ -15,7 +16,7 @@ export class SignupComponent implements OnInit {
   @Output()
   goToLoginClicked: EventEmitter<any> = new EventEmitter();
 
-  constructor(private UsersService: UsersService) { }
+  constructor(private UsersService: UsersService,private router: Router) { }
 
   ngOnInit() {
   }
@@ -26,9 +27,12 @@ export class SignupComponent implements OnInit {
 
   onSubmit(){
     //todo: verify that id is not present in list of users, if present generate another one
-    this.userToBeAdded.id = Math.floor(Math.random()*1000000);
+    let id = Math.floor(Math.random()*1000000);
+    this.userToBeAdded.id = id;
     this.UsersService.addUser(this.userToBeAdded);
+    this.router.navigate(['user', id]);
     this.userToBeAdded = new User();
+    
   }
 
 }
