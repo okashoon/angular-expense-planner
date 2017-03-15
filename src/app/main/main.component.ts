@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,12 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
-export class MainComponent implements OnInit {
+export class MainComponent  {
 
-  constructor(private activeRoute: ActivatedRoute) { }
+  constructor() { }
 
-  ngOnInit() {
-
-  }
 
 }

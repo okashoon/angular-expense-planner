@@ -9,6 +9,7 @@ import { Expense } from '../../../expense';
 })
 export class AddExpenseComponent implements OnInit {
 
+  
   expense: Expense = new Expense("",0,"Bills");
 
   //viewOn is the variable used in *ngIf to populate the view, and its bound from the parent component(AddEntryComponent)

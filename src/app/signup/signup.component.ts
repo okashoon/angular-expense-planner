@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
   //used to style email input if email is unavailable
   emailUnAvailable = false;
 
-  //emitter recieved by landing page to activate login upon clicking go to login <a> element
+  //emitter recieved by landing page to activate login upon clicking "go to login"
   @Output()
   goToLoginClicked: EventEmitter<any> = new EventEmitter();
 
@@ -28,7 +28,7 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-
+    //generate random id for user
     let id = Math.floor(Math.random() * 1000000);
     //keep generating ids in case of a duplicate in users list
     while(this.UsersService.users.hasOwnProperty(id)){

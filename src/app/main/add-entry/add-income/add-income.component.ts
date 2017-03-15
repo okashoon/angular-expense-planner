@@ -18,9 +18,6 @@ export class AddIncomeComponent implements OnInit {
   @Input()
   viewOn = false;
 
-  openView(){
-    this.viewOn = true;
-  }
   ngOnInit(){}
   
   onSubmit(){

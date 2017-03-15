@@ -25,6 +25,7 @@ export class DetailReportComponent implements OnInit {
   expensesCategoryTotalsArray: number[];
   incomesCategoryTotalsArray: number[];
 
+  //update all data from expenses and incomes services
   updateData() {
     this.expensesMainList = this.expensesService.getMainList();
     this.incomesMainList = this.incomesService.getMainList();
@@ -59,9 +60,11 @@ export class DetailReportComponent implements OnInit {
     this.updateData();
   }
 
+  
   enableEdit(element: any){
     element.disabled = false;
   }
+  
   disableEdit(element: any){
     element.disabled = true;
     //to save updated list to local storage

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
+  //providers are created per user not per application
   providers: [ExpensesService, IncomesService]
 })
 export class UserComponent implements OnInit {

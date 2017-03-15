@@ -1,21 +1,19 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, Output } from '@angular/core';
 
 @Component({
   selector: 'app-add-entry',
   templateUrl: './add-entry.component.html',
   styleUrls: ['./add-entry.component.css']
 })
-export class AddEntryComponent implements OnInit {
+export class AddEntryComponent  {
 
   constructor() { 
   }
 
-  ngOnInit() {
-  }
 
   //variables to toggle view between add-expense and add-income components
   expense = true;
-  income = false
+  income = false;
 
   toggleView(tab: string) {
     if (tab === "expense") {

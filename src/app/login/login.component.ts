@@ -1,26 +1,26 @@
 import { Router } from '@angular/router';
 import { UsersService } from '../users.service';
 import { User } from '../user';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,  Output } from '@angular/core';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   userToBeLogged: User = new User();
+
+  //for the 'wrong email' span in html
   wrongEmailPassword = false;
 
- //emitter recieved by landing page to activate login upon clicking go to login <a> element
+ //emitter recieved by landing page to activate login upon clicking 'go to login'
   @Output() 
   createAccountClicked: EventEmitter<any> = new EventEmitter();
 
   constructor(private usersService: UsersService, private router: Router) { }
 
-  ngOnInit() {
-  }
   onClick(){
     this.createAccountClicked.emit();
   }

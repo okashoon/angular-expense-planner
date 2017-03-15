@@ -7,17 +7,13 @@ import { Component, HostListener, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
+  //for background image
    height: number = document.documentElement.clientHeight;
    width: number = document.documentElement.clientWidth;
 
+   //for toggling between login and signup
    signupView: boolean = true;
    loginView: boolean = false;
-
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event) {
-  //   this.height = event.target.innerHeight;
-  //   this.width = event.target.innerWidth;
-  // }
 
   constructor() { }
 
