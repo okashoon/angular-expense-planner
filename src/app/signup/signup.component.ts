@@ -27,14 +27,18 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     //todo: verify that id is not present in list of users, if present generate another one
-    
+
     let id = Math.floor(Math.random() * 1000000);
+    while(this.UsersService.users.hasOwnProperty(id)){
+      id = Math.floor(Math.random() * 1000000);
+    }
     this.userToBeAdded.id = id;
     //change id if addUser returns false/ id is present in database
-    this.router.navigate(['user', id, 'main']);
-    
-    this.UsersService.addUser(this.userToBeAdded);
-    
+    //only navigate if user is added, add user return false if email is taken
+    if (this.UsersService.addUser(this.userToBeAdded)) {
+      this.router.navigate(['user', id, 'main']);
+    }
+
     this.userToBeAdded = new User();
 
   }

@@ -10,46 +10,54 @@ export class UsersService {
   constructor() {
     console.log("users service created");
     this.users = JSON.parse(localStorage.getItem("users")) || {};
-   }
+  }
 
-   storeData(): void {
+  storeData(): void {
     if (typeof (Storage) !== "undefined") {
       localStorage.setItem("users", JSON.stringify(this.users));
     } else { console.log("Local storage is not supported by your browser") }
   }
 
 
-  addUser(user: User){
+  addUser(user: User) {
+    for (let id in this.users) {
+      if (user.email === this.users[id].email) {
+        console.log("email is taken");
+        return false;
+      }
+    }
     this.users[user.id] = user;
     this.loginUser(user);
-    console.log(this.activeUser);
     this.storeData();
-    
+    console.log(this.users);
+    return true;
+
+
+
   }
 
   //assigns active user to the user passed in argument if he meets criteria and return true, else return false
-  loginUser(user: User){
-    for(let id in this.users){
-      if(user.email === this.users[id].email && user.password === this.users[id].password){
+  loginUser(user: User) {
+    for (let id in this.users) {
+      if (user.email === this.users[id].email && user.password === this.users[id].password) {
         this.activeUser = this.users[id];
         return this.users[id].id;
-
       }
     }
   }
 
-  logout(){
+  logout() {
     this.activeUser = null;
   }
 
-  addExpenses(expenses){
+  addExpenses(expenses) {
     let id = this.activeUser.id;
     this.users[id].expenses = expenses;
     this.storeData();
-    
+
   }
 
-  addIncomes(incomes){
+  addIncomes(incomes) {
     let id = this.activeUser.id;
     this.users[id].incomes = incomes;
   }

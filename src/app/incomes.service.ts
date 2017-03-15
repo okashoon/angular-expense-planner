@@ -30,10 +30,8 @@ export class IncomesService {
   constructor(private usersService: UsersService) { 
     this.activeUser = this.usersService.activeUser;
      let id = this.activeUser.id;
-     console.log(id);
      let users = this.usersService.users;
-     console.log(users);
-     this.mainList = users[id].expenses || {};
+     this.mainList = users[id].incomes || {};
   }
 
 
