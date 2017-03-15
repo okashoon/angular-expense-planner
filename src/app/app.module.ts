@@ -55,7 +55,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule
   ],
-  providers: [IncomesService, ExpensesService, UsersService],
+  providers: [UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

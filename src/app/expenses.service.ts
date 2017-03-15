@@ -1,3 +1,4 @@
+import { User } from './user';
 import { UsersService } from './users.service';
 import { ActivatedRoute } from '@angular/router';
 import { EventEmitter } from '@angular/forms/src/facade/async';
@@ -22,11 +23,21 @@ export class ExpensesService {
 
   //retrieve data from local storage if present, otherwise create empty object
   mainList = {};
+  activeUser: User;
+
+
 
   //observable, used to update results in resultsComponent when data changes
   @Output() anounceChange = new EventEmitter<any>();
 
   constructor(private usersService: UsersService) {
+     this.activeUser = this.usersService.activeUser;
+     let id = this.activeUser.id;
+     console.log(id);
+     let users = this.usersService.users;
+     console.log(users);
+     this.mainList = users[id].expenses || {};
+
   }
 
   addExpense(expense: Expense) {

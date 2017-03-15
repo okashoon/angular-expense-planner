@@ -1,3 +1,4 @@
+import { User } from './user';
 import { UsersService } from './users.service';
 import { EventEmitter } from '@angular/forms/src/facade/async';
 import { Subject } from 'rxjs/Rx';
@@ -21,17 +22,20 @@ export class IncomesService {
   // }
 
   mainList: any =  {};
+  activeUser: User = {};
 
   
   @Output() public anounceChange = new EventEmitter<any>();
 
-  constructor(private usersService: UsersService) { }
-
-  storeData(): void {
-    if (typeof(Storage) !== "undefined") {
-     localStorage.setItem("incomes", JSON.stringify(this.mainList));
-    } else {console.log("Local storage is not supported by your browser")}
+  constructor(private usersService: UsersService) { 
+    this.activeUser = this.usersService.activeUser;
+     let id = this.activeUser.id;
+     console.log(id);
+     let users = this.usersService.users;
+     console.log(users);
+     this.mainList = users[id].expenses || {};
   }
+
 
   addIncome(income: Income) {
     if (this.mainList.hasOwnProperty(income.category)) {
@@ -56,7 +60,6 @@ export class IncomesService {
   }
 
   editIncome(){
-    this.storeData();
   }
 
 
