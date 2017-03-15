@@ -1,3 +1,5 @@
+import { User } from '../user';
+import { UsersService } from '../users.service';
 import { Income } from '../income';
 import { Expense } from '../expense';
 import { IncomesService } from '../incomes.service';
@@ -11,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailReportComponent implements OnInit {
 
-  
+  activeUser: User = new User();  
 
   expensesMainList;
   incomesMainList;
@@ -42,8 +44,11 @@ export class DetailReportComponent implements OnInit {
     this.expensesCategoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [0];
     this.incomesCategoryTotalsArray = this.incomesService.getCategoryTotalsArray()[0] && this.incomesService.getCategoryTotalsArray() || [0];
   }
-  constructor(private expensesService: ExpensesService, private incomesService: IncomesService) { 
+  constructor(private expensesService: ExpensesService, 
+              private incomesService: IncomesService,
+              private usersService: UsersService) { 
     this.updateData();
+    this.activeUser = this.usersService.activeUser;
     
   }
 
@@ -71,8 +76,6 @@ export class DetailReportComponent implements OnInit {
     this.expensesService.editExpense();
     this.incomesService.editIncome();
     this.updateData();
-    
-    
     
   }
 

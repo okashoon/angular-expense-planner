@@ -1,3 +1,5 @@
+import { User } from '../user';
+import { UsersService } from '../users.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent  {
 
-  constructor() { }
+  activeUser: User;
 
-
+  constructor(private usersService: UsersService) {
+    this.activeUser = usersService.activeUser;
+   }
 }
