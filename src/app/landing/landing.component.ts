@@ -21,6 +21,11 @@ export class LandingComponent implements OnInit {
 
   constructor() { }
 
+  onResize(event) {
+     this.height = event.target.innerHeight;
+     this.width = event.target.innerWidth;
+  }    
+
   ngOnInit() {
   }
 
