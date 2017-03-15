@@ -1,3 +1,4 @@
+import { UsersService } from './users.service';
 import { EventEmitter } from '@angular/forms/src/facade/async';
 import { Subject } from 'rxjs/Rx';
 import { Income } from './income';
@@ -19,12 +20,12 @@ export class IncomesService {
   //   "category2": [{Income1}, {Income2 }]
   // }
 
-  mainList: any = JSON.parse(localStorage.getItem("incomes")) || {};
+  mainList: any =  {};
 
   
   @Output() public anounceChange = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(private usersService: UsersService) { }
 
   storeData(): void {
     if (typeof(Storage) !== "undefined") {
@@ -35,13 +36,14 @@ export class IncomesService {
   addIncome(income: Income) {
     if (this.mainList.hasOwnProperty(income.category)) {
       this.mainList[income.category].push(income)
+      this.usersService.addIncomes(this.mainList);
       this.anounceChange.emit();
     } else {
       this.mainList[income.category] = new Array;
       this.mainList[income.category].push(income);
+      this.usersService.addIncomes(this.mainList);
       this.anounceChange.emit();
     }
-    this.storeData();
 
   }
 
@@ -51,7 +53,6 @@ export class IncomesService {
     if (this.mainList[income.category][0] == null){
       delete this.mainList[income.category];
     }
-    this.storeData();
   }
 
   editIncome(){

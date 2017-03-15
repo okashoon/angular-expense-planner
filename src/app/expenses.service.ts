@@ -1,3 +1,5 @@
+import { UsersService } from './users.service';
+import { ActivatedRoute } from '@angular/router';
 import { EventEmitter } from '@angular/forms/src/facade/async';
 import { Subject } from 'rxjs/Rx';
 import { Expense } from './expense';
@@ -24,7 +26,7 @@ export class ExpensesService {
   //observable sources
   @Output() anounceChange = new EventEmitter<any>();
 
-  constructor() {
+  constructor(private usersService: UsersService) {
   }
   
 
@@ -38,11 +40,17 @@ export class ExpensesService {
   addExpense(expense: Expense) {
     if (this.mainList.hasOwnProperty(expense.category)) {
       this.mainList[expense.category].push(expense)
+      this.usersService.addExpenses(this.mainList);
       this.anounceChange.emit();
+      console.log(this.usersService.users)
+      
+
     } else {
       this.mainList[expense.category] = new Array;
       this.mainList[expense.category].push(expense);
+      this.usersService.addExpenses(this.mainList);
       this.anounceChange.emit();
+      console.log(this.usersService.users)
 
     }
     this.storeData();

@@ -4,22 +4,28 @@ import { User } from './user';
 @Injectable()
 export class UsersService {
 
-  private users: Array<User> = [];
+  users = {}
   private activeUser: User;
 
-  constructor() { }
+  constructor() {
+   }
+
+  getActiveUser(){
+    return this.activeUser;
+  }
 
   addUser(user: User){
-    this.users.push(user);
-    console.log(this.users);
+    this.activeUser = user;
+    this.users[user.id] = user;
+    
   }
 
   //assigns active user to the user passed in argument if he meets criteria and return true, else return false
   loginUser(user: User){
-    for(let u of this.users){
-      if(user.email === u.email && user.password === u.password){
+    for(let u in this.users){
+      if(user.email === this.users[u].email && user.password === this.users[u].password){
         this.activeUser = u;
-        return u.id;
+        return this.users[u].id;
       }
     }
   }
@@ -27,4 +33,17 @@ export class UsersService {
   logout(){
     this.activeUser = null;
   }
+
+  addExpenses(expenses){
+    console.log(this.activeUser);
+    let id = this.activeUser.id;
+    this.users[id].expenses = expenses;
+    
+  }
+
+  addIncomes(incomes){
+    let id = this.activeUser.id;
+    this.users[id].incomes = incomes;
+  }
+
 }

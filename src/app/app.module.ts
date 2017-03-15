@@ -1,7 +1,6 @@
 import { IncomesService } from './incomes.service';
 import { ExpensesService } from './expenses.service';
 import { UsersService } from './users.service';
-import { DatabaseService } from './database.service';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -56,7 +55,7 @@ const appRoutes: Routes = [
     FormsModule,
     HttpModule
   ],
-  providers: [IncomesService, ExpensesService, UsersService, DatabaseService],
+  providers: [IncomesService, ExpensesService, UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

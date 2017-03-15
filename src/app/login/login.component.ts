@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     //loginUser method, logs in the user and returns its id
     let id = this.usersService.loginUser(this.userToBeLogged);
-    this.router.navigate(['user',id]);
+    this.router.navigate(['user',id,'main']);
     this.userToBeLogged = new User();
   }
 
