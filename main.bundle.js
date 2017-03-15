@@ -7,7 +7,7 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(61);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(42);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_1__angular_forms_src_facade_async__ = __webpack_require__(40);
         /* harmony import */
@@ -131,7 +131,7 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(61);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(42);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_1__angular_forms_src_facade_async__ = __webpack_require__(40);
         /* harmony import */
@@ -245,7 +245,7 @@ webpackJsonp([1, 4], {
     }),
 
     /***/
-    305:
+    194:
     /***/
         (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -315,6 +315,86 @@ webpackJsonp([1, 4], {
     }),
 
     /***/
+    42:
+    /***/
+        (function(module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+        /* harmony export (binding) */
+        __webpack_require__.d(__webpack_exports__, "a", function() { return UsersService; });
+        var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
+            var c = arguments.length,
+                r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
+                d;
+            if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+            else
+                for (var i = decorators.length - 1; i >= 0; i--)
+                    if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+            return c > 3 && r && Object.defineProperty(target, key, r), r;
+        };
+        var __metadata = (this && this.__metadata) || function(k, v) {
+            if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+        };
+
+        var UsersService = (function() {
+            function UsersService() {
+                this.users = {};
+                console.log("users service created");
+                this.users = JSON.parse(localStorage.getItem("users")) || {};
+            }
+            UsersService.prototype.storeData = function() {
+                if (typeof(Storage) !== "undefined") {
+                    localStorage.setItem("users", JSON.stringify(this.users));
+                } else {
+                    console.log("Local storage is not supported by your browser");
+                }
+            };
+            UsersService.prototype.addUser = function(user) {
+                for (var id in this.users) {
+                    if (user.email === this.users[id].email) {
+                        return false;
+                    }
+                }
+                this.users[user.id] = user;
+                this.loginUser(user);
+                this.storeData();
+                return true;
+            };
+            //assigns active user to the user passed in argument if he meets criteria and return true, else return false
+            UsersService.prototype.loginUser = function(user) {
+                for (var id in this.users) {
+                    if (user.email === this.users[id].email && user.password === this.users[id].password) {
+                        this.activeUser = this.users[id];
+                        return this.users[id].id;
+                    }
+                }
+            };
+            UsersService.prototype.logout = function() {
+                this.activeUser = null;
+            };
+            UsersService.prototype.addExpenses = function(expenses) {
+                var id = this.activeUser.id;
+                this.users[id].expenses = expenses;
+                this.storeData();
+            };
+            UsersService.prototype.addIncomes = function(incomes) {
+                var id = this.activeUser.id;
+                this.users[id].incomes = incomes;
+            };
+            UsersService = __decorate([
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
+                __metadata('design:paramtypes', [])
+            ], UsersService);
+            return UsersService;
+        }());
+        //# sourceMappingURL=users.service.js.map
+
+        /***/
+    }),
+
+    /***/
     453:
     /***/
         (function(module, __webpack_exports__, __webpack_require__) {
@@ -362,11 +442,11 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(61);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(42);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(83);
+        var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(129);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(128);
+        var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(127);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
         /* harmony import */
@@ -491,11 +571,15 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__incomes_service__ = __webpack_require__(132);
+        var __WEBPACK_IMPORTED_MODULE_0__user__ = __webpack_require__(194);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__expenses_service__ = __webpack_require__(131);
+        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(42);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
+        var __WEBPACK_IMPORTED_MODULE_2__incomes_service__ = __webpack_require__(132);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_3__expenses_service__ = __webpack_require__(131);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
         __webpack_require__.d(__webpack_exports__, "a", function() { return DetailReportComponent; });
         var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -514,12 +598,18 @@ webpackJsonp([1, 4], {
 
 
 
+
+
         var DetailReportComponent = (function() {
-            function DetailReportComponent(expensesService, incomesService) {
+            function DetailReportComponent(expensesService, incomesService, usersService) {
                 this.expensesService = expensesService;
                 this.incomesService = incomesService;
+                this.usersService = usersService;
+                this.activeUser = new __WEBPACK_IMPORTED_MODULE_0__user__["a" /* User */ ]();
                 this.updateData();
+                this.activeUser = this.usersService.activeUser;
             }
+            //update all data from expenses and incomes services
             DetailReportComponent.prototype.updateData = function() {
                 this.expensesMainList = this.expensesService.getMainList();
                 this.incomesMainList = this.incomesService.getMainList();
@@ -552,15 +642,15 @@ webpackJsonp([1, 4], {
                 this.updateData();
             };
             DetailReportComponent = __decorate([
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__angular_core__["Component"])({
                     selector: 'app-detail-report',
                     template: __webpack_require__(539),
                     styles: [__webpack_require__(524)]
                 }),
-                __metadata('design:paramtypes', [(typeof(_a = typeof __WEBPACK_IMPORTED_MODULE_1__expenses_service__["a" /* ExpensesService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__expenses_service__["a" /* ExpensesService */ ]) === 'function' && _a) || Object, (typeof(_b = typeof __WEBPACK_IMPORTED_MODULE_0__incomes_service__["a" /* IncomesService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__incomes_service__["a" /* IncomesService */ ]) === 'function' && _b) || Object])
+                __metadata('design:paramtypes', [(typeof(_a = typeof __WEBPACK_IMPORTED_MODULE_3__expenses_service__["a" /* ExpensesService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_3__expenses_service__["a" /* ExpensesService */ ]) === 'function' && _a) || Object, (typeof(_b = typeof __WEBPACK_IMPORTED_MODULE_2__incomes_service__["a" /* IncomesService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__incomes_service__["a" /* IncomesService */ ]) === 'function' && _b) || Object, (typeof(_c = typeof __WEBPACK_IMPORTED_MODULE_1__users_service__["a" /* UsersService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__users_service__["a" /* UsersService */ ]) === 'function' && _c) || Object])
             ], DetailReportComponent);
             return DetailReportComponent;
-            var _a, _b;
+            var _a, _b, _c;
         }());
         //# sourceMappingURL=detail-report.component.js.map
 
@@ -667,9 +757,9 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(83);
+        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(129);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(61);
+        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(42);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
@@ -697,6 +787,7 @@ webpackJsonp([1, 4], {
             }
             HeaderComponent.prototype.ngOnInit = function() {};
             HeaderComponent.prototype.logout = function() {
+                //logout and navigate to landing page
                 this.usersService.logout();
                 this.router.navigate(['']);
             };
@@ -762,14 +853,11 @@ webpackJsonp([1, 4], {
         };
 
         var LandingComponent = (function() {
-            // @HostListener('window:resize', ['$event'])
-            // onResize(event) {
-            //   this.height = event.target.innerHeight;
-            //   this.width = event.target.innerWidth;
-            // }
             function LandingComponent() {
+                //for background image
                 this.height = document.documentElement.clientHeight;
                 this.width = document.documentElement.clientWidth;
+                //for toggling between login and signup
                 this.signupView = true;
                 this.loginView = false;
             }
@@ -810,11 +898,11 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(83);
+        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(129);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(61);
+        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(42);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_2__user__ = __webpack_require__(305);
+        var __WEBPACK_IMPORTED_MODULE_2__user__ = __webpack_require__(194);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
@@ -841,11 +929,11 @@ webpackJsonp([1, 4], {
                 this.usersService = usersService;
                 this.router = router;
                 this.userToBeLogged = new __WEBPACK_IMPORTED_MODULE_2__user__["a" /* User */ ]();
+                //for the 'wrong email' span in html
                 this.wrongEmailPassword = false;
-                //emitter recieved by landing page to activate login upon clicking go to login <a> element
+                //emitter recieved by landing page to activate login upon clicking 'go to login'
                 this.createAccountClicked = new __WEBPACK_IMPORTED_MODULE_3__angular_core__["EventEmitter"]();
             }
-            LoginComponent.prototype.ngOnInit = function() {};
             LoginComponent.prototype.onClick = function() {
                 this.createAccountClicked.emit();
             };
@@ -972,7 +1060,6 @@ webpackJsonp([1, 4], {
                 this.expense = true;
                 this.income = false;
             }
-            AddEntryComponent.prototype.ngOnInit = function() {};
             AddEntryComponent.prototype.toggleView = function(tab) {
                 if (tab === "expense") {
                     this.expense = true;
@@ -1034,9 +1121,6 @@ webpackJsonp([1, 4], {
                 //viewOn is the variable used in *ngIf to populate the view, and its bound from the parent component(AddEntryComponent)
                 this.viewOn = false;
             }
-            AddIncomeComponent.prototype.openView = function() {
-                this.viewOn = true;
-            };
             AddIncomeComponent.prototype.ngOnInit = function() {};
             AddIncomeComponent.prototype.onSubmit = function() {
                 this.incomesService.addIncome(this.income);
@@ -1070,7 +1154,7 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(83);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(42);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
@@ -1091,17 +1175,17 @@ webpackJsonp([1, 4], {
 
 
         var MainComponent = (function() {
-            function MainComponent(activeRoute) {
-                this.activeRoute = activeRoute;
+            function MainComponent(usersService) {
+                this.usersService = usersService;
+                this.activeUser = usersService.activeUser;
             }
-            MainComponent.prototype.ngOnInit = function() {};
             MainComponent = __decorate([
                 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
                     selector: 'app-main',
                     template: __webpack_require__(546),
                     styles: [__webpack_require__(531)]
                 }),
-                __metadata('design:paramtypes', [(typeof(_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["c" /* ActivatedRoute */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_router__["c" /* ActivatedRoute */ ]) === 'function' && _a) || Object])
+                __metadata('design:paramtypes', [(typeof(_a = typeof __WEBPACK_IMPORTED_MODULE_0__users_service__["a" /* UsersService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__users_service__["a" /* UsersService */ ]) === 'function' && _a) || Object])
             ], MainComponent);
             return MainComponent;
             var _a;
@@ -1198,11 +1282,11 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(83);
+        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(129);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(61);
+        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(42);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_2__user__ = __webpack_require__(305);
+        var __WEBPACK_IMPORTED_MODULE_2__user__ = __webpack_require__(194);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
@@ -1232,7 +1316,7 @@ webpackJsonp([1, 4], {
                 this.userToBeAdded = new __WEBPACK_IMPORTED_MODULE_2__user__["a" /* User */ ]();
                 //used to style email input if email is unavailable
                 this.emailUnAvailable = false;
-                //emitter recieved by landing page to activate login upon clicking go to login <a> element
+                //emitter recieved by landing page to activate login upon clicking "go to login"
                 this.goToLoginClicked = new __WEBPACK_IMPORTED_MODULE_3__angular_core__["EventEmitter"]();
             }
             SignupComponent.prototype.ngOnInit = function() {};
@@ -1240,6 +1324,7 @@ webpackJsonp([1, 4], {
                 this.goToLoginClicked.emit();
             };
             SignupComponent.prototype.onSubmit = function() {
+                //generate random id for user
                 var id = Math.floor(Math.random() * 1000000);
                 //keep generating ids in case of a duplicate in users list
                 while (this.UsersService.users.hasOwnProperty(id)) {
@@ -1312,6 +1397,7 @@ webpackJsonp([1, 4], {
                     selector: 'app-user',
                     template: __webpack_require__(549),
                     styles: [__webpack_require__(534)],
+                    //providers are created per user not per application
                     providers: [__WEBPACK_IMPORTED_MODULE_1__expenses_service__["a" /* ExpensesService */ ], __WEBPACK_IMPORTED_MODULE_0__incomes_service__["a" /* IncomesService */ ]]
                 }),
                 __metadata('design:paramtypes', [])
@@ -1610,7 +1696,7 @@ webpackJsonp([1, 4], {
     /***/
         (function(module, exports) {
 
-        module.exports = "<div class=\"container\">\r\n    <app-header></app-header>\r\n    <div class=\"row\">\r\n        <div class=\"col-md-5\" id=\"expense-container\">\r\n            <!--iterate through categories and create a separate table for each category-->\r\n            <table class=\"table \" *ngFor=\"let category of expensesCategoryArray; let i = index\">\r\n                <thead class=\"thead-expense\">\r\n                    <tr>\r\n                        <th class=\"expense-name\">{{category}}</th>\r\n                        <th class=\"expense-amount\">Total: {{expensesCategoryTotalsArray[i]}} L.E</th>\r\n                        <th></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <!--iterate through expenses in that category-->\r\n                    <tr *ngFor=\"let expense of expensesMainList[category]; let k = index\">\r\n                        <td class=\"expense-name\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{expense.name}}</td>\r\n                        <td class=\"expense-amount\">\r\n                            <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to \r\n                        non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->\r\n                            <input #expenseAmount (keyup.enter)=\"disableEdit(expenseAmount)\" disabled class=\"form-control form-control-sm\" type=\"number\" [(ngModel)]=\"expense.amount\"> L.E\r\n                        </td>\r\n                        <td>\r\n                            <button (click)=\"deleteExpense(expense)\" class=\"btn btn-danger pull-right\"> <i class=\"fa fa-trash-o\"></i></button>\r\n                            <button (click)=\"enableEdit(expenseAmount)\" class=\"btn btn-success pull-right\"><i class=\"fa fa-pencil\"></i></button>\r\n                        </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n            <div id=\"total-expense\" class=\"total\">\r\n                Total: {{totalExpenses}} L.E\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"col-md-5\" id=\"income-container\">\r\n            <!--iterate through categories and create a separate table for each category-->\r\n            <table class=\"table \" *ngFor=\"let category of incomesCategoryArray; let i = index\">\r\n                <thead class=\"thead-income\">\r\n                    <tr>\r\n                        <th class=\"expense-name\">{{category}}</th>\r\n                        <th class=\"expense-amount\">Total: {{incomesCategoryTotalsArray[i]}} L.E</th>\r\n                        <th></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <!--iterate through expenses in that category-->\r\n                    <tr *ngFor=\"let income of incomesMainList[category]; let k = 'index + 1' \">\r\n                        <td class=\"expense-name\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{income.name}}</td>\r\n                        <td class=\"expense-amount\">\r\n                            <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to \r\n                        non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->\r\n                            <input #incomeAmount (keyup.enter)=\"disableEdit(incomeAmount)\" disabled class=\"form-control form-control-sm\" type=\"number\" [(ngModel)]=\"income.amount\"> L.E\r\n                        </td>\r\n                        <td>\r\n                            <button (click)=\"deleteIncome(income)\" class=\"btn btn-danger pull-right\"> <i class=\"fa fa-trash-o\"></i></button>\r\n                            <button (click)=\"enableEdit(incomeAmount)\" class=\"btn btn-success pull-right\"><i class=\"fa fa-pencil\"></i></button>\r\n                        </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n            <div id=\"total-income\" class=\"total\">\r\n                Total: {{totalIncomes}} L.E\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12\" class=\"total\" id=\"extra-cash\">\r\n            Extra Cash: {{totalIncomes - totalExpenses}} L.E\r\n        </div>\r\n    </div>\r\n</div>"
+        module.exports = "<div class=\"container\">\r\n    <app-header></app-header>\r\n    <h3>{{activeUser.firstName}} {{activeUser.lastName}}'s Report</h3>\r\n    <div class=\"row\">\r\n        <div class=\"col-md-5\" id=\"expense-container\">\r\n            <!--iterate through categories and create a separate table for each category-->\r\n            <table class=\"table \" *ngFor=\"let category of expensesCategoryArray; let i = index\">\r\n                <thead class=\"thead-expense\">\r\n                    <tr>\r\n                        <th class=\"expense-name\">{{category}}</th>\r\n                        <th class=\"expense-amount\">Total: {{expensesCategoryTotalsArray[i]}} L.E</th>\r\n                        <th></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <!--iterate through expenses in that category-->\r\n                    <tr *ngFor=\"let expense of expensesMainList[category]; let k = index\">\r\n                        <td class=\"expense-name\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{expense.name}}</td>\r\n                        <td class=\"expense-amount\">\r\n                            <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to \r\n                        non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->\r\n                            <input #expenseAmount (keyup.enter)=\"disableEdit(expenseAmount)\" disabled class=\"form-control form-control-sm\" type=\"number\" [(ngModel)]=\"expense.amount\"> L.E\r\n                        </td>\r\n                        <td>\r\n                            <button (click)=\"deleteExpense(expense)\" class=\"btn btn-danger pull-right\"> <i class=\"fa fa-trash-o\"></i></button>\r\n                            <button (click)=\"enableEdit(expenseAmount)\" class=\"btn btn-success pull-right\"><i class=\"fa fa-pencil\"></i></button>\r\n                        </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n            <div id=\"total-expense\" class=\"total\">\r\n                Total: {{totalExpenses}} L.E\r\n            </div>\r\n        </div>\r\n\r\n        <div class=\"col-md-5\" id=\"income-container\">\r\n            <!--iterate through categories and create a separate table for each category-->\r\n            <table class=\"table \" *ngFor=\"let category of incomesCategoryArray; let i = index\">\r\n                <thead class=\"thead-income\">\r\n                    <tr>\r\n                        <th class=\"expense-name\">{{category}}</th>\r\n                        <th class=\"expense-amount\">Total: {{incomesCategoryTotalsArray[i]}} L.E</th>\r\n                        <th></th>\r\n                    </tr>\r\n                </thead>\r\n                <tbody>\r\n                    <!--iterate through expenses in that category-->\r\n                    <tr *ngFor=\"let income of incomesMainList[category]; let k = 'index + 1' \">\r\n                        <td class=\"expense-name\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{income.name}}</td>\r\n                        <td class=\"expense-amount\">\r\n                            <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to \r\n                        non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->\r\n                            <input #incomeAmount (keyup.enter)=\"disableEdit(incomeAmount)\" disabled class=\"form-control form-control-sm\" type=\"number\" [(ngModel)]=\"income.amount\"> L.E\r\n                        </td>\r\n                        <td>\r\n                            <button (click)=\"deleteIncome(income)\" class=\"btn btn-danger pull-right\"> <i class=\"fa fa-trash-o\"></i></button>\r\n                            <button (click)=\"enableEdit(incomeAmount)\" class=\"btn btn-success pull-right\"><i class=\"fa fa-pencil\"></i></button>\r\n                        </td>\r\n                    </tr>\r\n                </tbody>\r\n            </table>\r\n            <div id=\"total-income\" class=\"total\">\r\n                Total: {{totalIncomes}} L.E\r\n            </div>\r\n        </div>\r\n\r\n    </div>\r\n    <div class=\"row\">\r\n        <div class=\"col-md-12\" class=\"total\" id=\"extra-cash\">\r\n            Extra Cash: {{totalIncomes - totalExpenses}} L.E\r\n        </div>\r\n    </div>\r\n</div>"
 
         /***/
     }),
@@ -1630,7 +1716,7 @@ webpackJsonp([1, 4], {
     /***/
         (function(module, exports) {
 
-        module.exports = "<div (window:resize)=\"onResize($event)\" [style.width.px]=\"width\" [style.height.px]=\"height\" id=\"main-container\">\n    <span id=\"title\">\n        <h2>Expense Planner</h2>\n        <h3>The easy way to take control of your money</h3>\n    </span>\n    <app-login (createAccountClicked)=\"openSignup()\" *ngIf=\"loginView\"></app-login>\n    <app-signup (goToLoginClicked)=\"openLogin()\" *ngIf=\"signupView\"></app-signup>\n</div>"
+        module.exports = "<div (window:resize)=\"onResize($event)\" [style.width.px]=\"width\" [style.height.px]=\"height\" id=\"main-container\">\r\n    <span id=\"title\">\r\n        <h2>Expense Planner</h2>\r\n        <h3>The easy way to take control of your money</h3>\r\n    </span>\r\n    <app-login (createAccountClicked)=\"openSignup()\" *ngIf=\"loginView\"></app-login>\r\n    <app-signup (goToLoginClicked)=\"openLogin()\" *ngIf=\"signupView\"></app-signup>\r\n</div>"
 
         /***/
     }),
@@ -1680,7 +1766,7 @@ webpackJsonp([1, 4], {
     /***/
         (function(module, exports) {
 
-        module.exports = "<div class=\"container\">\r\n    <app-header></app-header>\r\n    <div class=\"row\">\r\n        <div class=\"col-md-8\">\r\n            <app-results></app-results>\r\n        </div>\r\n        <div class=\"col-md-4\">\r\n            <app-add-entry></app-add-entry>\r\n        </div>\r\n    </div>\r\n</div>"
+        module.exports = "<div class=\"container\">\r\n    <app-header></app-header>\r\n    <h2>Welcome {{activeUser.firstName}} !</h2>\r\n\r\n    <div class=\"row\">\r\n        <div class=\"col-md-8\">\r\n            <app-results></app-results>\r\n        </div>\r\n        <div class=\"col-md-4\">\r\n            <app-add-entry></app-add-entry>\r\n        </div>\r\n    </div>\r\n</div>"
 
         /***/
     }),
@@ -1722,86 +1808,6 @@ webpackJsonp([1, 4], {
 
         module.exports = __webpack_require__(335);
 
-
-        /***/
-    }),
-
-    /***/
-    61:
-    /***/
-        (function(module, __webpack_exports__, __webpack_require__) {
-
-        "use strict";
-        /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-        /* harmony export (binding) */
-        __webpack_require__.d(__webpack_exports__, "a", function() { return UsersService; });
-        var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
-            var c = arguments.length,
-                r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc,
-                d;
-            if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-            else
-                for (var i = decorators.length - 1; i >= 0; i--)
-                    if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-            return c > 3 && r && Object.defineProperty(target, key, r), r;
-        };
-        var __metadata = (this && this.__metadata) || function(k, v) {
-            if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-        };
-
-        var UsersService = (function() {
-            function UsersService() {
-                this.users = {};
-                console.log("users service created");
-                this.users = JSON.parse(localStorage.getItem("users")) || {};
-            }
-            UsersService.prototype.storeData = function() {
-                if (typeof(Storage) !== "undefined") {
-                    localStorage.setItem("users", JSON.stringify(this.users));
-                } else {
-                    console.log("Local storage is not supported by your browser");
-                }
-            };
-            UsersService.prototype.addUser = function(user) {
-                for (var id in this.users) {
-                    if (user.email === this.users[id].email) {
-                        return false;
-                    }
-                }
-                this.users[user.id] = user;
-                this.loginUser(user);
-                this.storeData();
-                return true;
-            };
-            //assigns active user to the user passed in argument if he meets criteria and return true, else return false
-            UsersService.prototype.loginUser = function(user) {
-                for (var id in this.users) {
-                    if (user.email === this.users[id].email && user.password === this.users[id].password) {
-                        this.activeUser = this.users[id];
-                        return this.users[id].id;
-                    }
-                }
-            };
-            UsersService.prototype.logout = function() {
-                this.activeUser = null;
-            };
-            UsersService.prototype.addExpenses = function(expenses) {
-                var id = this.activeUser.id;
-                this.users[id].expenses = expenses;
-                this.storeData();
-            };
-            UsersService.prototype.addIncomes = function(incomes) {
-                var id = this.activeUser.id;
-                this.users[id].incomes = incomes;
-            };
-            UsersService = __decorate([
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-                __metadata('design:paramtypes', [])
-            ], UsersService);
-            return UsersService;
-        }());
-        //# sourceMappingURL=users.service.js.map
 
         /***/
     })
