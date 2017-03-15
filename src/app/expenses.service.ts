@@ -31,12 +31,12 @@ export class ExpensesService {
   @Output() anounceChange = new EventEmitter<any>();
 
   constructor(private usersService: UsersService) {
-     this.activeUser = this.usersService.activeUser;
-     let id = this.activeUser.id;
-     console.log(id);
-     let users = this.usersService.users;
-     console.log(users);
-     this.mainList = users[id].expenses || {};
+    this.activeUser = this.usersService.activeUser;
+    let id = this.activeUser.id;
+    console.log(id);
+    let users = this.usersService.users;
+    console.log(users);
+    this.mainList = users[id].expenses || {};
 
   }
 
@@ -69,6 +69,8 @@ export class ExpensesService {
   }
 
   editExpense() {
+    this.usersService.addExpenses(this.mainList);
+
   }
 
   getTotalExpenses() {
