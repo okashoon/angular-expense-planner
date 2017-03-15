@@ -21,20 +21,12 @@ export class ExpensesService {
   // }
 
   //retrieve data from local storage if present, otherwise create empty object
-  mainList: any = JSON.parse(localStorage.getItem("expenses")) || {};
+  mainList = {};
 
-  //observable sources
+  //observable, used to update results in resultsComponent when data changes
   @Output() anounceChange = new EventEmitter<any>();
 
   constructor(private usersService: UsersService) {
-  }
-  
-
-
-  storeData(): void {
-    if (typeof(Storage) !== "undefined") {
-     localStorage.setItem("expenses", JSON.stringify(this.mainList));
-    } else {console.log("Local storage is not supported by your browser")}
   }
 
   addExpense(expense: Expense) {
@@ -43,7 +35,7 @@ export class ExpensesService {
       this.usersService.addExpenses(this.mainList);
       this.anounceChange.emit();
       console.log(this.usersService.users)
-      
+
 
     } else {
       this.mainList[expense.category] = new Array;
@@ -53,32 +45,30 @@ export class ExpensesService {
       console.log(this.usersService.users)
 
     }
-    this.storeData();
 
   }
 
   deleteExpense(expense: Expense) {
     let index: number = this.mainList[expense.category].indexOf(expense);
     this.mainList[expense.category].splice(index, 1);
-    if (this.mainList[expense.category][0] == null){
+    if (this.mainList[expense.category][0] == null) {
       delete this.mainList[expense.category];
     }
-    this.storeData();
+
   }
 
-  editExpense(){
-    this.storeData();
+  editExpense() {
   }
 
   getTotalExpenses() {
     let totalExpenses = 0;
-    for(let category in this.mainList){
-      for(let expense of this.mainList[category]){
+    for (let category in this.mainList) {
+      for (let expense of this.mainList[category]) {
         totalExpenses += expense.amount;
       }
     }
     return totalExpenses;
-    
+
   }
 
   getCategories() {
@@ -97,7 +87,7 @@ export class ExpensesService {
     return categoryTotals;
   }
 
-  getMainList(){
+  getMainList() {
     return this.mainList;
   }
 

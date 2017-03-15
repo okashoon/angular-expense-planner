@@ -5,14 +5,17 @@ import { User } from './user';
 export class UsersService {
 
   users = {}
-  private activeUser: User;
+  activeUser: User;
 
   constructor() {
    }
 
-  getActiveUser(){
-    return this.activeUser;
+   storeData(): void {
+    if (typeof (Storage) !== "undefined") {
+      localStorage.setItem("expenses", JSON.stringify(this.mainList));
+    } else { console.log("Local storage is not supported by your browser") }
   }
+
 
   addUser(user: User){
     this.activeUser = user;
@@ -35,7 +38,6 @@ export class UsersService {
   }
 
   addExpenses(expenses){
-    console.log(this.activeUser);
     let id = this.activeUser.id;
     this.users[id].expenses = expenses;
     
