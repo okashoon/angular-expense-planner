@@ -22,14 +22,12 @@ export class UsersService {
   addUser(user: User) {
     for (let id in this.users) {
       if (user.email === this.users[id].email) {
-        console.log("email is taken");
         return false;
       }
     }
     this.users[user.id] = user;
     this.loginUser(user);
     this.storeData();
-    console.log(this.users);
     return true;
 
 

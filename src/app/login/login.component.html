@@ -3,11 +3,12 @@
     <form (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-md-12">
-                <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="userToBeLogged.email">
+                <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="userToBeLogged.email" required>
             </div>
             <div class="col-md-12">
-                <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="userToBeLogged.password">
+                <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="userToBeLogged.password" required>
             </div>
+            <span id="password-error" *ngIf="wrongEmailPassword">Incorrect Email or Password </span>
 
         </div>
 

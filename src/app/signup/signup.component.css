@@ -24,3 +24,8 @@ a {
     display: inline-block;
     margin-top: 10px;
 }
+
+#email-error {
+    color: red;
+    float: left;
+}

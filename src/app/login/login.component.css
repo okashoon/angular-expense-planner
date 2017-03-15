@@ -23,3 +23,9 @@ a:hover {
 a {
     margin-top: 10px;
 }
+
+#password-error {
+    float: left;
+    color: red;
+    margin-left: 20px;
+}

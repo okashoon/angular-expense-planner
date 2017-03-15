@@ -11,6 +11,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class LoginComponent implements OnInit {
 
   userToBeLogged: User = new User();
+  wrongEmailPassword = false;
 
  //emitter recieved by landing page to activate login upon clicking go to login <a> element
   @Output() 
@@ -25,11 +26,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
-    //loginUser method, logs in the user and returns its id
+    //loginUser method, logs in the user and returns its id, reutrn null if didnt log in successfuly
     let id = this.usersService.loginUser(this.userToBeLogged);
     if(id) {
       this.router.navigate(['user',id,'main']);
-    }
+    } else { this.wrongEmailPassword = true};
     this.userToBeLogged = new User();
   }
 

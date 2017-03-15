@@ -3,16 +3,17 @@
     <form (ngSubmit)="onSubmit()">
         <div class="row">
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="First Name" name="first-name" [(ngModel)]="userToBeAdded.firstName">
+                <input type="text" class="form-control" placeholder="First Name" name="first-name" [(ngModel)]="userToBeAdded.firstName" required>
             </div>
             <div class="col-md-6">
-                <input type="text" class="form-control" placeholder="Last Name" name="last-name" [(ngModel)]="userToBeAdded.lastName">
+                <input type="text" class="form-control" placeholder="Last Name" name="last-name" [(ngModel)]="userToBeAdded.lastName" required>
             </div>
             <div class="col-md-12">
-                <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="userToBeAdded.email">
+                <input type="email" class="form-control" placeholder="Email" name="email" [(ngModel)]="userToBeAdded.email" required>
+                <span id="email-error" *ngIf="emailUnAvailable">Email is already taken</span>
             </div>
             <div class="col-md-12">
-                <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="userToBeAdded.password">
+                <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="userToBeAdded.password" required>
             </div>
 
         </div>

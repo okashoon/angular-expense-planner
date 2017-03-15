@@ -11,6 +11,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class SignupComponent implements OnInit {
 
   userToBeAdded: User = new User();
+  //used to style email input if email is unavailable
+  emailUnAvailable = false;
 
   //emitter recieved by landing page to activate login upon clicking go to login <a> element
   @Output()
@@ -26,17 +28,18 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    //todo: verify that id is not present in list of users, if present generate another one
 
     let id = Math.floor(Math.random() * 1000000);
+    //keep generating ids in case of a duplicate in users list
     while(this.UsersService.users.hasOwnProperty(id)){
       id = Math.floor(Math.random() * 1000000);
     }
     this.userToBeAdded.id = id;
-    //change id if addUser returns false/ id is present in database
-    //only navigate if user is added, add user return false if email is taken
+    //only navigate if user is added, addUser function return false if email is taken
     if (this.UsersService.addUser(this.userToBeAdded)) {
       this.router.navigate(['user', id, 'main']);
+    } else {
+      this.emailUnAvailable = true;
     }
 
     this.userToBeAdded = new User();
