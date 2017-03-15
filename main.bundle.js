@@ -1416,7 +1416,7 @@ webpackJsonp([1, 4], {
 
 
         // module
-        exports.push([module.i, "#main-container {\r\n    background: -webkit-linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/assets/images/expenses.svg) no-repeat center center fixed;\r\n    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/https:/okashoon.github.io/angular-expense-planner/assets/images/expenses.svg) no-repeat center center fixed;\r\n    background-size: cover;\r\n    text-align: center;\r\n    -webkit-filter: drop-shadow(10);\r\n            filter: drop-shadow(10)\r\n}\r\n\r\n#title {\r\n    position: absolute;\r\n    top: 20%;\r\n    left: 30%;\r\n    color: white;\r\n}", ""]);
+        exports.push([module.i, "#main-container {\r\n    background: -webkit-linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/assets/images/expenses.svg) no-repeat center center fixed;\r\n    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(/assets/images/expenses.svg) no-repeat center center fixed;\r\n    background-size: cover;\r\n    text-align: center;\r\n    -webkit-filter: drop-shadow(10);\r\n            filter: drop-shadow(10)\r\n}\r\n\r\n#title {\r\n    position: absolute;\r\n    top: 20%;\r\n    left: 30%;\r\n    color: white;\r\n}", ""]);
 
         // exports
 
