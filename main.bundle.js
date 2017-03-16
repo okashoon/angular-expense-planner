@@ -7,9 +7,9 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(42);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(30);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__angular_forms_src_facade_async__ = __webpack_require__(40);
+        var __WEBPACK_IMPORTED_MODULE_1__angular_forms_src_facade_async__ = __webpack_require__(41);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
@@ -51,9 +51,7 @@ webpackJsonp([1, 4], {
                 this.anounceChange = new __WEBPACK_IMPORTED_MODULE_1__angular_forms_src_facade_async__["a" /* EventEmitter */ ]();
                 this.activeUser = this.usersService.activeUser;
                 var id = this.activeUser.id;
-                console.log(id);
                 var users = this.usersService.users;
-                console.log(users);
                 this.mainList = users[id].expenses || {};
             }
             ExpensesService.prototype.addExpense = function(expense) {
@@ -61,13 +59,11 @@ webpackJsonp([1, 4], {
                     this.mainList[expense.category].push(expense);
                     this.usersService.addExpenses(this.mainList);
                     this.anounceChange.emit();
-                    console.log(this.usersService.users);
                 } else {
                     this.mainList[expense.category] = new Array;
                     this.mainList[expense.category].push(expense);
                     this.usersService.addExpenses(this.mainList);
                     this.anounceChange.emit();
-                    console.log(this.usersService.users);
                 }
             };
             ExpensesService.prototype.deleteExpense = function(expense) {
@@ -131,9 +127,9 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(42);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(30);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__angular_forms_src_facade_async__ = __webpack_require__(40);
+        var __WEBPACK_IMPORTED_MODULE_1__angular_forms_src_facade_async__ = __webpack_require__(41);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
@@ -270,52 +266,7 @@ webpackJsonp([1, 4], {
     }),
 
     /***/
-    334:
-    /***/
-        (function(module, exports) {
-
-        function webpackEmptyContext(req) {
-            throw new Error("Cannot find module '" + req + "'.");
-        }
-        webpackEmptyContext.keys = function() { return []; };
-        webpackEmptyContext.resolve = webpackEmptyContext;
-        module.exports = webpackEmptyContext;
-        webpackEmptyContext.id = 334;
-
-
-        /***/
-    }),
-
-    /***/
-    335:
-    /***/
-        (function(module, __webpack_exports__, __webpack_require__) {
-
-        "use strict";
-        Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-        /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-        /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(423);
-        /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(454);
-        /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(469);
-
-
-
-
-        if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */ ].production) {
-            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["enableProdMode"])();
-        }
-        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */ ])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */ ]);
-        //# sourceMappingURL=main.js.map
-
-        /***/
-    }),
-
-    /***/
-    42:
+    30:
     /***/
         (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -341,7 +292,6 @@ webpackJsonp([1, 4], {
         var UsersService = (function() {
             function UsersService() {
                 this.users = {};
-                console.log("users service created");
                 this.users = JSON.parse(localStorage.getItem("users")) || {};
             }
             UsersService.prototype.storeData = function() {
@@ -395,13 +345,62 @@ webpackJsonp([1, 4], {
     }),
 
     /***/
+    334:
+    /***/
+        (function(module, exports) {
+
+        function webpackEmptyContext(req) {
+            throw new Error("Cannot find module '" + req + "'.");
+        }
+        webpackEmptyContext.keys = function() { return []; };
+        webpackEmptyContext.resolve = webpackEmptyContext;
+        module.exports = webpackEmptyContext;
+        webpackEmptyContext.id = 334;
+
+
+        /***/
+    }),
+
+    /***/
+    335:
+    /***/
+        (function(module, __webpack_exports__, __webpack_require__) {
+
+        "use strict";
+        Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(423);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(454);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(469);
+
+
+
+
+        if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */ ].production) {
+            __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["enableProdMode"])();
+        }
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */ ])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */ ]);
+        //# sourceMappingURL=main.js.map
+
+        /***/
+    }),
+
+    /***/
     453:
     /***/
         (function(module, __webpack_exports__, __webpack_require__) {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(30);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(83);
+        /* harmony import */
+        var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
         __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
         var __decorate = (this && this.__decorate) || function(decorators, target, key, desc) {
@@ -418,17 +417,30 @@ webpackJsonp([1, 4], {
             if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
         };
 
+
+
         var AppComponent = (function() {
-            function AppComponent() {}
+            //to block the user from navigating through the navigation bar, any navigation will reroute to landing page
+            function AppComponent(activeRoute, usersService, router) {
+                this.activeRoute = activeRoute;
+                this.usersService = usersService;
+                this.router = router;
+                this.activeRoute.params.subscribe(function(p) {
+                    if (!usersService.activeUser) {
+                        router.navigate(['']);
+                    }
+                });
+            }
             AppComponent = __decorate([
-                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+                __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["Component"])({
                     selector: 'app-root',
                     template: __webpack_require__(538),
                     styles: [__webpack_require__(523)]
                 }),
-                __metadata('design:paramtypes', [])
+                __metadata('design:paramtypes', [(typeof(_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */ ]) === 'function' && _a) || Object, (typeof(_b = typeof __WEBPACK_IMPORTED_MODULE_0__users_service__["a" /* UsersService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__users_service__["a" /* UsersService */ ]) === 'function' && _b) || Object, (typeof(_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */ ]) === 'function' && _c) || Object])
             ], AppComponent);
             return AppComponent;
+            var _a, _b, _c;
         }());
         //# sourceMappingURL=app.component.js.map
 
@@ -442,11 +454,11 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(42);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(30);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(129);
+        var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(83);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(127);
+        var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(128);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
         /* harmony import */
@@ -573,7 +585,7 @@ webpackJsonp([1, 4], {
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_0__user__ = __webpack_require__(194);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(42);
+        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(30);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_2__incomes_service__ = __webpack_require__(132);
         /* harmony import */
@@ -681,6 +693,7 @@ webpackJsonp([1, 4], {
             if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
         };
 
+        //directive for the drop down menu
         var DropdownDirective = (function() {
             function DropdownDirective(elementRef) {
                 this.elementRef = elementRef;
@@ -757,9 +770,9 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(129);
+        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(83);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(42);
+        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(30);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
@@ -869,12 +882,10 @@ webpackJsonp([1, 4], {
             LandingComponent.prototype.openSignup = function() {
                 this.loginView = false;
                 this.signupView = true;
-                console.log(this.loginView);
             };
             LandingComponent.prototype.openLogin = function() {
                 this.signupView = false;
                 this.loginView = true;
-                console.log(this.loginView);
             };
             LandingComponent = __decorate([
                 __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -898,9 +909,9 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(129);
+        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(83);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(42);
+        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(30);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_2__user__ = __webpack_require__(194);
         /* harmony import */
@@ -1057,8 +1068,8 @@ webpackJsonp([1, 4], {
         var AddEntryComponent = (function() {
             function AddEntryComponent() {
                 //variables to toggle view between add-expense and add-income components
-                this.expense = true;
-                this.income = false;
+                this.expense = false;
+                this.income = true;
             }
             AddEntryComponent.prototype.toggleView = function(tab) {
                 if (tab === "expense") {
@@ -1154,7 +1165,7 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(42);
+        var __WEBPACK_IMPORTED_MODULE_0__users_service__ = __webpack_require__(30);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
         /* harmony export (binding) */
@@ -1282,9 +1293,9 @@ webpackJsonp([1, 4], {
 
         "use strict";
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(129);
+        var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__(83);
         /* harmony import */
-        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(42);
+        var __WEBPACK_IMPORTED_MODULE_1__users_service__ = __webpack_require__(30);
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_2__user__ = __webpack_require__(194);
         /* harmony import */
@@ -1309,10 +1320,9 @@ webpackJsonp([1, 4], {
 
 
         var SignupComponent = (function() {
-            function SignupComponent(UsersService, router, activeRoute) {
+            function SignupComponent(UsersService, router) {
                 this.UsersService = UsersService;
                 this.router = router;
-                this.activeRoute = activeRoute;
                 this.userToBeAdded = new __WEBPACK_IMPORTED_MODULE_2__user__["a" /* User */ ]();
                 //used to style email input if email is unavailable
                 this.emailUnAvailable = false;
@@ -1349,10 +1359,10 @@ webpackJsonp([1, 4], {
                     template: __webpack_require__(548),
                     styles: [__webpack_require__(533)]
                 }),
-                __metadata('design:paramtypes', [(typeof(_b = typeof __WEBPACK_IMPORTED_MODULE_1__users_service__["a" /* UsersService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__users_service__["a" /* UsersService */ ]) === 'function' && _b) || Object, (typeof(_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */ ]) === 'function' && _c) || Object, (typeof(_d = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["c" /* ActivatedRoute */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_router__["c" /* ActivatedRoute */ ]) === 'function' && _d) || Object])
+                __metadata('design:paramtypes', [(typeof(_b = typeof __WEBPACK_IMPORTED_MODULE_1__users_service__["a" /* UsersService */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__users_service__["a" /* UsersService */ ]) === 'function' && _b) || Object, (typeof(_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */ ] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */ ]) === 'function' && _c) || Object])
             ], SignupComponent);
             return SignupComponent;
-            var _a, _b, _c, _d;
+            var _a, _b, _c;
         }());
         //# sourceMappingURL=signup.component.js.map
 
@@ -1736,7 +1746,7 @@ webpackJsonp([1, 4], {
     /***/
         (function(module, exports) {
 
-        module.exports = "<div>\r\n\r\n\r\n    <div *ngIf=\"viewOn\">\r\n        <form (ngSubmit)=\"onSubmit()\">\r\n            <div class=\"input-group centered\">\r\n                <input type=\"text\" class=\"form-control \" placeholder=\"Expense\" name=\"title\" [(ngModel)]=\"expense.name\" required>\r\n            </div>\r\n            <div class=\"input-group centered\">\r\n                <label for=\"category\">Category:</label>\r\n                <select class=\"form-control\" name=\"category\" [(ngModel)]=\"expense.category\">\r\n                    <option>Bills</option>\r\n                    <option>Education</option>\r\n                    <option>Transport</option>\r\n                    <option>Clothes</option>\r\n                    <option>Entertainment</option>\r\n                    <option>Food</option>\r\n                    <option>Gifts</option>\r\n                    <option>Health</option>\r\n                    <option>House</option>\r\n                    <option>Pets</option>\r\n                    <option>Sports</option>\r\n                </select>\r\n            </div>\r\n            <div class=\"input-group  centered\">\r\n                <span class=\"input-group-addon\">EGP</span>\r\n                <input type=\"number\" class=\"form-control\" placeholder=\"amount\" name=\"amount\" [(ngModel)]=\"expense.amount\" required>\r\n                <span class=\"input-group-addon \">LE</span>\r\n\r\n            </div>\r\n            <button class=\"btn btn-success btn-block \" type=\"submit\"><i class=\"fa fa-cart-arrow-down\"></i>Add Expense</button>\r\n        </form>\r\n    </div>"
+        module.exports = "<div>\r\n\r\n\r\n    <div *ngIf=\"viewOn\">\r\n        <form (ngSubmit)=\"onSubmit()\">\r\n            <div class=\"input-group centered\">\r\n                <input type=\"text\" class=\"form-control \" placeholder=\"Expense\" name=\"title\" [(ngModel)]=\"expense.name\" required>\r\n            </div>\r\n            <div class=\"input-group centered\">\r\n                <label for=\"category\">Category:</label>\r\n                <select class=\"form-control\" name=\"category\" [(ngModel)]=\"expense.category\">\r\n                    <option>Bills</option>\r\n                    <option>Education</option>\r\n                    <option>Transport</option>\r\n                    <option>Clothes</option>\r\n                    <option>Entertainment</option>\r\n                    <option>Food</option>\r\n                    <option>Gifts</option>\r\n                    <option>Health</option>\r\n                    <option>House</option>\r\n                    <option>Pets</option>\r\n                    <option>Sports</option>\r\n                </select>\r\n            </div>\r\n            <div class=\"input-group  centered\">\r\n                <span class=\"input-group-addon\">EGP</span>\r\n                <input type=\"number\" min=\"1\" class=\"form-control\" placeholder=\"amount\" name=\"amount\" [(ngModel)]=\"expense.amount\" required>\r\n                <span class=\"input-group-addon \">LE</span>\r\n\r\n            </div>\r\n            <button class=\"btn btn-success btn-block \" type=\"submit\"><i class=\"fa fa-cart-arrow-down\"></i>Add Expense</button>\r\n        </form>\r\n    </div>"
 
         /***/
     }),
@@ -1756,7 +1766,7 @@ webpackJsonp([1, 4], {
     /***/
         (function(module, exports) {
 
-        module.exports = "<div *ngIf=\"viewOn\">\r\n    <form (ngSubmit)=\"onSubmit()\">\r\n        <div class=\"input-group centered\">\r\n            <input type=\"text\" class=\"form-control \" placeholder=\"Income\" name=\"title\" [(ngModel)]=\"income.name\" required>\r\n        </div>\r\n        <div class=\"input-group centered\">\r\n            <label for=\"category\">Category:</label>\r\n            <select class=\"form-control\" name=\"category\" [(ngModel)]=\"income.category\">\r\n                    <option>Salary</option>\r\n                    <option>Deposits</option>\r\n                    <option>Savings</option>\r\n                    <option>Bonus</option>\r\n                    <option>Rent</option>\r\n                    <option>Other</option>\r\n                </select>\r\n        </div>\r\n        <div class=\"input-group  centered \">\r\n            <span class=\"input-group-addon\">EGP</span>\r\n            <input type=\"number\" class=\"form-control\" placeholder=\"amount\" name=\"amount\" [(ngModel)]=\"income.amount\" required>\r\n            <span class=\"input-group-addon \">LE</span>\r\n        </div>\r\n        <button class=\"btn btn-success btn-block \" type=\"submit \"><i class=\"fa fa-money\"></i>Add Income</button>\r\n    </form>\r\n</div>"
+        module.exports = "<div *ngIf=\"viewOn\">\r\n    <form (ngSubmit)=\"onSubmit()\">\r\n        <div class=\"input-group centered\">\r\n            <input type=\"text\" class=\"form-control \" placeholder=\"Income\" name=\"title\" [(ngModel)]=\"income.name\" required>\r\n        </div>\r\n        <div class=\"input-group centered\">\r\n            <label for=\"category\">Category:</label>\r\n            <select class=\"form-control\" name=\"category\" [(ngModel)]=\"income.category\">\r\n                    <option>Salary</option>\r\n                    <option>Deposits</option>\r\n                    <option>Savings</option>\r\n                    <option>Bonus</option>\r\n                    <option>Rent</option>\r\n                    <option>Other</option>\r\n                </select>\r\n        </div>\r\n        <div class=\"input-group  centered \">\r\n            <span class=\"input-group-addon\">EGP</span>\r\n            <input type=\"number\" min=\"1\" class=\"form-control\" placeholder=\"amount\" name=\"amount\" [(ngModel)]=\"income.amount\" required>\r\n            <span class=\"input-group-addon \">LE</span>\r\n        </div>\r\n        <button class=\"btn btn-success btn-block \" type=\"submit \"><i class=\"fa fa-money\"></i>Add Income</button>\r\n    </form>\r\n</div>"
 
         /***/
     }),
