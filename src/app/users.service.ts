@@ -8,7 +8,6 @@ export class UsersService {
   activeUser: User;
 
   constructor() {
-    console.log("users service created");
     this.users = JSON.parse(localStorage.getItem("users")) || {};
   }
 

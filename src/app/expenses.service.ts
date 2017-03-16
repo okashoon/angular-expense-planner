@@ -33,9 +33,7 @@ export class ExpensesService {
   constructor(private usersService: UsersService) {
     this.activeUser = this.usersService.activeUser;
     let id = this.activeUser.id;
-    console.log(id);
     let users = this.usersService.users;
-    console.log(users);
     this.mainList = users[id].expenses || {};
 
   }
@@ -45,7 +43,6 @@ export class ExpensesService {
       this.mainList[expense.category].push(expense)
       this.usersService.addExpenses(this.mainList);
       this.anounceChange.emit();
-      console.log(this.usersService.users)
 
 
     } else {
@@ -53,7 +50,6 @@ export class ExpensesService {
       this.mainList[expense.category].push(expense);
       this.usersService.addExpenses(this.mainList);
       this.anounceChange.emit();
-      console.log(this.usersService.users)
 
     }
 

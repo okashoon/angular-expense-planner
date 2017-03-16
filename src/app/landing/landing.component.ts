@@ -28,12 +28,10 @@ export class LandingComponent implements OnInit {
   openSignup(){
     this.loginView = false;
     this.signupView = true;
-    console.log(this.loginView);
   } 
   openLogin(){
     this.signupView = false;
     this.loginView = true;
-    console.log(this.loginView);
   } 
 
 }
