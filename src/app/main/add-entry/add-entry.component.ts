@@ -12,8 +12,8 @@ export class AddEntryComponent  {
 
 
   //variables to toggle view between add-expense and add-income components
-  expense = true;
-  income = false;
+  expense = false;
+  income = true;
 
   toggleView(tab: string) {
     if (tab === "expense") {
