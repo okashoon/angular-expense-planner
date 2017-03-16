@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { UsersService } from '../users.service';
 import { User } from '../user';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
   @Output()
   goToLoginClicked: EventEmitter<any> = new EventEmitter();
 
-  constructor(private UsersService: UsersService, private router: Router, private activeRoute: ActivatedRoute) { }
+  constructor(private UsersService: UsersService, private router: Router) { }
 
   ngOnInit() {
   }

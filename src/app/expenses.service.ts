@@ -1,6 +1,5 @@
 import { User } from './user';
 import { UsersService } from './users.service';
-import { ActivatedRoute } from '@angular/router';
 import { EventEmitter } from '@angular/forms/src/facade/async';
 import { Subject } from 'rxjs/Rx';
 import { Expense } from './expense';
