@@ -28,9 +28,9 @@ export class IncomesService {
   @Output() public anounceChange = new EventEmitter<any>();
 
   constructor(private usersService: UsersService) { 
-    this.activeUser = this.usersService.activeUser;
+    this.activeUser = this.usersService.getActiveUser();
      let id = this.activeUser.id;
-     let users = this.usersService.users;
+     let users = this.usersService.getUsers();
      this.mainList = users[id].incomes || {};
   }
 

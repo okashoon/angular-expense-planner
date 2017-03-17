@@ -26,6 +26,7 @@ export class ResultsComponent implements OnInit {
     this.totalExpenses = this.expensesService.getTotalExpenses();
     this.totalIncomes = this.incomesService.getTotalIncomes();
     this.expenseIncomePercent = this.totalExpenses/this.totalIncomes*100;
+    console.log(this.expenseIncomePercent);
     
     //only update arrays if there is data, otherwise put ['no expenses'] and [100]
     this.categoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];

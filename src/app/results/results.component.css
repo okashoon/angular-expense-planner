@@ -25,11 +25,6 @@
     position: initial;
 }
 
-#report {
-    display: block;
-    margin: 50px auto;
-}
-
 canvas {
     height: 800px;
 }
@@ -64,8 +59,17 @@ body {
     background-color: #c0392b;
 }
 
-i {
+.progress i {
     position: relative;
     top: 15px;
     right: 10px;
+}
+
+#report {
+    display: block;
+    margin: 50px auto;
+}
+
+#report i {
+    margin-left: 10px;
 }

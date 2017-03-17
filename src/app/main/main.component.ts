@@ -12,6 +12,6 @@ export class MainComponent  {
   activeUser: User;
 
   constructor(private usersService: UsersService) {
-    this.activeUser = usersService.activeUser;
+    this.activeUser = usersService.getActiveUser();
    }
 }

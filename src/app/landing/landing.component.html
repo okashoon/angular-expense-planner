@@ -1,8 +1,13 @@
 <div (window:resize)="onResize($event)" [style.width.px]="width" [style.height.px]="height" id="main-container">
-    <span id="title">
-        <h2>Expense Planner</h2>
-        <h3>The easy way to take control of your money</h3>
-    </span>
-    <app-login (createAccountClicked)="openSignup()" *ngIf="loginView"></app-login>
-    <app-signup (goToLoginClicked)="openLogin()" *ngIf="signupView"></app-signup>
+    <div class="row>">
+
+        <div style="text-align: center; padding-top:100px;" class="col-md-8 col-md-offset-2">
+            <span id="title">
+                <h2>Expense Planner</h2>
+                <h3>The easy way to take control of your money</h3>
+            </span>
+            <app-login (createAccountClicked)="openSignup()" *ngIf="loginView"></app-login>
+            <app-signup (goToLoginClicked)="openLogin()" *ngIf="signupView"></app-signup>
+        </div>
+    </div>
 </div>

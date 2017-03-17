@@ -31,7 +31,7 @@ export class SignupComponent implements OnInit {
     //generate random id for user
     let id = Math.floor(Math.random() * 1000000);
     //keep generating ids in case of a duplicate in users list
-    while(this.UsersService.users.hasOwnProperty(id)){
+    while(this.UsersService.getUsers().hasOwnProperty(id)){
       id = Math.floor(Math.random() * 1000000);
     }
     this.userToBeAdded.id = id;
