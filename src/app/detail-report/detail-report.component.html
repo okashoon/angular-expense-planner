@@ -66,8 +66,19 @@
 
     </div>
     <div class="row">
-        <div class="col-md-12" class="total" id="extra-cash">
-            Extra Cash: {{totalIncomes - totalExpenses}} L.E
+        <div *ngIf="isExtra" class="col-md-10 total" id="extra-cash">
+            <i class="fa fa-smile-o fa-lg "></i>
+            <span> You have <strong>Extra</strong> {{totalIncomes - totalExpenses}} L.E this month</span>
+        </div>
+
+        <div *ngIf="isEqual" class="col-md-10 total" id="equal-cash">
+            Your expenses is exactly <strong>equal</strong> to your income
+        </div>
+
+        <div *ngIf="isDefecient" class="col-md-10 total" id="defecient-cash">
+            <i class="fa fa-exclamation-triangle fa-lg "></i>
+            <span> Your expenses <strong>exceeds</strong> your income by : {{totalExpenses - totalIncomes}} L.E</span>
         </div>
     </div>
+    <button routerLink="../main" class="btn btn-success btn-lg"><i class="fa fa-arrow-circle-left fa-lg"></i>Back to main panel</button>
 </div>

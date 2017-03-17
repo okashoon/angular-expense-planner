@@ -4,8 +4,8 @@ import { User } from './user';
 @Injectable()
 export class UsersService {
 
-  users = {}
-  activeUser: User;
+  private users = {}
+  private activeUser: User;
 
   constructor() {
     this.users = JSON.parse(localStorage.getItem("users")) || {};
@@ -28,9 +28,6 @@ export class UsersService {
     this.loginUser(user);
     this.storeData();
     return true;
-
-
-
   }
 
   //assigns active user to the user passed in argument if he meets criteria and return true, else return false
@@ -57,6 +54,13 @@ export class UsersService {
   addIncomes(incomes) {
     let id = this.activeUser.id;
     this.users[id].incomes = incomes;
+  }
+
+  getActiveUser(){
+    return this.activeUser;
+  }
+  getUsers(){
+    return this.users;
   }
 
 }

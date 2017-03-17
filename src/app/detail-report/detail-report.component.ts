@@ -13,7 +13,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailReportComponent implements OnInit {
 
-  activeUser: User = new User();  
+  //for the title of page
+  activeUser: User = new User();
 
   expensesMainList;
   incomesMainList;
@@ -26,6 +27,13 @@ export class DetailReportComponent implements OnInit {
 
   expensesCategoryTotalsArray: number[];
   incomesCategoryTotalsArray: number[];
+
+  //varibales used in *ngIf for the extra cash element
+  extraAmount: number = this.totalIncomes - this.totalExpenses;
+  isExtra: boolean;
+  isEqual: boolean;
+  isDefecient: boolean;
+
 
   //update all data from expenses and incomes services
   updateData() {
@@ -43,13 +51,35 @@ export class DetailReportComponent implements OnInit {
     //total expenses/incomes for  each category
     this.expensesCategoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [0];
     this.incomesCategoryTotalsArray = this.incomesService.getCategoryTotalsArray()[0] && this.incomesService.getCategoryTotalsArray() || [0];
+
+    this.extraAmount = this.totalIncomes - this.totalExpenses;
+
+    if (this.extraAmount === 0) {
+      this.isEqual = true;
+      this.isDefecient = false;
+      this.isExtra = false;
+
+
+    } else if (this.extraAmount < 0) {
+      this.isDefecient = true;
+      this.isExtra = false;
+      this.isEqual = false;
+
+
+    } else {
+      this.isExtra = true;
+      this.isDefecient = false;
+      this.isEqual = false;
+
+    }
+
   }
-  constructor(private expensesService: ExpensesService, 
-              private incomesService: IncomesService,
-              private usersService: UsersService) { 
+  constructor(private expensesService: ExpensesService,
+    private incomesService: IncomesService,
+    private usersService: UsersService) {
     this.updateData();
-    this.activeUser = this.usersService.activeUser;
-    
+    this.activeUser = this.usersService.getActiveUser();
+
   }
 
   ngOnInit() {
@@ -65,18 +95,18 @@ export class DetailReportComponent implements OnInit {
     this.updateData();
   }
 
-  
-  enableEdit(element: any){
+
+  enableEdit(element: any) {
     element.disabled = false;
   }
-  
-  disableEdit(element: any){
+
+  disableEdit(element: any) {
     element.disabled = true;
     //to save updated list to local storage
     this.expensesService.editExpense();
     this.incomesService.editIncome();
     this.updateData();
-    
+
   }
 
 }

@@ -21,8 +21,8 @@ export class ExpensesService {
   // }
 
   //retrieve data from local storage if present, otherwise create empty object
-  mainList = {};
-  activeUser: User;
+  private mainList = {};
+  private activeUser: User;
 
 
 
@@ -30,9 +30,9 @@ export class ExpensesService {
   @Output() anounceChange = new EventEmitter<any>();
 
   constructor(private usersService: UsersService) {
-    this.activeUser = this.usersService.activeUser;
+    this.activeUser = this.usersService.getActiveUser();
     let id = this.activeUser.id;
-    let users = this.usersService.users;
+    let users = this.usersService.getUsers();
     this.mainList = users[id].expenses || {};
 
   }
@@ -60,7 +60,8 @@ export class ExpensesService {
     if (this.mainList[expense.category][0] == null) {
       delete this.mainList[expense.category];
     }
-
+      this.usersService.addExpenses(this.mainList);
+    
   }
 
   editExpense() {

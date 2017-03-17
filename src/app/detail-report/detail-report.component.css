@@ -39,6 +39,7 @@ table th {
     text-align: center;
     color: white;
     font-size: 1.4em;
+    margin: 20px;
 }
 
 #total-expense {
@@ -47,11 +48,6 @@ table th {
 
 #total-income {
     background-color: #16a085;
-}
-
-#extra-cash {
-    background-color: grey;
-    border-radius: 5px;
 }
 
 .form-control {
@@ -69,4 +65,23 @@ table th {
 
 button {
     margin-right: 5px;
+}
+
+#extra-cash {
+    background-color: #16a085;
+    border-radius: 5px;
+}
+
+#equal-cash {
+    background-color: grey;
+    border-radius: 5px;
+}
+
+#defecient-cash {
+    background-color: #c0392b;
+    border-radius: 5px;
+}
+
+i {
+    margin-right: 20px;
 }

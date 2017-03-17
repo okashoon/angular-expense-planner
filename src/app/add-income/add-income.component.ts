@@ -1,7 +1,7 @@
-import { IncomesService } from '../../../incomes.service';
+import { IncomesService } from '../incomes.service';
 
 import { Component, Input, OnInit } from '@angular/core';
-import { Income } from '../../../income'
+import { Income } from '../income'
 
 @Component({
   selector: 'app-add-income',
