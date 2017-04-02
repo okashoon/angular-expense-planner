@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
 import { User } from './user';
+import { BaseRequestOptions, Headers, Http, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+const headers = new Headers ({ 'Content-Type': 'application/json' });
+const options = new RequestOptions({ 'headers': headers, method: "post" });
 
 @Injectable()
 export class UsersService {
 
+ 
+
   private users = {}
   private activeUser: User;
 
-  constructor() {
+  constructor(private http: Http) {
     this.users = JSON.parse(localStorage.getItem("users")) || {};
   }
 
@@ -25,6 +32,8 @@ export class UsersService {
       }
     }
     this.users[user.id] = user;
+    this.http.post('/api/users',JSON.stringify(user), options).subscribe();
+    
     this.loginUser(user);
     this.storeData();
     return true;
@@ -32,6 +41,7 @@ export class UsersService {
 
   //assigns active user to the user passed in argument if he meets criteria and return true, else return false
   loginUser(user: User) {
+    
     for (let id in this.users) {
       if (user.email === this.users[id].email && user.password === this.users[id].password) {
         this.activeUser = this.users[id];
