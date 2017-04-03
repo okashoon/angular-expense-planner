@@ -56,6 +56,7 @@ export class UsersService {
 
   addExpenses(expenses) {
     let id = this.activeUser.id;
+    this.http.post('/api/users/'+id,JSON.stringify(expenses),options).subscribe();
     this.users[id].expenses = expenses;
     this.storeData();
 
