@@ -30,7 +30,14 @@ var userSchema = new Schema({
         Pets: [expenseSchema],
         Sports: [expenseSchema]
     },
-    incomes: String
+    incomes: {
+        Salary: [expenseSchema],
+        Deposits: [expenseSchema],
+        Savings: [expenseSchema],
+        Bonus: [expenseSchema],
+        Rent: [expenseSchema],
+        Other: [expenseSchema]
+    }
 })
 
 var User = mongoose.model('User', userSchema);
@@ -41,19 +48,41 @@ router.get('/', (req, res) => {
 })
 
 router.route('/users')
+    //signup user
     .post((req, res) => {
+        User.find({ email: req.body.email }, { email: 1, id: 1 }, (err, user) => {
+            if (user.length < 1) {
+                var newUser = new User(req.body)
+                newUser.save(err => {
+                    if (err) res.send(err);
+                    res.json({ message: "user saved" });
+                })
 
-        var user = new User(req.body)
-        user.save(err => {
-            if (err) res.send(err);
-        })
-        res.end("user saved");
-        console.log(req.body);
+            } else {
+                res.json({ message: "user exists" })
+            }
+
+
+        }).limit(1);
+
     })
 
-router.route('/users/:id')
-    .post((req, res) => {
-        User.findOneAndUpdate({ "id": req.params.id }, { $set: { "expenses": req.body } }, { new: true }, (err, expenses) => console.log(req.body))
+router.get('/users/:id', (req, res) => {
+    var data = {};
+    User.find({ id: req.params.id }, (err, users) => {
+        if (err) res.end();
+        res.send(users);
+        console.log(users);
     })
 
+})
+
+router.route('/users/:id/expenses')
+    .post((req, res) => {
+        User.findOneAndUpdate({ "id": req.params.id }, { $set: { "expenses": req.body } }, { new: true }, (err, expenses) => {})
+    })
+router.route('/users/:id/incomes')
+    .post((req, res) => {
+        User.findOneAndUpdate({ "id": req.params.id }, { $set: { "incomes": req.body } }, { new: true }, (err, incomes) => {})
+    })
 module.exports = router;

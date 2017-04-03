@@ -15,28 +15,24 @@ export class UsersService {
   private activeUser: User;
 
   constructor(private http: Http) {
-    this.users = JSON.parse(localStorage.getItem("users")) || {};
+    this.http.get('/api/users/109').map(res => res.json()).subscribe((res) => {console.log(res)});
+    //this.users = JSON.parse(localStorage.getItem("users")) || {};
   }
 
-  storeData(): void {
-    if (typeof (Storage) !== "undefined") {
-      localStorage.setItem("users", JSON.stringify(this.users));
-    } else { console.log("Local storage is not supported by your browser") }
-  }
 
 
   addUser(user: User) {
-    for (let id in this.users) {
-      if (user.email === this.users[id].email) {
-        return false;
-      }
-    }
-    this.users[user.id] = user;
-    this.http.post('/api/users',JSON.stringify(user), options).subscribe();
+    // for (let id in this.users) {
+    //   if (user.email === this.users[id].email) {
+    //     return false;
+    //   }
+    // }
+    // this.users[user.id] = user;
+    // console.log(this.users);
+    this.http.post('/api/users',JSON.stringify(user), options).map(res => res.json()).subscribe((res) => console.log(res));
     
-    this.loginUser(user);
-    this.storeData();
-    return true;
+    // this.loginUser(user);
+    // return true;
   }
 
   //assigns active user to the user passed in argument if he meets criteria and return true, else return false
@@ -56,14 +52,14 @@ export class UsersService {
 
   addExpenses(expenses) {
     let id = this.activeUser.id;
-    this.http.post('/api/users/'+id,JSON.stringify(expenses),options).subscribe();
+    this.http.post('/api/users/'+id+'/expenses',JSON.stringify(expenses),options).subscribe();
     this.users[id].expenses = expenses;
-    this.storeData();
 
   }
 
   addIncomes(incomes) {
     let id = this.activeUser.id;
+    this.http.post('/api/users/'+id+'/incomes', JSON.stringify(incomes),options).subscribe();
     this.users[id].incomes = incomes;
   }
 
