@@ -15,7 +15,8 @@ export class UsersService {
   private activeUser: User;
 
   constructor(private http: Http) {
-    this.http.get('/api/users/109').map(res => res.json()).subscribe((res) => {console.log(res)});
+    
+    //this.http.get('/api/users/109').map(res => res.json()).subscribe((res) => {console.log(res)});
     //this.users = JSON.parse(localStorage.getItem("users")) || {};
   }
 
@@ -29,7 +30,7 @@ export class UsersService {
     // }
     // this.users[user.id] = user;
     // console.log(this.users);
-    this.http.post('/api/users',JSON.stringify(user), options).map(res => res.json()).subscribe((res) => console.log(res));
+    return this.http.post('/api/users',JSON.stringify(user), options).map(res => res.json());
     
     // this.loginUser(user);
     // return true;

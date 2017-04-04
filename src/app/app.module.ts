@@ -21,6 +21,7 @@ import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserComponent } from './user/user.component';
+import { ToasterService, ToasterModule,ToasterConfig } from 'angular2-toaster';
 
 const userRoutes: Routes = [
   {path: 'main', component: MainComponent},
@@ -53,9 +54,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ToasterModule
   ],
-  providers: [UsersService],
+  providers: [UsersService,ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
