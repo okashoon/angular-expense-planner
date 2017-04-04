@@ -58,14 +58,12 @@ export class UsersService {
   addExpenses(expenses) {
     let id = this.activeUser.id;
     this.http.post('/api/users/' + id + '/expenses', JSON.stringify(expenses), options).subscribe();
-    this.users[id].expenses = expenses;
 
   }
 
   addIncomes(incomes) {
     let id = this.activeUser.id;
     this.http.post('/api/users/' + id + '/incomes', JSON.stringify(incomes), options).subscribe();
-    this.users[id].incomes = incomes;
   }
 
   getActiveUser() {
@@ -73,6 +71,12 @@ export class UsersService {
   }
   getUsers() {
     return this.users;
+  }
+  getUserExpenses(id: number){
+    return this.http.get('/api/users/'+id+'/expenses');
+  }
+  getUserIncomes(id: number){
+    return this.http.get('./api/users/'+id+'/incomes');
   }
 
 }

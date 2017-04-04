@@ -32,8 +32,11 @@ export class ExpensesService {
   constructor(private usersService: UsersService) {
     this.activeUser = this.usersService.getActiveUser();
     let id = this.activeUser.id;
-    let users = this.usersService.getUsers();
-    this.mainList = users[id].expenses || {};
+    this.usersService.getUserExpenses(id).subscribe(res => {
+      this.mainList = res.json();
+
+    })
+    
 
   }
 
@@ -81,7 +84,14 @@ export class ExpensesService {
   }
 
   getCategories() {
-    return Object.keys(this.mainList);
+    let categories =[];
+    for(let category in this.mainList){
+      if(this.mainList[category].length >= 1 && category != "_id"){
+        categories.push(category);
+      }
+    }
+    console.log(categories);
+    return categories;
   }
 
   getCategoryTotalsArray(): number[] {
@@ -91,8 +101,10 @@ export class ExpensesService {
       for (var expense of this.mainList[category]) {
         sum += expense.amount;
       }
-      categoryTotals.push(sum);
+      if(sum != 0 && !isNaN(sum) ){
+      categoryTotals.push(sum);}
     }
+    console.log(categoryTotals);
     return categoryTotals;
   }
 

@@ -31,7 +31,10 @@ export class IncomesService {
     this.activeUser = this.usersService.getActiveUser();
      let id = this.activeUser.id;
      let users = this.usersService.getUsers();
-     this.mainList = users[id].incomes || {};
+     this.usersService.getUserIncomes(id).subscribe(res => {
+     this.mainList = res.json();
+        
+     })
   }
 
 
