@@ -47,7 +47,7 @@ router.get('/', (req, res) => {
     res.send('api works');
 })
 
-router.route('/users')
+router.route('/users/signup')
     //signup user
     .post((req, res) => {
         User.find({ email: req.body.email }, { email: 1, id: 1 }, (err, user) => {
@@ -55,7 +55,7 @@ router.route('/users')
                 var newUser = new User(req.body)
                 newUser.save(err => {
                     if (err) res.send(err);
-                    res.json({ message: "user saved" });
+                    res.json(newUser);
                 })
 
             } else {
@@ -66,6 +66,22 @@ router.route('/users')
         }).limit(1);
 
     })
+
+router.post('/users/login', (req, res) => {
+    User.find({ email: req.body.email }, (err, users) => {
+        console.log(req.body.email);
+        console.log(users[0].password);
+        if (users.length >= 1) {
+            if (req.body.password === users[0].password) {
+                res.json(users[0]);
+            } else {
+                res.json({ message: "wrong password" });
+            }
+        } else {
+            res.json({ message: "wrong email" });
+        }
+    })
+})
 
 router.get('/users/:id', (req, res) => {
     var data = {};
