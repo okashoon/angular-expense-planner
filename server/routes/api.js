@@ -71,8 +71,6 @@ router.post('/users/signup', (req, res) => {
 
 router.post('/users/login', (req, res) => {
     User.find({ email: req.body.email }, (err, users) => {
-        console.log(req.body.email);
-        console.log(users[0].password);
         if (users.length >= 1) {
             if (req.body.password === users[0].password) {
                 res.json(users[0]);
@@ -90,7 +88,6 @@ router.get('/users/:id', (req, res) => {
     User.find({ id: req.params.id }, (err, users) => {
         if (err) res.end();
         res.send(users);
-        console.log(users);
     })
 
 })

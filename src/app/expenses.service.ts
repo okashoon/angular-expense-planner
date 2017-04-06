@@ -4,6 +4,12 @@ import { EventEmitter } from '@angular/forms/src/facade/async';
 import { Subject } from 'rxjs/Rx';
 import { Expense } from './expense';
 import { Injectable, Output } from '@angular/core';
+import { BaseRequestOptions, Headers, Http, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+const headers = new Headers({ 'Content-Type': 'application/json' });
+const options = new RequestOptions({ 'headers': headers, method: "post" });
+
 
 @Injectable()
 export class ExpensesService {
@@ -29,14 +35,15 @@ export class ExpensesService {
   //observable, used to update results in resultsComponent when data changes
   @Output() anounceChange = new EventEmitter<any>();
 
-  constructor(private usersService: UsersService) {
+  constructor(private usersService: UsersService, private http: Http) {
     this.activeUser = this.usersService.getActiveUser();
     let id = this.activeUser.id;
     this.usersService.getUserExpenses(id).subscribe(res => {
-      this.mainList = res.json();
+      this.mainList = res;
+      console.log(this.activeUser);
 
     })
-    
+
 
   }
 
@@ -63,8 +70,8 @@ export class ExpensesService {
     if (this.mainList[expense.category][0] == null) {
       delete this.mainList[expense.category];
     }
-      this.usersService.addExpenses(this.mainList);
-    
+    this.usersService.addExpenses(this.mainList);
+
   }
 
   editExpense() {
@@ -84,32 +91,22 @@ export class ExpensesService {
   }
 
   getCategories() {
-    let categories =[];
-    for(let category in this.mainList){
-      if(this.mainList[category].length >= 1 && category != "_id"){
-        categories.push(category);
-      }
-    }
-    console.log(categories);
-    return categories;
+
+    return this.http.get('/api/users/' + this.activeUser.id + '/expenses').map(expenses => expenses.json());
+
   }
 
-  getCategoryTotalsArray(): number[] {
-    let categoryTotals: number[] = [];
-    for (var category in this.mainList) {
-      let sum = 0;
-      for (var expense of this.mainList[category]) {
-        sum += expense.amount;
-      }
-      if(sum != 0 && !isNaN(sum) ){
-      categoryTotals.push(sum);}
-    }
-    console.log(categoryTotals);
-    return categoryTotals;
+  getCategoryTotalsArray() {
+
+
+
+
+
   }
 
-  getMainList() {
-    return this.mainList;
+  getExpenses() {
+    return this.http.get('/api/users/' + this.activeUser.id + '/expenses').map(expenses => expenses.json());
+    
   }
 
 
