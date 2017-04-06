@@ -31,7 +31,7 @@ export class ResultsComponent implements OnInit {
           categoryTotals.push(sum);
         }
       }
-      this.doughnutChartData = categoryTotals;
+      this.doughnutChartData = categoryTotals[0] && categoryTotals || [0];
 
       let categories = [];
       for (let category in expenses) {
@@ -39,7 +39,7 @@ export class ResultsComponent implements OnInit {
           categories.push(category);
         }
       }
-      this.doughnutChartLabels = categories;
+      this.doughnutChartLabels = categories[0] && categories || ['no expenses'];
     })
 
     

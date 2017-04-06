@@ -37,7 +37,31 @@ export class DetailReportComponent implements OnInit {
 
   //update all data from expenses and incomes services
   updateData() {
-    this.expensesMainList = this.expensesService.getMainList();
+
+    this.expensesService.getExpenses().subscribe(expenses => {
+    this.expensesMainList = expenses;
+
+    let categoryTotals = []
+      for (var category in expenses) {
+        let sum = 0;
+        for (var expense of expenses[category]) {
+          sum += expense.amount;
+        }
+        if (sum != 0 && !isNaN(sum)) {
+          categoryTotals.push(sum);
+        }
+      }
+      this.expensesCategoryTotalsArray = categoryTotals;
+
+      let categories = [];
+      for (let category in expenses) {
+        if (expenses[category].length >= 1 && category != "_id") {
+          categories.push(category);
+        }
+      }
+      this.expensesCategoryArray = categories;
+
+    })
     this.incomesMainList = this.incomesService.getMainList();
 
 
@@ -45,11 +69,9 @@ export class DetailReportComponent implements OnInit {
     this.totalIncomes = this.incomesService.getTotalIncomes();
 
     //categpries of expenses/incomes (labels) -- checking first that its not empty, otherwise assign "no expenses" to it
-    this.expensesCategoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories() || ["No Expenses"];
     this.incomesCategoryArray = this.incomesService.getCategories()[0] && this.incomesService.getCategories() || ["No Incomes"];
 
     //total expenses/incomes for  each category
-    this.expensesCategoryTotalsArray = this.expensesService.getCategoryTotalsArray()[0] && this.expensesService.getCategoryTotalsArray() || [0];
     this.incomesCategoryTotalsArray = this.incomesService.getCategoryTotalsArray()[0] && this.incomesService.getCategoryTotalsArray() || [0];
 
     this.extraAmount = this.totalIncomes - this.totalExpenses;

@@ -72,11 +72,5 @@ export class UsersService {
   getUsers() {
     return this.users;
   }
-  getUserExpenses(id: number){
-    return this.http.get('/api/users/'+id+'/expenses').map(res => res.json());
-  }
-  getUserIncomes(id: number){
-    return this.http.get('./api/users/'+id+'/incomes');
-  }
 
 }

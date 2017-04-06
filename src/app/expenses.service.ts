@@ -38,44 +38,48 @@ export class ExpensesService {
   constructor(private usersService: UsersService, private http: Http) {
     this.activeUser = this.usersService.getActiveUser();
     let id = this.activeUser.id;
-    this.usersService.getUserExpenses(id).subscribe(res => {
+    this.http.get('/api/users/'+this.activeUser.id+'/expenses').map(res => res.json()).subscribe(res => {
       this.mainList = res;
-      console.log(this.activeUser);
-
+      console.log(this.mainList);
     })
+
 
 
   }
 
   addExpense(expense: Expense) {
-    if (this.mainList.hasOwnProperty(expense.category)) {
-      this.mainList[expense.category].push(expense)
-      this.usersService.addExpenses(this.mainList);
-      this.anounceChange.emit();
+    
+    // if (this.mainList.hasOwnProperty(expense.category)) {
+    //   this.mainList[expense.category].push(expense)
+    //   this.usersService.addExpenses(this.mainList);
+    //   this.anounceChange.emit();
 
 
-    } else {
-      this.mainList[expense.category] = new Array;
-      this.mainList[expense.category].push(expense);
-      this.usersService.addExpenses(this.mainList);
-      this.anounceChange.emit();
+    // } else {
+    //   this.mainList[expense.category] = new Array;
+    //   this.mainList[expense.category].push(expense);
+    //   this.usersService.addExpenses(this.mainList);
+    //   this.anounceChange.emit();
 
-    }
+    // }
+
+
+    this.http.post('/api/users/'+this.activeUser.id+'/expenses',JSON.stringify(expense), options).subscribe();
+    
 
   }
 
   deleteExpense(expense: Expense) {
-    let index: number = this.mainList[expense.category].indexOf(expense);
-    this.mainList[expense.category].splice(index, 1);
-    if (this.mainList[expense.category][0] == null) {
-      delete this.mainList[expense.category];
-    }
-    this.usersService.addExpenses(this.mainList);
-
+    this.http.put('/api/users/'+this.activeUser.id+'/expenses/delete', JSON.stringify(expense), new RequestOptions(
+      {'headers': headers, method: 'put'}
+    )).subscribe();
+    
   }
 
-  editExpense() {
-    this.usersService.addExpenses(this.mainList);
+  editExpense(expense) {
+     this.http.put('/api/users/'+this.activeUser.id+'/expenses', JSON.stringify(expense), new RequestOptions(
+      {'headers': headers, method: 'put'}
+    )).subscribe();
 
   }
 
@@ -90,19 +94,6 @@ export class ExpensesService {
 
   }
 
-  getCategories() {
-
-    return this.http.get('/api/users/' + this.activeUser.id + '/expenses').map(expenses => expenses.json());
-
-  }
-
-  getCategoryTotalsArray() {
-
-
-
-
-
-  }
 
   getExpenses() {
     return this.http.get('/api/users/' + this.activeUser.id + '/expenses').map(expenses => expenses.json());

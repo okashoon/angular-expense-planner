@@ -10,6 +10,12 @@ var expenseSchema = new Schema({
     amount: Number,
     category: String
 });
+
+var incomeSchema = new Schema({
+    name: String,
+    amount: Number,
+    category: String
+});
 var userExpenses = new Schema({
     Transport: [expenseSchema],
     Bills: [expenseSchema],
@@ -26,12 +32,12 @@ var userExpenses = new Schema({
 });
 
 var userIncomes = new Schema({
-    Salary: [expenseSchema],
-    Deposits: [expenseSchema],
-    Savings: [expenseSchema],
-    Bonus: [expenseSchema],
-    Rent: [expenseSchema],
-    Other: [expenseSchema]
+    Salary: [incomeSchema],
+    Deposits: [incomeSchema],
+    Savings: [incomeSchema],
+    Bonus: [incomeSchema],
+    Rent: [incomeSchema],
+    Other: [incomeSchema]
 })
 
 var userSchema = new Schema({
@@ -45,6 +51,8 @@ var userSchema = new Schema({
 })
 
 var User = mongoose.model('User', userSchema);
+var Expense = mongoose.model('Expense', expenseSchema);
+var Income = mongoose.model('Income', incomeSchema);
 
 
 router.get('/', (req, res) => {
@@ -93,17 +101,52 @@ router.get('/users/:id', (req, res) => {
 })
 
 router.route('/users/:id/expenses')
+    //update/add expense
     .post((req, res) => {
-        User.findOneAndUpdate({ "id": req.params.id }, { $set: { "expenses": req.body } }, { new: true }, (err, users) => {})
+        User.find({ "id": req.params.id }, (err, users) => {
+            let expense = new Expense(req.body);
+            users[0].expenses[req.body.category].push(expense);
+            users[0].save();
+        })
     })
     .get((req, res) => {
         User.find({ id: req.params.id }, (err, users) => {
             res.json(users[0].expenses);
         })
     })
+    .put((req, res) => {
+        User.find({ "id": req.params.id }, (err, users) => {
+
+            let expenses = users[0].expenses[req.body.category];
+            console.log(expenses);
+            for (let expense of expenses) {
+                if (expense._id == req.body._id) {
+                    expense = req.body;
+                }
+            }
+            users[0].save();
+        })
+    })
+router.put('/users/:id/expenses/delete', (req, res) => {
+    User.find({ "id": req.params.id }, (err, users) => {
+
+        let expenses = users[0].expenses[req.body.category];
+        for (let expense of expenses) {
+            if (expense._id == req.body._id) {
+                expenses.splice(expenses.indexOf(expense), 1);
+            }
+        }
+        users[0].save();
+    })
+})
+
 router.route('/users/:id/incomes')
     .post((req, res) => {
-        User.findOneAndUpdate({ "id": req.params.id }, { $set: { "incomes": req.body } }, { new: true }, (err, incomes) => {})
+        User.find({ "id": req.params.id }, (err, users) => {
+            let income = new Income(req.body);
+            users[0].incomes[req.body.category].push(income);
+            users[0].save();
+        })
     })
     .get((req, res) => {
         User.find({ id: req.params.id }, (err, users) => {

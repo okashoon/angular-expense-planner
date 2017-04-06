@@ -8,6 +8,7 @@ const app = express();
 
 //parses the req body to json so that i can access it by request.body
 app.use(bodyParser.json());
+app.use(bodyParser.raw());
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/api', api);
 
