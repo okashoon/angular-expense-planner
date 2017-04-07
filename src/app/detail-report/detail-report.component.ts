@@ -36,8 +36,8 @@ export class DetailReportComponent implements OnInit {
 
 
   //update all data from expenses and incomes services
-  updateData() {
 
+  updateExpenses() {
     this.expensesService.getExpenses().subscribe(expenses => {
       this.expensesMainList = expenses;
 
@@ -62,17 +62,51 @@ export class DetailReportComponent implements OnInit {
       this.expensesCategoryArray = categories;
 
     })
-    this.incomesMainList = this.incomesService.getMainList();
+  }
+
+  updateIncomes() {
+
+    this.incomesService.getIncomes().subscribe(incomes => {
+
+      this.incomesMainList = incomes;
+
+
+      let categoryTotals = []
+      for (var category in incomes) {
+        let sum = 0;
+        for (var income of incomes[category]) {
+          sum += income.amount;
+        }
+        if (sum != 0 && !isNaN(sum)) {
+          categoryTotals.push(sum);
+        }
+      }
+      this.incomesCategoryTotalsArray = categoryTotals || [0];
+
+      let categories = [];
+      for (let category in incomes) {
+        if (incomes[category].length >= 1 && category != "_id") {
+          categories.push(category);
+        }
+      }
+     this.incomesCategoryArray = categories || ["No Incomes"];
+
+
+
+    })
+
+
+  }
+  updateData() {
+
+    this.updateExpenses();
+
+    this.updateIncomes();
 
 
     this.totalExpenses = this.expensesService.getTotalExpenses();
     this.totalIncomes = this.incomesService.getTotalIncomes();
 
-    //categpries of expenses/incomes (labels) -- checking first that its not empty, otherwise assign "no expenses" to it
-    this.incomesCategoryArray = this.incomesService.getCategories()[0] && this.incomesService.getCategories() || ["No Incomes"];
-
-    //total expenses/incomes for  each category
-    this.incomesCategoryTotalsArray = this.incomesService.getCategoryTotalsArray()[0] && this.incomesService.getCategoryTotalsArray() || [0];
 
     this.extraAmount = this.totalIncomes - this.totalExpenses;
 
@@ -123,7 +157,7 @@ export class DetailReportComponent implements OnInit {
 
   }
 
-  disableEdit(expense: Expense,element: any) {
+  disableEdit(expense: Expense, element: any) {
     element.disabled = true;
     //to save updated list to local storage
     // this.incomesService.editIncome();

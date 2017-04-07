@@ -78,19 +78,19 @@ router.post('/users/signup', (req, res) => {
 })
 
 router.post('/users/login', (req, res) => {
-    User.find({ email: req.body.email }, (err, users) => {
-        if (users.length >= 1) {
-            if (req.body.password === users[0].password) {
-                res.json(users[0]);
+        User.find({ email: req.body.email }, (err, users) => {
+            if (users.length >= 1) {
+                if (req.body.password === users[0].password) {
+                    res.json(users[0]);
+                } else {
+                    res.json({ message: "wrong password" });
+                }
             } else {
-                res.json({ message: "wrong password" });
+                res.json({ message: "wrong email" });
             }
-        } else {
-            res.json({ message: "wrong email" });
-        }
+        })
     })
-})
-
+    //get all users
 router.get('/users/:id', (req, res) => {
     var data = {};
     User.find({ id: req.params.id }, (err, users) => {
@@ -100,8 +100,9 @@ router.get('/users/:id', (req, res) => {
 
 })
 
+
 router.route('/users/:id/expenses')
-    //update/add expense
+    //add expense
     .post((req, res) => {
         User.find({ "id": req.params.id }, (err, users) => {
             let expense = new Expense(req.body);
@@ -109,24 +110,25 @@ router.route('/users/:id/expenses')
             users[0].save();
         })
     })
+    //get expense
     .get((req, res) => {
         User.find({ id: req.params.id }, (err, users) => {
             res.json(users[0].expenses);
         })
     })
+    //update expense
     .put((req, res) => {
         User.find({ "id": req.params.id }, (err, users) => {
             let expenses = users[0].expenses[req.body.category];
             for (let expense of expenses) {
                 if (expense._id == req.body._id) {
                     expenses[expenses.indexOf(expense)] = req.body;
-                    console.log('expense updated');
-                    console.log(expense);
                 }
             }
             users[0].save();
         })
     })
+    //delete expense
 router.put('/users/:id/expenses/delete', (req, res) => {
     User.find({ "id": req.params.id }, (err, users) => {
 
@@ -141,16 +143,34 @@ router.put('/users/:id/expenses/delete', (req, res) => {
 })
 
 router.route('/users/:id/incomes')
+    //add income
     .post((req, res) => {
         User.find({ "id": req.params.id }, (err, users) => {
             let income = new Income(req.body);
             users[0].incomes[req.body.category].push(income);
             users[0].save();
+            res.json('user saved');
         })
     })
+    //get all incomes for a user
     .get((req, res) => {
         User.find({ id: req.params.id }, (err, users) => {
             res.json(users[0].incomes);
         })
     })
+
+router.put('/users/:id/incomes/delete', (req, res) => {
+    User.find({ "id": req.params.id }, (err, users) => {
+
+        let incomes = users[0].incomes[req.body.category];
+        for (let income of incomes) {
+            if (income._id == req.body._id) {
+                incomes.splice(incomes.indexOf(income), 1);
+            }
+        }
+        users[0].save();
+    })
+})
+
+
 module.exports = router;
