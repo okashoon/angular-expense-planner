@@ -39,9 +39,9 @@ export class DetailReportComponent implements OnInit {
   updateData() {
 
     this.expensesService.getExpenses().subscribe(expenses => {
-    this.expensesMainList = expenses;
+      this.expensesMainList = expenses;
 
-    let categoryTotals = []
+      let categoryTotals = []
       for (var category in expenses) {
         let sum = 0;
         for (var expense of expenses[category]) {
@@ -118,16 +118,18 @@ export class DetailReportComponent implements OnInit {
   }
 
 
-  enableEdit(element: any) {
+  enableEdit(expense: Expense, element: any) {
     element.disabled = false;
+
   }
 
-  disableEdit(element: any) {
+  disableEdit(expense: Expense,element: any) {
     element.disabled = true;
     //to save updated list to local storage
-    this.expensesService.editExpense();
-    this.incomesService.editIncome();
-    this.updateData();
+    // this.incomesService.editIncome();
+    // this.updateData();
+    this.expensesService.editExpense(expense).subscribe();
+
 
   }
 

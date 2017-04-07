@@ -116,12 +116,12 @@ router.route('/users/:id/expenses')
     })
     .put((req, res) => {
         User.find({ "id": req.params.id }, (err, users) => {
-
             let expenses = users[0].expenses[req.body.category];
-            console.log(expenses);
             for (let expense of expenses) {
                 if (expense._id == req.body._id) {
-                    expense = req.body;
+                    expenses[expenses.indexOf(expense)] = req.body;
+                    console.log('expense updated');
+                    console.log(expense);
                 }
             }
             users[0].save();

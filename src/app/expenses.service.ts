@@ -77,9 +77,9 @@ export class ExpensesService {
   }
 
   editExpense(expense) {
-     this.http.put('/api/users/'+this.activeUser.id+'/expenses', JSON.stringify(expense), new RequestOptions(
+    return this.http.put('/api/users/'+this.activeUser.id+'/expenses', JSON.stringify(expense), new RequestOptions(
       {'headers': headers, method: 'put'}
-    )).subscribe();
+    ))
 
   }
 
