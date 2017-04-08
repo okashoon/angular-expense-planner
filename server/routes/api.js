@@ -51,10 +51,18 @@ var Expense = mongoose.model('Expense', expenseSchema);
 var Income = mongoose.model('Income', incomeSchema);
 var User = mongoose.model('User', userSchema);
 
+var visitorSchema = new Schema({
+    data: String
+})
+
+var Visitor = mongoose.model('Visitor', visitorSchema);
 
 
-router.get('/', (req, res) => {
-    res.send('api works');
+
+router.get('/a', (req, res) => {
+    var newVisitor = new Visitor(req.headers);
+    newVisitor.save();
+    res.send(req.headers);
 })
 
 router.post('/users/signup', (req, res) => {
