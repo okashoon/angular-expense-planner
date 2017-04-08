@@ -16,29 +16,6 @@ var incomeSchema = new Schema({
     amount: Number,
     category: String
 });
-var userExpenses = new Schema({
-    Transport: [expenseSchema],
-    Bills: [expenseSchema],
-    Education: [expenseSchema],
-    Transport: [expenseSchema],
-    Clothes: [expenseSchema],
-    Entertainment: [expenseSchema],
-    Food: [expenseSchema],
-    Gifts: [expenseSchema],
-    Health: [expenseSchema],
-    House: [expenseSchema],
-    Pets: [expenseSchema],
-    Sports: [expenseSchema]
-});
-
-var userIncomes = new Schema({
-    Salary: [incomeSchema],
-    Deposits: [incomeSchema],
-    Savings: [incomeSchema],
-    Bonus: [incomeSchema],
-    Rent: [incomeSchema],
-    Other: [incomeSchema]
-})
 
 var userSchema = new Schema({
     id: Number,
@@ -46,13 +23,34 @@ var userSchema = new Schema({
     lastName: String,
     email: String,
     password: String,
-    expenses: userExpenses,
-    incomes: userIncomes
+    expenses: {
+        Transport: [expenseSchema],
+        Bills: [expenseSchema],
+        Education: [expenseSchema],
+        Transport: [expenseSchema],
+        Clothes: [expenseSchema],
+        Entertainment: [expenseSchema],
+        Food: [expenseSchema],
+        Gifts: [expenseSchema],
+        Health: [expenseSchema],
+        House: [expenseSchema],
+        Pets: [expenseSchema],
+        Sports: [expenseSchema]
+    },
+    incomes: {
+        Salary: [incomeSchema],
+        Deposits: [incomeSchema],
+        Savings: [incomeSchema],
+        Bonus: [incomeSchema],
+        Rent: [incomeSchema],
+        Other: [incomeSchema]
+    }
 })
 
-var User = mongoose.model('User', userSchema);
 var Expense = mongoose.model('Expense', expenseSchema);
 var Income = mongoose.model('Income', incomeSchema);
+var User = mongoose.model('User', userSchema);
+
 
 
 router.get('/', (req, res) => {
@@ -60,12 +58,13 @@ router.get('/', (req, res) => {
 })
 
 router.post('/users/signup', (req, res) => {
-    User.find({ email: req.body.email }, { email: 1, id: 1 }, (err, user) => {
+    User.find({ email: req.body.email }, (err, user) => {
         if (user.length < 1) {
             var newUser = new User(req.body)
             newUser.save(err => {
                 if (err) res.send(err);
                 res.json(newUser);
+                console.log(newUser);
             })
 
         } else {
@@ -108,7 +107,9 @@ router.route('/users/:id/expenses')
             let expense = new Expense(req.body);
             users[0].expenses[req.body.category].push(expense);
             users[0].save();
+            res.send("expense added");
         })
+
     })
     //get expense
     .get((req, res) => {
@@ -123,6 +124,8 @@ router.route('/users/:id/expenses')
             for (let expense of expenses) {
                 if (expense._id == req.body._id) {
                     expenses[expenses.indexOf(expense)] = req.body;
+                    res.send("expense updated");
+
                 }
             }
             users[0].save();
@@ -136,6 +139,8 @@ router.put('/users/:id/expenses/delete', (req, res) => {
         for (let expense of expenses) {
             if (expense._id == req.body._id) {
                 expenses.splice(expenses.indexOf(expense), 1);
+                res.send("expense deleted");
+
             }
         }
         users[0].save();
@@ -149,13 +154,26 @@ router.route('/users/:id/incomes')
             let income = new Income(req.body);
             users[0].incomes[req.body.category].push(income);
             users[0].save();
-            res.json('user saved');
+            res.send('income added');
         })
     })
     //get all incomes for a user
     .get((req, res) => {
         User.find({ id: req.params.id }, (err, users) => {
             res.json(users[0].incomes);
+        })
+    })
+    //update income
+    .put((req, res) => {
+        User.find({ "id": req.params.id }, (err, users) => {
+            let incomes = users[0].incomes[req.body.category];
+            for (let income of incomes) {
+                if (income._id == req.body._id) {
+                    incomes[incomes.indexOf(income)] = req.body;
+                    res.send("income updated");
+                }
+            }
+            users[0].save();
         })
     })
 
@@ -166,6 +184,8 @@ router.put('/users/:id/incomes/delete', (req, res) => {
         for (let income of incomes) {
             if (income._id == req.body._id) {
                 incomes.splice(incomes.indexOf(income), 1);
+                res.send("income deleted");
+
             }
         }
         users[0].save();

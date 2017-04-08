@@ -36,7 +36,6 @@ export class IncomesService {
      let id = this.activeUser.id;
      this.http.get('/api/users/'+this.activeUser.id+'/incomes').map(res => res.json()).subscribe(res => {
       this.mainList = res;
-      console.log(this.mainList);
     })
 
   }
@@ -55,7 +54,7 @@ export class IncomesService {
     // }
 
         this.http.post('/api/users/'+this.activeUser.id+'/incomes',JSON.stringify(income), options).subscribe(() => console.log('income added'));
-
+        this.anounceChange.emit();
 
   }
 
@@ -73,21 +72,17 @@ export class IncomesService {
     
   }
 
-  editIncome(){
-      this.usersService.addIncomes(this.mainList);
+  editIncome(income){
+      // this.usersService.addIncomes(this.mainList);
+
+      return this.http.put('/api/users/'+this.activeUser.id+'/incomes', JSON.stringify(income), new RequestOptions(
+      {'headers': headers, method: 'put'}
+    ))
+
     
   }
 
 
-  getTotalIncomes() {
-    let totalIncomes = 0;
-    for(let category in this.mainList){
-      for(let expense of this.mainList[category]){
-        totalIncomes += expense.amount;
-      }
-    }
-    return totalIncomes;
-  }
 
   getCategories() {
     return Object.keys(this.mainList);

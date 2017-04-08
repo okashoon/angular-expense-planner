@@ -2,6 +2,8 @@ import { Router } from '@angular/router';
 import { UsersService } from '../users.service';
 import { User } from '../user';
 import { Component, EventEmitter, Output } from '@angular/core';
+import { ToasterModule, ToasterService, ToasterConfig } from 'angular2-toaster'
+
 
 @Component({
   selector: 'app-login',
@@ -9,6 +11,12 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
+  public toasterconfig: ToasterConfig =
+  new ToasterConfig({
+
+    positionClass: 'position-center'
+  });
 
   userToBeLogged: User = new User();
 
@@ -19,7 +27,7 @@ export class LoginComponent {
   @Output()
   createAccountClicked: EventEmitter<any> = new EventEmitter();
 
-  constructor(private usersService: UsersService, private router: Router) { }
+  constructor(private usersService: UsersService, private router: Router, private toasterService: ToasterService) { }
 
   onClick() {
     this.createAccountClicked.emit();
@@ -28,7 +36,12 @@ export class LoginComponent {
   onSubmit() {
     //loginUser method, logs in the user and returns its id, reutrn null if didnt log in successfuly
     this.usersService.loginUser(this.userToBeLogged).subscribe(res => {
-      this.router.navigate(['user', res.id, 'main']);
+      if(res.firstName){
+        this.toasterService.pop('success', 'Successfuly logged in')
+        this.router.navigate(['user', res.id, 'main']);
+      } else {
+        this.toasterService.pop('error', 'wrong email or password')
+      }
     })
 
   }

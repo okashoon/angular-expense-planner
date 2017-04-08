@@ -19,11 +19,11 @@
                         <td class="expense-amount">
                             <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to 
                         non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->
-                            <input #expenseAmount (keyup.enter)="disableEdit(expense,expenseAmount)" disabled class="form-control form-control-sm" type="number" [(ngModel)]="expense.amount"> L.E
+                            <input #expenseAmount (keyup.enter)="disableEdit(undefined,expense,expenseAmount)" disabled class="form-control form-control-sm" type="number" [(ngModel)]="expense.amount"> L.E
                         </td>
                         <td>
                             <button (click)="deleteExpense(expense)" class="btn btn-danger pull-right"> <i class="fa fa-trash-o"></i></button>
-                            <button (click)="enableEdit(expense, expenseAmount)" class="btn btn-success pull-right"><i class="fa fa-pencil"></i></button>
+                            <button (click)="enableEdit(expenseAmount)" class="btn btn-success pull-right"><i class="fa fa-pencil"></i></button>
                         </td>
                     </tr>
                 </tbody>
@@ -50,7 +50,7 @@
                         <td class="expense-amount">
                             <!--amount is put in a disabled input element, which is styled like a normal text, that changes styling if toggled to 
                         non-disabled to a normal text input, toggling is done by edit button - enableEdit function-->
-                            <input #incomeAmount (keyup.enter)="disableEdit(incomeAmount)" disabled class="form-control form-control-sm" type="number" [(ngModel)]="income.amount"> L.E
+                            <input #incomeAmount (keyup.enter)="disableEdit(income,undefined,incomeAmount)" disabled class="form-control form-control-sm" type="number" [(ngModel)]="income.amount"> L.E
                         </td>
                         <td>
                             <button (click)="deleteIncome(income)" class="btn btn-danger pull-right"> <i class="fa fa-trash-o"></i></button>

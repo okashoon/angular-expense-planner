@@ -27,25 +27,16 @@ export class ExpensesService {
   // }
 
   //retrieve data from local storage if present, otherwise create empty object
-  private mainList = {};
-  private activeUser: User;
-
-
+  private activeUser =this.usersService.getActiveUser();
+  
 
   //observable, used to update results in resultsComponent when data changes
   @Output() anounceChange = new EventEmitter<any>();
 
   constructor(private usersService: UsersService, private http: Http) {
-    this.activeUser = this.usersService.getActiveUser();
-    let id = this.activeUser.id;
-    this.http.get('/api/users/'+this.activeUser.id+'/expenses').map(res => res.json()).subscribe(res => {
-      this.mainList = res;
-      console.log(this.mainList);
-    })
-
-
 
   }
+
 
   addExpense(expense: Expense) {
     
@@ -64,7 +55,8 @@ export class ExpensesService {
     // }
 
 
-    this.http.post('/api/users/'+this.activeUser.id+'/expenses',JSON.stringify(expense), options).subscribe();
+    this.http.post('/api/users/'+this.activeUser.id+'/expenses',JSON.stringify(expense), options).subscribe(()=>this.anounceChange.emit());
+    
     
 
   }
@@ -83,16 +75,20 @@ export class ExpensesService {
 
   }
 
-  getTotalExpenses() {
-    let totalExpenses = 0;
-    for (let category in this.mainList) {
-      for (let expense of this.mainList[category]) {
-        totalExpenses += expense.amount;
-      }
-    }
-    return totalExpenses;
+  // getTotalExpenses() {
 
-  }
+  //   this.getExpenses().subscribe(expenses => {})
+  //   let totalExpenses = 0;
+  //   for (let category in this.mainList) {
+  //     for (let expense of this.mainList[category]) {
+  //       totalExpenses += expense.amount;
+  //       console.log(expense);
+  //     }
+  //   }
+  //   console.log(totalExpenses)
+  //   return totalExpenses;
+
+  // }
 
 
   getExpenses() {

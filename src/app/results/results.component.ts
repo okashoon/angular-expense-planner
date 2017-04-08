@@ -11,8 +11,8 @@ import { Component, OnInit, } from '@angular/core';
 })
 export class ResultsComponent implements OnInit {
 
-  totalExpenses: number = this.expensesService.getTotalExpenses();
-  totalIncomes: number = this.incomesService.getTotalIncomes();
+  totalExpenses: number = 0;
+  totalIncomes: number;
   expenseIncomePercent: number = this.totalExpenses / this.totalIncomes * 100;
 
   //categpries of expenses (labels) -- checking first that its not empty, otherwise assign "no expenses" to it
@@ -21,6 +21,8 @@ export class ResultsComponent implements OnInit {
   updateResults() {
 
     this.expensesService.getExpenses().subscribe(expenses => {
+
+      delete expenses._id;
       let categoryTotals = []
       for (var category in expenses) {
         let sum = 0;
@@ -40,13 +42,33 @@ export class ResultsComponent implements OnInit {
         }
       }
       this.doughnutChartLabels = categories[0] && categories || ['no expenses'];
+
+      let totalExpenses = 0;
+      for (let category in expenses) {
+        for (let expense of expenses[category]) {
+          totalExpenses += expense.amount;
+        }
+      }
+      this.totalExpenses = totalExpenses;
+
+      this.incomesService.getIncomes().subscribe(incomes => {
+        delete incomes._id;
+
+        let totalIncomes = 0;
+        for (let category in incomes) {
+          for (let income of incomes[category]) {
+            totalIncomes += income.amount;
+          }
+        }
+        console.log(totalIncomes);
+        this.totalIncomes = totalIncomes;
+    this.expenseIncomePercent = this.totalExpenses / this.totalIncomes * 100;
+        
+      })
     })
 
-    
 
-    // this.totalExpenses = this.expensesService.getTotalExpenses();
-    // this.totalIncomes = this.incomesService.getTotalIncomes();
-    // this.expenseIncomePercent = this.totalExpenses / this.totalIncomes * 100;
+
 
     // //only update arrays if there is data, otherwise put ['no expenses'] and [100]
     // this.categoryArray = this.expensesService.getCategories()[0] && this.expensesService.getCategories();
@@ -59,8 +81,8 @@ export class ResultsComponent implements OnInit {
   ngOnInit() {
     this.updateResults();
     //update results whenever expenses or incomes changes
-    // this.expensesService.anounceChange.subscribe(p => {this.updateResults()});
-    // this.incomesService.anounceChange.subscribe(p => {this.updateResults()});
+     this.expensesService.anounceChange.subscribe(p => {this.updateResults()});
+     this.incomesService.anounceChange.subscribe(p => {this.updateResults()});
   }
 
   // Doughnut

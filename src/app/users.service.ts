@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from './user';
 import { BaseRequestOptions, Headers, Http, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
 
 const headers = new Headers({ 'Content-Type': 'application/json' });
 const options = new RequestOptions({ 'headers': headers, method: "post" });
@@ -39,32 +40,17 @@ export class UsersService {
 
   //assigns active user to the user passed in argument if he meets criteria and return true, else return false
   loginUser(user: User) {
-
-    let response = this.http.post('/api/users/login', JSON.stringify(user), options).map(res => res.json());
-    response.subscribe(res => {
-      
-      if (res.firstName) {
-        this.activeUser = res;
-      }
-    })
-
-    return response;
+    //the do : Perform a side effect for every emission on the source Observable, but return an Observable that is identical to the source
+    //beacuse i want to use that observable in the login component
+    return this.http.post('/api/users/login', JSON.stringify(user), options).map(res => res.json()).do((res)=>{
+      this.activeUser = res;
+    });
   }
 
   logout() {
     this.activeUser = null;
   }
 
-  addExpenses(expenses) {
-    let id = this.activeUser.id;
-    this.http.post('/api/users/' + id + '/expenses', JSON.stringify(expenses), options).subscribe();
-
-  }
-
-  addIncomes(incomes) {
-    let id = this.activeUser.id;
-    this.http.post('/api/users/' + id + '/incomes', JSON.stringify(incomes), options).subscribe();
-  }
 
   getActiveUser() {
     return this.activeUser;

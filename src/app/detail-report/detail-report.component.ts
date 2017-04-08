@@ -39,6 +39,8 @@ export class DetailReportComponent implements OnInit {
 
   updateExpenses() {
     this.expensesService.getExpenses().subscribe(expenses => {
+
+      delete expenses._id;
       this.expensesMainList = expenses;
 
       let categoryTotals = []
@@ -61,12 +63,22 @@ export class DetailReportComponent implements OnInit {
       }
       this.expensesCategoryArray = categories;
 
+      let totalExpenses = 0;
+      for (let category in expenses) {
+        for (let expense of expenses[category]) {
+          totalExpenses += expense.amount;
+        }
+      }
+      this.totalExpenses = totalExpenses;
+
+
     })
   }
 
   updateIncomes() {
 
     this.incomesService.getIncomes().subscribe(incomes => {
+      delete incomes._id;
 
       this.incomesMainList = incomes;
 
@@ -91,6 +103,14 @@ export class DetailReportComponent implements OnInit {
       }
      this.incomesCategoryArray = categories || ["No Incomes"];
 
+     let totalIncomes = 0;
+        for (let category in incomes) {
+          for (let income of incomes[category]) {
+            totalIncomes += income.amount;
+          }
+        }
+        this.totalIncomes = totalIncomes;
+
 
 
     })
@@ -103,9 +123,6 @@ export class DetailReportComponent implements OnInit {
 
     this.updateIncomes();
 
-
-    this.totalExpenses = this.expensesService.getTotalExpenses();
-    this.totalIncomes = this.incomesService.getTotalIncomes();
 
 
     this.extraAmount = this.totalIncomes - this.totalExpenses;
@@ -152,18 +169,19 @@ export class DetailReportComponent implements OnInit {
   }
 
 
-  enableEdit(expense: Expense, element: any) {
+  enableEdit(element: any) {
     element.disabled = false;
 
   }
 
-  disableEdit(expense: Expense, element: any) {
-    element.disabled = true;
-    //to save updated list to local storage
-    // this.incomesService.editIncome();
-    // this.updateData();
-    this.expensesService.editExpense(expense).subscribe();
+  disableEdit(income: Income, expense: Expense, element: any) {
 
+    if(income){
+       this.incomesService.editIncome(income).subscribe(()=>{this.updateData(); console.log('income updated')});
+    } else if(expense){
+      this.expensesService.editExpense(expense).subscribe(()=>{this.updateData(); console.log('expense updated')});
+    }
+     element.disabled = true;
 
   }
 

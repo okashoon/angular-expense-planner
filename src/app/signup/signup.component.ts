@@ -61,12 +61,13 @@ export class SignupComponent implements OnInit {
     this.userToBeAdded.id = id;
     this.usersService.addUser(this.userToBeAdded).subscribe(res => {
       if (res.message === "user exists") {
-        this.toasterService.pop('danger', "Email already exists");
+        this.toasterService.pop('error', "Email already exists");
       } else {
 
         this.toasterService.pop('success', "User successfuly created");
         this.usersService.loginUser(this.userToBeAdded).subscribe(res => {
           this.router.navigate(['user', id, 'main']);
+          console.log(res);
         })
 
         
