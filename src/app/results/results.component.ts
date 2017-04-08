@@ -60,7 +60,6 @@ export class ResultsComponent implements OnInit {
             totalIncomes += income.amount;
           }
         }
-        console.log(totalIncomes);
         this.totalIncomes = totalIncomes;
     this.expenseIncomePercent = this.totalExpenses / this.totalIncomes * 100;
         
