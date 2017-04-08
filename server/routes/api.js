@@ -55,33 +55,33 @@ var visitorSchema = new Schema({
     data: String
 })
 
-var Visitor = mongoose.model('Visitor', visitorSchema);
+var Visitor = mongoose.model('Visitor', visitorSchema, "visitors");
 
 
 
-router.get('/a', (req, res) => {
-    var newVisitor = new Visitor(req.headers);
-    newVisitor.save();
-    res.send(req.headers);
-})
 
 router.post('/users/signup', (req, res) => {
     User.find({ email: req.body.email }, (err, user) => {
         if (user.length < 1) {
             var newUser = new User(req.body)
-            newUser.save(err => {
+            newUser.save((err, doc) => {
                 if (err) res.send(err);
                 res.json(newUser);
-                console.log(newUser);
             })
 
         } else {
             res.json({ message: "user exists" })
         }
-
-
     }).limit(1);
-
+    let headers = "";
+    for (header in req.headers) {
+        headers += header + ' : ' + req.headers[header] + '----';
+    }
+    console.log(headers);
+    var newVisitor = new Visitor({
+        "data": headers
+    })
+    newVisitor.save();
 })
 
 router.post('/users/login', (req, res) => {
